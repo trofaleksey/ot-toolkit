@@ -35,7 +35,7 @@ The repository should remain private until ownership and licensing for source co
 
 ## Development
 
-Xcode 16.4 with the iOS 18.5 simulator is the authoritative CI baseline. Newer Xcode versions may be used locally when the same change passes pinned CI.
+Xcode 26.6 with the iOS 26.5 simulator is the authoritative CI baseline. CI also runs the same checks with Xcode 16.4 and iOS 18.5 to protect the iOS/iPadOS 18.0 deployment target.
 
 Format and lint Swift source with the Apple toolchain:
 
@@ -51,11 +51,11 @@ xcodebuild test \
   -project OTToolkit.xcodeproj \
   -scheme OTToolkit \
   -testPlan OTToolkit \
-  -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' \
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' \
   CODE_SIGNING_ALLOWED=NO
 ```
 
-Use an installed local simulator name and OS when running a newer Xcode version. CI also runs the critical UI smoke flow on iPad and unsigned Debug and Release builds.
+Use an installed local simulator name and OS when needed. CI also runs the critical UI smoke flow on iPad and unsigned Debug and Release builds in both toolchain lanes.
 
 ## Privacy reminder
 

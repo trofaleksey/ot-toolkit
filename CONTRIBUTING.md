@@ -50,7 +50,7 @@ Never push directly to `main`, force-push it, or delete it. These are maintainer
 
 For documentation-only work, run the repository checks listed in the pull request. For Swift changes, run `./Scripts/format.sh`, `./Scripts/lint.sh`, and the relevant shared `OTToolkit` test-plan invocation. Include iPhone and iPad UI coverage for critical flows and record manual assistive-technology checks.
 
-Xcode 16.4 and iOS 18.5 in GitHub CI are authoritative. A newer local Xcode run is useful supplemental validation but does not replace the pinned check. Unsigned simulator builds use `CODE_SIGNING_ALLOWED=NO`; signing and distribution configuration remain release work.
+Xcode 26.6 and iOS 26.5 in GitHub CI are authoritative. The Xcode 16.4 and iOS 18.5 compatibility lane protects the iOS/iPadOS 18.0 deployment target. Local validation does not replace either pinned check. Unsigned simulator builds use `CODE_SIGNING_ALLOWED=NO`; signing and distribution configuration remain release work.
 
 ## Sensitive reports
 
