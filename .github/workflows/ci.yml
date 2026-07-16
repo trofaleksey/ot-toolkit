@@ -30,6 +30,7 @@ jobs:
         run: |
           set -euo pipefail
           required=(
+            .githooks/pre-push
             AGENTS.md
             README.md
             CONTRIBUTING.md
@@ -48,6 +49,52 @@ jobs:
           for path in "${required[@]}"; do
             test -s "${path}"
           done
+
+      - name: Verify local main-push guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          hook=.githooks/pre-push
+          test -x "${hook}"
+          sh -n "${hook}"
+
+          zero=0000000000000000000000000000000000000000
+          update=1111111111111111111111111111111111111111
+
+          allow_case() {
+            local description=$1
+            shift
+            if ! printf '%s\n' "$@" \
+              | "${hook}" origin https://github.com/example/example.git; then
+              echo "::error::The pre-push hook rejected ${description}."
+              exit 1
+            fi
+          }
+
+          reject_case() {
+            local description=$1
+            shift
+            if printf '%s\n' "$@" \
+              | "${hook}" origin https://github.com/example/example.git \
+                >/dev/null 2>&1; then
+              echo "::error::The pre-push hook allowed ${description}."
+              exit 1
+            fi
+          }
+
+          allow_case "safe non-main refs" \
+            "refs/heads/codex/test ${update} refs/heads/codex/test ${zero}" \
+            "refs/tags/main ${update} refs/tags/main ${zero}" \
+            "(delete) ${zero} refs/heads/codex/old ${update}" \
+            "refs/heads/main ${update} refs/heads/codex/from-main ${zero}"
+
+          reject_case "a direct main update" \
+            "refs/heads/codex/test ${update} refs/heads/main ${zero}"
+          reject_case "main deletion" \
+            "(delete) ${zero} refs/heads/main ${update}"
+          reject_case "a multi-ref push containing main" \
+            "refs/heads/codex/test ${update} refs/heads/codex/test ${zero}" \
+            "refs/heads/other ${update} refs/heads/main ${zero}"
 
       - name: Reject trailing whitespace
         shell: bash

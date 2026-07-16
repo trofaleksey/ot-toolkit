@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# GitHub Free cannot enforce protected branches on this private repository.
+# Reject any push that targets the remote main branch as a local safety rail.
+
+protected_ref=refs/heads/main
+remote_name=${1:-remote}
+
+while IFS=' ' read -r _local_ref _local_oid remote_ref _remote_oid
+do
+    if [ "$remote_ref" = "$protected_ref" ]; then
+        printf '%s\n' \
+            "Direct pushes to main are blocked for ${remote_name}." \
+            "Push a codex/... branch, wait for green CI, and squash-merge its pull request." \
+            "This local hook is a guardrail, not server-side branch protection." >&2
+        exit 1
+    fi
+done
+
+exit 0
