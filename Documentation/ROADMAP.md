@@ -10,7 +10,7 @@ Work in vertical slices and keep only one feature implementation in progress unl
 
 ## Current status
 
-The repository has a universal Xcode foundation with app, unit-test, and UI-test targets plus pinned CI. OTK-001 establishes the first green build/test baseline; later milestone tickets own navigation, design tokens, persistence, and feature behavior.
+The repository has a universal Xcode foundation with app, unit-test, and UI-test targets plus pinned CI. OTK-001 established the first green build/test baseline, and OTK-007 updates it for current App Store Connect requirements while retaining iOS 18 compatibility coverage. Later milestone tickets own navigation, design tokens, persistence, and feature behavior.
 
 ## Milestone 0 — Foundation
 
@@ -24,6 +24,7 @@ Goal: create the smallest testable universal app and remove architectural uncert
 | OTK-004 | Store/container harness, file protection, explicit no-CloudKit configuration, reset, backup exclusion, and Privacy Manifest review | OTK-001 |
 | OTK-005 | Recruit five beta OTs and confirm three Gate A participants | none |
 | OTK-006 | Solo-maintainer governance for private GitHub Free: local main-push guard, manual green-CI/squash workflow, ownership, and reporting handoff | none |
+| OTK-007 | Xcode 26.6 / iOS 26.5 authoritative CI with an Xcode 16.4 / iOS 18.5 compatibility lane | OTK-001 |
 
 Exit gate:
 

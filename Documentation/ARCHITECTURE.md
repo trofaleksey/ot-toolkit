@@ -12,13 +12,14 @@ Shared abstractions are extracted only after a second real consumer demonstrates
 - UI framework: SwiftUI.
 - Persistence: SwiftData for domain content; AppStorage for simple device preferences.
 - Deployment target: iOS and iPadOS 18.0.
-- CI baseline: macOS 15 runner with Xcode 16.4 and an iOS 18.5 simulator.
+- Authoritative CI baseline: macOS 26 runner with Xcode 26.6 and an iOS 26.5 simulator.
+- Compatibility CI baseline: macOS 15 runner with Xcode 16.4 and an iOS 18.5 simulator.
 - Project: one OTToolkit.xcodeproj with app, unit-test, and UI-test targets.
 - Shared artifacts: OTToolkit scheme and OTToolkit test plan.
 - Language scope: English-only v1 with all user-facing strings in Localizable.xcstrings.
 - App Intents metadata extraction: disabled until an approved feature introduces AppIntents.
 
-Newer Xcode versions may be used locally only when the project still passes the pinned CI baseline. Changes to the deployment target or toolchain require an ADR and matching CI update. A future App Intents feature must remove the metadata-extraction override and its bootstrap guard in the same change.
+Local Xcode versions do not replace the pinned authoritative and compatibility CI lanes. Changes to the deployment target or either toolchain require an ADR and matching CI update. A future App Intents feature must remove the metadata-extraction override and its bootstrap guard in the same change.
 
 ## Project structure
 
@@ -161,7 +162,7 @@ The canonical iPhone CI command runs the shared unit and UI test plan:
       -project OTToolkit.xcodeproj \
       -scheme OTToolkit \
       -testPlan OTToolkit \
-      -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' \
+      -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' \
       CODE_SIGNING_ALLOWED=NO
 
 Critical iPad UI smoke tests run through the same plan in a second invocation:
@@ -171,10 +172,10 @@ Critical iPad UI smoke tests run through the same plan in a second invocation:
       -scheme OTToolkit \
       -testPlan OTToolkit \
       -only-testing:OTToolkitUITests \
-      -destination 'platform=iOS Simulator,name=iPad (10th generation),OS=18.5' \
+      -destination 'platform=iOS Simulator,name=iPad (A16),OS=26.5' \
       CODE_SIGNING_ALLOWED=NO
 
-CI also performs unsigned Debug and Release simulator builds. It uses warnings-as-errors for project code, iPhone and iPad destinations, result bundles on failures, read-only permissions, cancellation of superseded pull-request runs, and a bounded timeout. OTK-001 establishes the no-tracking manifest with no required-reason declarations; OTK-004 re-audits it when persistence and preferences are introduced.
+CI performs the same lint, settings verification, unsigned Debug and Release simulator builds, iPhone test plan, and iPad UI smoke tests in the authoritative and compatibility lanes. It uses warnings-as-errors for project code, result bundles on failures, read-only permissions, cancellation of superseded pull-request runs, and a bounded timeout. OTK-001 establishes the no-tracking manifest with no required-reason declarations; OTK-004 re-audits it when persistence and preferences are introduced.
 
 ## Decision records
 

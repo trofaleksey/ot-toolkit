@@ -14,7 +14,7 @@ The original plan called five tools the MVP while identifying only three as the 
 - Regulation Cards require the clinical-content gate and may move to v1.1.
 - User-created regulation cards are out of v1.
 - The deployment target is iOS/iPadOS 18.0.
-- CI is pinned to macOS 15, Xcode 16.4, and iOS 18.5 until an explicit toolchain update.
+- The original CI baseline is macOS 15, Xcode 16.4, and iOS 18.5; ADR-0004 supersedes this toolchain pin while retaining it as a compatibility lane.
 - V1 is English-only, with all user-facing strings externalized for later localization.
 - Use one Xcode project; add a workspace only when a real multi-project need exists.
 - GitHub Issues are the active backlog. Repository Markdown contains durable product, architecture, validation, and decision material.

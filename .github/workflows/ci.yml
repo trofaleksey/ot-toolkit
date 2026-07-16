@@ -37,6 +37,7 @@ jobs:
             Documentation/ADRs/0001-delivery-scope-and-platform.md
             Documentation/ADRs/0002-timer-lifecycle.md
             Documentation/ADRs/0003-local-data-and-media.md
+            Documentation/ADRs/0004-supported-toolchain.md
             Documentation/ARCHITECTURE.md
             Documentation/CONTENT_GOVERNANCE.md
             Documentation/DESIGN_SYSTEM.md
@@ -118,10 +119,35 @@ jobs:
 
   build-and-test:
     needs: repository-policy
-    runs-on: macos-15
+    name: Build and test (${{ matrix.name }})
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Xcode 26.6 / iOS 26.5
+            id: latest-stable
+            runner: macos-26
+            macos_major: "26"
+            developer_dir: /Applications/Xcode_26.6.app/Contents/Developer
+            xcode_version: "Xcode 26.6"
+            sdk_version: "26.5"
+            phone: iPhone 17
+            tablet: iPad (A16)
+            runtime: "26.5"
+          - name: Xcode 16.4 / iOS 18.5 compatibility
+            id: ios-18-compatibility
+            runner: macos-15
+            macos_major: "15"
+            developer_dir: /Applications/Xcode_16.4.app/Contents/Developer
+            xcode_version: "Xcode 16.4"
+            sdk_version: "18.5"
+            phone: iPhone 16
+            tablet: iPad (10th generation)
+            runtime: "18.5"
     env:
-      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+      DEVELOPER_DIR: ${{ matrix.developer_dir }}
       NSUnbufferedIO: "YES"
 
     steps:
@@ -141,10 +167,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(xcodebuild -version | sed -n '1p')" = "Xcode 16.4"
-          test "$(xcrun --sdk iphonesimulator --show-sdk-version)" = "18.5"
-          xcrun simctl list devices available | grep -F "iPhone 16 ("
-          xcrun simctl list devices available | grep -F "iPad (10th generation) ("
+          test "$(sw_vers -productVersion | cut -d. -f1)" = \
+            "${{ matrix.macos_major }}"
+          test "$(xcodebuild -version | sed -n '1p')" = \
+            "${{ matrix.xcode_version }}"
+          test "$(xcrun --sdk iphonesimulator --show-sdk-version)" = \
+            "${{ matrix.sdk_version }}"
+          xcrun simctl list devices available \
+            | grep -F "${{ matrix.phone }} ("
+          xcrun simctl list devices available \
+            | grep -F "${{ matrix.tablet }} ("
 
       - name: Lint Swift source
         run: ./Scripts/lint.sh
@@ -222,7 +254,7 @@ jobs:
             -project OTToolkit.xcodeproj \
             -scheme OTToolkit \
             -testPlan OTToolkit \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' \
+            -destination 'platform=iOS Simulator,name=${{ matrix.phone }},OS=${{ matrix.runtime }}' \
             -derivedDataPath "${DERIVED_DATA_PATH}" \
             -resultBundlePath TestResults/iPhone.xcresult \
             CODE_SIGNING_ALLOWED=NO
@@ -234,7 +266,7 @@ jobs:
             -scheme OTToolkit \
             -testPlan OTToolkit \
             -only-testing:OTToolkitUITests \
-            -destination 'platform=iOS Simulator,name=iPad (10th generation),OS=18.5' \
+            -destination 'platform=iOS Simulator,name=${{ matrix.tablet }},OS=${{ matrix.runtime }}' \
             -derivedDataPath "${DERIVED_DATA_PATH}" \
             -resultBundlePath TestResults/iPad.xcresult \
             CODE_SIGNING_ALLOWED=NO
@@ -243,7 +275,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: xcode-result-bundles-${{ github.run_attempt }}
+          name: xcode-result-bundles-${{ matrix.id }}-${{ github.run_attempt }}
           path: TestResults/*.xcresult
           if-no-files-found: ignore
           retention-days: 7
