@@ -1,32 +1,116 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "home.foundation.detail" : {
-      "comment" : "Explains the current state of the early app foundation.",
+    "app.title" : {
+      "comment" : "Application name used in navigation and privacy-safe presentation.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Therapy tools will appear here as they are added."
+            "value" : "OT Toolkit"
           }
         }
       }
     },
-    "home.foundation.status" : {
-      "comment" : "Non-color status that confirms the app foundation is ready.",
+    "child.exit.confirmation.message" : {
+      "comment" : "Explains that leaving child-facing mode does not discard active tool state.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Foundation ready"
+            "value" : "The current tool will stay ready."
+          }
+        }
+      }
+    },
+    "child.exit.confirmation.return" : {
+      "comment" : "Confirmation action that exits child-facing mode.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Return to controls"
+          }
+        }
+      }
+    },
+    "child.exit.confirmation.stay" : {
+      "comment" : "Cancel action that keeps child-facing mode visible.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stay in child view"
+          }
+        }
+      }
+    },
+    "child.exit.confirmation.title" : {
+      "comment" : "Adult exit confirmation heading.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Return to therapist controls?"
+          }
+        }
+      }
+    },
+    "child.exit.hint" : {
+      "comment" : "Accessibility hint for the visible adult exit control.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens a confirmation before returning to therapist controls."
+          }
+        }
+      }
+    },
+    "child.exit.request" : {
+      "comment" : "Visible label for leaving a child-facing presentation.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit child view"
+          }
+        }
+      }
+    },
+    "child.fixture.detail" : {
+      "comment" : "Generic, synthetic child-facing content used only by the UI-test launch fixture.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calm child-facing content appears here."
+          }
+        }
+      }
+    },
+    "child.fixture.title" : {
+      "comment" : "Generic title used only by the child-facing UI-test launch fixture.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Child view"
           }
         }
       }
     },
     "home.subtitle" : {
-      "comment" : "Short product description on the initial launch screen.",
+      "comment" : "Short product description on the tools screen.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -38,13 +122,157 @@
       }
     },
     "home.title" : {
-      "comment" : "App name shown on the initial launch screen.",
+      "comment" : "App name shown on the tools screen.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OT Toolkit"
+          }
+        }
+      }
+    },
+    "navigation.detail.prompt" : {
+      "comment" : "Empty detail heading shown before a tool is selected on regular-width iPad.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a tool"
+          }
+        }
+      }
+    },
+    "navigation.detail.prompt.detail" : {
+      "comment" : "Empty detail guidance shown before a tool is selected on regular-width iPad.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a tool to open it."
+          }
+        }
+      }
+    },
+    "navigation.saved" : {
+      "comment" : "Saved-content navigation section label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved"
+          }
+        }
+      }
+    },
+    "navigation.saved.placeholder" : {
+      "comment" : "Empty-state detail for saved content before persistence features exist.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved boards will appear here."
+          }
+        }
+      }
+    },
+    "navigation.settings" : {
+      "comment" : "Settings navigation section label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "navigation.settings.placeholder" : {
+      "comment" : "Empty-state detail for settings before settings features exist.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings will appear here."
+          }
+        }
+      }
+    },
+    "navigation.tools" : {
+      "comment" : "Tools navigation section label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tools"
+          }
+        }
+      }
+    },
+    "privacy.cover.detail" : {
+      "comment" : "Generic copy shown while app content is hidden from inactive-scene snapshots.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content hidden for privacy."
+          }
+        }
+      }
+    },
+    "privacy.cover.title" : {
+      "comment" : "Privacy-safe app title shown while the scene is inactive.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OT Toolkit"
+          }
+        }
+      }
+    },
+    "tool.visualTimer.placeholder.detail" : {
+      "comment" : "Temporary honest empty state until OTK-011 supplies timer controls.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer controls are coming in the next feature."
+          }
+        }
+      }
+    },
+    "tool.visualTimer.summary" : {
+      "comment" : "Short description on the Visual Timer navigation card.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start a calm visual countdown."
+          }
+        }
+      }
+    },
+    "tool.visualTimer.title" : {
+      "comment" : "Visual Timer tool name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Timer"
           }
         }
       }

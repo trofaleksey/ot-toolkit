@@ -2,7 +2,13 @@ import XCTest
 
 @MainActor
 enum AccessibilityTestSupport {
-    static func launchApplication(usesLargestAccessibilityText: Bool = false) -> XCUIApplication {
+    static func launchApplication(
+        usesLargestAccessibilityText: Bool = false,
+        forcesCompactNavigation: Bool = false,
+        enablesLayoutToggleFixture: Bool = false,
+        forcesPrivacyCover: Bool = false,
+        startsInChildFacingFixture: Bool = false
+    ) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = [
             "-AppleLanguages", "(en)",
@@ -11,6 +17,18 @@ enum AccessibilityTestSupport {
         ]
         if usesLargestAccessibilityText {
             app.launchArguments.append("-ui-test-largest-accessibility-text")
+        }
+        if forcesCompactNavigation {
+            app.launchArguments.append("-ui-test-force-compact-navigation")
+        }
+        if enablesLayoutToggleFixture {
+            app.launchArguments.append("-ui-test-enable-layout-toggle-fixture")
+        }
+        if forcesPrivacyCover {
+            app.launchArguments.append("-ui-test-force-privacy-cover")
+        }
+        if startsInChildFacingFixture {
+            app.launchArguments.append("-ui-test-start-child-facing-fixture")
         }
         app.launch()
         return app
@@ -42,6 +60,17 @@ enum AccessibilityTestSupport {
             file: file,
             line: line
         )
+    }
+
+    static func assertSuppressed(
+        _ element: XCUIElement,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        XCTAssertFalse(element.isHittable, file: file, line: line)
+        if element.exists {
+            XCTAssertFalse(element.isEnabled, file: file, line: line)
+        }
     }
 
     static func assertFitsHorizontally(

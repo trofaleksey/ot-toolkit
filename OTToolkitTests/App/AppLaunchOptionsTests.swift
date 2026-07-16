@@ -22,6 +22,23 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertTrue(options.usesLargestAccessibilityText)
     }
 
+    func testAdaptiveShellUITestArgumentsAreRecognized() {
+        let options = AppLaunchOptions(
+            arguments: [
+                "OTToolkit",
+                "-ui-test-force-compact-navigation",
+                "-ui-test-enable-layout-toggle-fixture",
+                "-ui-test-force-privacy-cover",
+                "-ui-test-start-child-facing-fixture",
+            ]
+        )
+
+        XCTAssertTrue(options.forcesCompactNavigation)
+        XCTAssertTrue(options.enablesLayoutToggleFixture)
+        XCTAssertTrue(options.forcesPrivacyCover)
+        XCTAssertTrue(options.startsInChildFacingFixture)
+    }
+
     func testDisableAnimationsArgumentRequiresAnExactMatch() {
         let options = AppLaunchOptions(arguments: ["OTToolkit", "--disable-animations"])
 
@@ -32,5 +49,26 @@ final class AppLaunchOptionsTests: XCTestCase {
         let options = AppLaunchOptions(arguments: ["OTToolkit"])
 
         XCTAssertFalse(options.usesLargestAccessibilityText)
+        XCTAssertFalse(options.forcesCompactNavigation)
+        XCTAssertFalse(options.enablesLayoutToggleFixture)
+        XCTAssertFalse(options.forcesPrivacyCover)
+        XCTAssertFalse(options.startsInChildFacingFixture)
+    }
+
+    func testAdaptiveShellUITestArgumentsRequireExactMatches() {
+        let options = AppLaunchOptions(
+            arguments: [
+                "OTToolkit",
+                "--ui-test-force-compact-navigation",
+                "--ui-test-enable-layout-toggle-fixture",
+                "--ui-test-force-privacy-cover",
+                "--ui-test-start-child-facing-fixture",
+            ]
+        )
+
+        XCTAssertFalse(options.forcesCompactNavigation)
+        XCTAssertFalse(options.enablesLayoutToggleFixture)
+        XCTAssertFalse(options.forcesPrivacyCover)
+        XCTAssertFalse(options.startsInChildFacingFixture)
     }
 }
