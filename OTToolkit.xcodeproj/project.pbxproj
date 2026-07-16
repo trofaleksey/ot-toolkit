@@ -15,6 +15,9 @@
 		C10000000000000000000006 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000006 /* PrivacyInfo.xcprivacy */; };
 		C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000007 /* AppLaunchOptionsTests.swift */; };
 		C10000000000000000000008 /* AppLaunchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000008 /* AppLaunchUITests.swift */; };
+		C10000000000000000000009 /* VisualTimerClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000A /* VisualTimerClock.swift */; };
+		C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000B /* VisualTimerStateMachine.swift */; };
+		C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000C /* VisualTimerStateMachineTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		B10000000000000000000007 /* AppLaunchOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchOptionsTests.swift; sourceTree = "<group>"; };
 		B10000000000000000000008 /* AppLaunchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchUITests.swift; sourceTree = "<group>"; };
 		B10000000000000000000009 /* OTToolkit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OTToolkit.xctestplan; sourceTree = "<group>"; };
+		B1000000000000000000000A /* VisualTimerClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerClock.swift; sourceTree = "<group>"; };
+		B1000000000000000000000B /* VisualTimerStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerStateMachine.swift; sourceTree = "<group>"; };
+		B1000000000000000000000C /* VisualTimerStateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerStateMachineTests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000007 /* Home */,
+				A1000000000000000000000D /* VisualTimer */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -128,6 +135,23 @@
 				B10000000000000000000003 /* HomeView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		A1000000000000000000000D /* VisualTimer */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000000E /* Domain */,
+			);
+			path = VisualTimer;
+			sourceTree = "<group>";
+		};
+		A1000000000000000000000E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B1000000000000000000000A /* VisualTimerClock.swift */,
+				B1000000000000000000000B /* VisualTimerStateMachine.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000008 /* Resources */ = {
@@ -144,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000000A /* App */,
+				A1000000000000000000000F /* Features */,
 			);
 			path = OTToolkitTests;
 			sourceTree = "<group>";
@@ -154,6 +179,30 @@
 				B10000000000000000000007 /* AppLaunchOptionsTests.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		A1000000000000000000000F /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000010 /* VisualTimer */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000010 /* VisualTimer */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000011 /* Domain */,
+			);
+			path = VisualTimer;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000011 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B1000000000000000000000C /* VisualTimerStateMachineTests.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		A1000000000000000000000B /* OTToolkitUITests */ = {
@@ -306,6 +355,8 @@
 				C10000000000000000000001 /* OTToolkitApp.swift in Sources */,
 				C10000000000000000000002 /* AppLaunchOptions.swift in Sources */,
 				C10000000000000000000003 /* HomeView.swift in Sources */,
+				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
+				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */,
+				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
