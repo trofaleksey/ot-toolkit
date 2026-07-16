@@ -14,9 +14,23 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertTrue(options.disablesAnimations)
     }
 
+    func testLargestAccessibilityTextArgumentIsRecognized() {
+        let options = AppLaunchOptions(
+            arguments: ["OTToolkit", "-ui-test-largest-accessibility-text"]
+        )
+
+        XCTAssertTrue(options.usesLargestAccessibilityText)
+    }
+
     func testDisableAnimationsArgumentRequiresAnExactMatch() {
         let options = AppLaunchOptions(arguments: ["OTToolkit", "--disable-animations"])
 
         XCTAssertFalse(options.disablesAnimations)
+    }
+
+    func testAccessibilityOverridesRemainDisabledByDefault() {
+        let options = AppLaunchOptions(arguments: ["OTToolkit"])
+
+        XCTAssertFalse(options.usesLargestAccessibilityText)
     }
 }

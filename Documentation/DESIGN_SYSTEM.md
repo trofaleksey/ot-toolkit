@@ -118,6 +118,9 @@ Future imported media follows PRIVACY.md and ADR-0003: re-encoding, metadata rem
 
 All custom illustrations, icons, sounds, and fonts require documented source and license provenance. OT Toolkit uses an original timer visual language and does not reproduce another product's distinctive assets or trade dress.
 
+Record shipped asset origin, ownership, licensing, modifications, and accessibility intent in
+`ASSET_PROVENANCE.md` before release.
+
 Informative illustrations and symbols have localized accessibility labels derived from their meaning, never from asset filenames. Decorative images and redundant symbols are hidden from assistive technologies. Board image/label combinations are tested so VoiceOver neither omits meaning nor repeats the same label.
 
 ## Accessibility release matrix

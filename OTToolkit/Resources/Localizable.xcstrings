@@ -1,6 +1,42 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "home.foundation.detail" : {
+      "comment" : "Explains the current state of the early app foundation.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Therapy tools will appear here as they are added."
+          }
+        }
+      }
+    },
+    "home.foundation.status" : {
+      "comment" : "Non-color status that confirms the app foundation is ready.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foundation ready"
+          }
+        }
+      }
+    },
+    "home.subtitle" : {
+      "comment" : "Short product description on the initial launch screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calm, offline tools for therapy sessions."
+          }
+        }
+      }
+    },
     "home.title" : {
       "comment" : "App name shown on the initial launch screen.",
       "extractionState" : "manual",
