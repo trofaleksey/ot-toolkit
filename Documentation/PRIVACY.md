@@ -84,6 +84,10 @@ No microphone, location, HealthKit, contacts, or tracking permission is allowed 
 
 Regulation Cards provide therapist-reviewed reference content, not individualized treatment recommendations. Pick for Me operates only within therapist-selected filters. CONTENT_GOVERNANCE.md defines the safety, provenance, and approval gate.
 
+## Privacy manifest baseline
+
+The OTK-001 bootstrap collects no data, performs no tracking, and directly uses no required-reason API. Its PrivacyInfo.xcprivacy declares `NSPrivacyTracking` as false and omits unused data-collection and accessed-API declarations. OTK-004 must re-audit the manifest when SwiftData, AppStorage/UserDefaults, file timestamps, or other persistence APIs are introduced; later tickets repeat the review whenever the implemented data flow or API surface changes.
+
 ## Public disclosures and release gate
 
 Before TestFlight use with real sessions or App Store submission:

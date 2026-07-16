@@ -7,6 +7,7 @@ xcuserdata/
 
 # Build and test output
 DerivedData/
+TestResults/
 build/
 *.xcresult
 *.moved-aside

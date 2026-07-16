@@ -1,4 +1,4 @@
-name: Repository checks
+name: CI
 
 on:
   push:
@@ -11,11 +11,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: repository-checks-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  planning-baseline:
+  repository-policy:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 
@@ -25,30 +25,39 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Verify required planning documents
+      - name: Verify required project files
         shell: bash
         run: |
           set -euo pipefail
           required=(
             .githooks/pre-push
+            .swift-format
             AGENTS.md
-            README.md
             CONTRIBUTING.md
-            SECURITY.md
-            Documentation/PRODUCT.md
-            Documentation/ROADMAP.md
-            Documentation/ARCHITECTURE.md
-            Documentation/DESIGN_SYSTEM.md
-            Documentation/PRIVACY.md
-            Documentation/VALIDATION_PLAN.md
-            Documentation/CONTENT_GOVERNANCE.md
             Documentation/ADRs/0001-delivery-scope-and-platform.md
             Documentation/ADRs/0002-timer-lifecycle.md
             Documentation/ADRs/0003-local-data-and-media.md
+            Documentation/ARCHITECTURE.md
+            Documentation/CONTENT_GOVERNANCE.md
+            Documentation/DESIGN_SYSTEM.md
+            Documentation/PRIVACY.md
+            Documentation/PRODUCT.md
+            Documentation/ROADMAP.md
+            Documentation/VALIDATION_PLAN.md
+            OTToolkit.xcodeproj/project.pbxproj
+            OTToolkit.xcodeproj/xcshareddata/xcschemes/OTToolkit.xcscheme
+            OTToolkit.xctestplan
+            OTToolkit/Resources/PrivacyInfo.xcprivacy
+            README.md
+            Scripts/format.sh
+            Scripts/lint.sh
+            SECURITY.md
           )
           for path in "${required[@]}"; do
             test -s "${path}"
           done
+          test -x Scripts/format.sh
+          test -x Scripts/lint.sh
 
       - name: Verify local main-push guard
         shell: bash
@@ -100,16 +109,132 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if git grep -nI -E '[[:blank:]]+$' -- '*.md' '*.yml' '*.yaml'; then
+          if git grep -nI -E '[[:blank:]]+$' -- \
+            '*.md' '*.pbxproj' '*.plist' '*.sh' '*.swift' \
+            '*.xcprivacy' '*.xcscheme' '*.xcstrings' '*.xctestplan' '*.yml' '*.yaml'; then
             echo "::error::Trailing whitespace found."
             exit 1
           fi
 
-      - name: Require real Xcode CI with the first Swift source
+  build-and-test:
+    needs: repository-policy
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
+      DERIVED_DATA_PATH: ${{ runner.temp }}/OTToolkitDerivedData
+      NSUnbufferedIO: "YES"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Verify pinned toolchain and destinations
         shell: bash
         run: |
           set -euo pipefail
-          if find . -type f -name '*.swift' -print -quit | grep -q .; then
-            echo "::error::OTK-001 must replace this planning-only workflow with pinned macOS/Xcode CI in the same change that adds Swift source."
+          test "$(xcodebuild -version | sed -n '1p')" = "Xcode 16.4"
+          test "$(xcrun --sdk iphonesimulator --show-sdk-version)" = "18.5"
+          xcrun simctl list devices available | grep -F "iPhone 16 ("
+          xcrun simctl list devices available | grep -F "iPad (10th generation) ("
+
+      - name: Lint Swift source
+        run: ./Scripts/lint.sh
+
+      - name: Verify project and privacy settings
+        shell: bash
+        run: |
+          set -euo pipefail
+          plutil -lint OTToolkit/Resources/PrivacyInfo.xcprivacy
+          test "$(/usr/libexec/PlistBuddy -c 'Print :NSPrivacyTracking' \
+            OTToolkit/Resources/PrivacyInfo.xcprivacy)" = "false"
+
+          settings=$(xcodebuild \
+            -project OTToolkit.xcodeproj \
+            -scheme OTToolkit \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "${DERIVED_DATA_PATH}" \
+            -showBuildSettings)
+          grep -F "IPHONEOS_DEPLOYMENT_TARGET = 18.0" <<<"${settings}"
+          grep -F "SWIFT_VERSION = 6.0" <<<"${settings}"
+          grep -F "TARGETED_DEVICE_FAMILY = 1,2" <<<"${settings}"
+
+          if find OTToolkit -type f -name '*.entitlements' -print -quit | grep -q .; then
+            echo "::error::OTK-001 must not add an entitlements file."
             exit 1
           fi
+
+          if git grep -nE \
+            'SystemCapabilities|XCRemoteSwiftPackageReference|XCSwiftPackageProductDependency|CODE_SIGN_ENTITLEMENTS|com\.apple\.developer\.|NS[A-Za-z]+UsageDescription' \
+            -- OTToolkit.xcodeproj OTToolkit; then
+            echo "::error::A prohibited bootstrap capability or permission was found."
+            exit 1
+          fi
+
+      - name: Prepare result bundles
+        run: mkdir -p TestResults
+
+      - name: Build Debug
+        run: |
+          xcodebuild build \
+            -project OTToolkit.xcodeproj \
+            -scheme OTToolkit \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "${DERIVED_DATA_PATH}" \
+            -resultBundlePath TestResults/DebugBuild.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Verify bundled privacy manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          manifest="${DERIVED_DATA_PATH}/Build/Products/Debug-iphonesimulator/OTToolkit.app/PrivacyInfo.xcprivacy"
+          test -f "${manifest}"
+          plutil -lint "${manifest}"
+
+      - name: Build Release
+        run: |
+          xcodebuild build \
+            -project OTToolkit.xcodeproj \
+            -scheme OTToolkit \
+            -configuration Release \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "${DERIVED_DATA_PATH}" \
+            -resultBundlePath TestResults/ReleaseBuild.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Test iPhone
+        run: |
+          xcodebuild test \
+            -project OTToolkit.xcodeproj \
+            -scheme OTToolkit \
+            -testPlan OTToolkit \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' \
+            -derivedDataPath "${DERIVED_DATA_PATH}" \
+            -resultBundlePath TestResults/iPhone.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Test iPad critical flow
+        run: |
+          xcodebuild test \
+            -project OTToolkit.xcodeproj \
+            -scheme OTToolkit \
+            -testPlan OTToolkit \
+            -only-testing:OTToolkitUITests \
+            -destination 'platform=iOS Simulator,name=iPad (10th generation),OS=18.5' \
+            -derivedDataPath "${DERIVED_DATA_PATH}" \
+            -resultBundlePath TestResults/iPad.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Upload failure result bundles
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: xcode-result-bundles-${{ github.run_attempt }}
+          path: TestResults/*.xcresult
+          if-no-files-found: ignore
+          retention-days: 7
