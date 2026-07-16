@@ -23,7 +23,7 @@ Goal: create the smallest testable universal app and remove architectural uncert
 | OTK-003 | Design tokens and accessibility test harness | OTK-001 |
 | OTK-004 | Store/container harness, file protection, explicit no-CloudKit configuration, reset, backup exclusion, and Privacy Manifest review | OTK-001 |
 | OTK-005 | Recruit five beta OTs and confirm three Gate A participants | none |
-| OTK-006 | Repository governance, required planning check, private security channel, and ownership rules | none |
+| OTK-006 | Solo-maintainer governance for private GitHub Free: local main-push guard, manual green-CI/squash workflow, ownership, and reporting handoff | none |
 
 Exit gate:
 
@@ -150,7 +150,16 @@ Recommended milestones mirror sections 0–5. Recommended labels:
 - area: timer, area: boards, area: persistence, area: accessibility, area: privacy, area: content
 - status: blocked, status: needs-validation
 
-A GitHub Project may show Status, Priority, Area, Risk, and Milestone. OTK-006 requires the planning check on main immediately after the initial push, disables force pushes, enables private vulnerability reporting, and records interim ownership. OTK-001 replaces the planning check with required Xcode CI. Secret scanning and push protection should remain enabled.
+A GitHub Project may show Status, Priority, Area, Risk, and Milestone.
+
+The repository remains private on GitHub Free. That plan does not provide server-enforced protected branches or rulesets for a private repository, so OTK-006 records the limitation and uses compensating solo-maintainer controls instead of blocking delivery:
+
+1. Inspect any existing hook path, then run `git config --local core.hooksPath .githooks` in every compatible clone so the versioned pre-push hook rejects any update or deletion targeting remote `main`.
+2. Work only on `codex/otk-XXX-short-description` branches and open a pull request for every change.
+3. Wait for all available CI checks to pass, inspect the final diff, and squash-merge through GitHub.
+4. Keep squash-only merging and automatic merged-branch deletion enabled; keep CODEOWNERS, issue/PR templates, milestones, Dependabot alerts, and automated security updates maintained.
+
+The local hook prevents accidents but is not a security boundary and can be bypassed with `--no-verify`. Server-enforced branch rules remain out of scope while the repository is both private and on GitHub Free. OTK-001 replaces the planning workflow with pinned Xcode CI. The pre-beta security path is the detail-free collaborator fallback in SECURITY.md; OTK-041 owns a monitored direct fallback before TestFlight. Secret scanning and push protection should remain enabled when GitHub makes them available to the repository.
 
 ## Principal risks
 
