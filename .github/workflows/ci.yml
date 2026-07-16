@@ -1,0 +1,68 @@
+name: Repository checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  planning-baseline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Verify required planning documents
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            AGENTS.md
+            README.md
+            CONTRIBUTING.md
+            SECURITY.md
+            Documentation/PRODUCT.md
+            Documentation/ROADMAP.md
+            Documentation/ARCHITECTURE.md
+            Documentation/DESIGN_SYSTEM.md
+            Documentation/PRIVACY.md
+            Documentation/VALIDATION_PLAN.md
+            Documentation/CONTENT_GOVERNANCE.md
+            Documentation/ADRs/0001-delivery-scope-and-platform.md
+            Documentation/ADRs/0002-timer-lifecycle.md
+            Documentation/ADRs/0003-local-data-and-media.md
+          )
+          for path in "${required[@]}"; do
+            test -s "${path}"
+          done
+
+      - name: Reject trailing whitespace
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -nI -E '[[:blank:]]+$' -- '*.md' '*.yml' '*.yaml'; then
+            echo "::error::Trailing whitespace found."
+            exit 1
+          fi
+
+      - name: Require real Xcode CI with the first Swift source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -type f -name '*.swift' -print -quit | grep -q .; then
+            echo "::error::OTK-001 must replace this planning-only workflow with pinned macOS/Xcode CI in the same change that adds Swift source."
+            exit 1
+          fi

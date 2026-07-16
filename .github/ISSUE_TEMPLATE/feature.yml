@@ -1,0 +1,66 @@
+name: Product or engineering ticket
+description: Propose a bounded OT Toolkit outcome.
+title: ""
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include real child or patient data, screenshots, labels, or clinical narratives. A maintainer assigns any OTK roadmap ID; the GitHub issue number remains the closing reference.
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and user story
+      description: Explain the problem and complete the therapist user story.
+      placeholder: As a pediatric occupational therapist, I want ... so that ...
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Required behavior, screens, persistence, accessibility, failure states, and explicit exclusions.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and decisions
+      description: Link blocking issues and ADRs; identify assumptions needing a decision.
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data, privacy, permissions, and safety
+      description: Cover classification, storage, migration, deletion, backup, reset, permissions, and clinical-content review.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Use Given/When/Then statements.
+      placeholder: |
+        1. Given ...
+           When ...
+           Then ...
+    validations:
+      required: true
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing and manual validation
+      description: List domain, persistence, iPhone/iPad UI, accessibility, lifecycle, and real-device checks.
+    validations:
+      required: true
+  - type: checkboxes
+    id: readiness
+    attributes:
+      label: Ready checklist
+      options:
+        - label: Scope is bounded and out-of-scope behavior is explicit.
+          required: true
+        - label: Relevant privacy, accessibility, persistence, and clinical-content risks are addressed.
+          required: true
+        - label: No real child or patient information is included.
+          required: true
