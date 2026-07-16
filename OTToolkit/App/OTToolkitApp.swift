@@ -11,13 +11,23 @@ struct OTToolkitApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            rootView
                 .transaction { transaction in
                     if launchOptions.disablesAnimations {
                         transaction.animation = nil
                         transaction.disablesAnimations = true
                     }
                 }
+        }
+    }
+
+    @ViewBuilder
+    private var rootView: some View {
+        if launchOptions.usesLargestAccessibilityText {
+            HomeView()
+                .dynamicTypeSize(.accessibility5)
+        } else {
+            HomeView()
         }
     }
 }

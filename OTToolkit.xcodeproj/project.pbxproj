@@ -18,6 +18,16 @@
 		C10000000000000000000009 /* VisualTimerClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000A /* VisualTimerClock.swift */; };
 		C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000B /* VisualTimerStateMachine.swift */; };
 		C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000C /* VisualTimerStateMachineTests.swift */; };
+		C1000000000000000000000C /* OTSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000D /* OTSpacing.swift */; };
+		C1000000000000000000000D /* OTRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000E /* OTRadius.swift */; };
+		C1000000000000000000000E /* OTTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000000F /* OTTypography.swift */; };
+		C1000000000000000000000F /* OTColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000010 /* OTColor.swift */; };
+		C10000000000000000000010 /* OTInteractiveTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000011 /* OTInteractiveTarget.swift */; };
+		C10000000000000000000011 /* OTAccessibilityPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000012 /* OTAccessibilityPreferences.swift */; };
+		C10000000000000000000012 /* DesignTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000013 /* DesignTokenTests.swift */; };
+		C10000000000000000000013 /* SemanticColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000014 /* SemanticColorTests.swift */; };
+		C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000015 /* AccessibilityPreferencesTests.swift */; };
+		C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000016 /* AccessibilityTestSupport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +60,16 @@
 		B1000000000000000000000A /* VisualTimerClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerClock.swift; sourceTree = "<group>"; };
 		B1000000000000000000000B /* VisualTimerStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerStateMachine.swift; sourceTree = "<group>"; };
 		B1000000000000000000000C /* VisualTimerStateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerStateMachineTests.swift; sourceTree = "<group>"; };
+		B1000000000000000000000D /* OTSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTSpacing.swift; sourceTree = "<group>"; };
+		B1000000000000000000000E /* OTRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTRadius.swift; sourceTree = "<group>"; };
+		B1000000000000000000000F /* OTTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTTypography.swift; sourceTree = "<group>"; };
+		B10000000000000000000010 /* OTColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTColor.swift; sourceTree = "<group>"; };
+		B10000000000000000000011 /* OTInteractiveTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTInteractiveTarget.swift; sourceTree = "<group>"; };
+		B10000000000000000000012 /* OTAccessibilityPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTAccessibilityPreferences.swift; sourceTree = "<group>"; };
+		B10000000000000000000013 /* DesignTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokenTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000014 /* SemanticColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticColorTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000015 /* AccessibilityPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityPreferencesTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000016 /* AccessibilityTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTestSupport.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000005 /* App */,
+				A10000000000000000000012 /* Core */,
 				A10000000000000000000006 /* Features */,
 				A10000000000000000000008 /* Resources */,
 			);
@@ -164,10 +185,40 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		A10000000000000000000012 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000013 /* Accessibility */,
+				A10000000000000000000014 /* DesignSystem */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000013 /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000012 /* OTAccessibilityPreferences.swift */,
+			);
+			path = Accessibility;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000014 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000010 /* OTColor.swift */,
+				B10000000000000000000011 /* OTInteractiveTarget.swift */,
+				B1000000000000000000000E /* OTRadius.swift */,
+				B1000000000000000000000D /* OTSpacing.swift */,
+				B1000000000000000000000F /* OTTypography.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		A10000000000000000000009 /* OTToolkitTests */ = {
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000000A /* App */,
+				A10000000000000000000015 /* Core */,
 				A1000000000000000000000F /* Features */,
 			);
 			path = OTToolkitTests;
@@ -205,10 +256,37 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		A10000000000000000000015 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000016 /* Accessibility */,
+				A10000000000000000000017 /* DesignSystem */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000016 /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000015 /* AccessibilityPreferencesTests.swift */,
+			);
+			path = Accessibility;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000017 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000013 /* DesignTokenTests.swift */,
+				B10000000000000000000014 /* SemanticColorTests.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		A1000000000000000000000B /* OTToolkitUITests */ = {
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000000C /* CriticalFlows */,
+				A10000000000000000000018 /* Support */,
 			);
 			path = OTToolkitUITests;
 			sourceTree = "<group>";
@@ -219,6 +297,14 @@
 				B10000000000000000000008 /* AppLaunchUITests.swift */,
 			);
 			path = CriticalFlows;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000018 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000016 /* AccessibilityTestSupport.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,6 +440,12 @@
 			files = (
 				C10000000000000000000001 /* OTToolkitApp.swift in Sources */,
 				C10000000000000000000002 /* AppLaunchOptions.swift in Sources */,
+				C10000000000000000000011 /* OTAccessibilityPreferences.swift in Sources */,
+				C1000000000000000000000F /* OTColor.swift in Sources */,
+				C10000000000000000000010 /* OTInteractiveTarget.swift in Sources */,
+				C1000000000000000000000D /* OTRadius.swift in Sources */,
+				C1000000000000000000000C /* OTSpacing.swift in Sources */,
+				C1000000000000000000000E /* OTTypography.swift in Sources */,
 				C10000000000000000000003 /* HomeView.swift in Sources */,
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
@@ -365,6 +457,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */,
+				C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */,
+				C10000000000000000000012 /* DesignTokenTests.swift in Sources */,
+				C10000000000000000000013 /* SemanticColorTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C10000000000000000000008 /* AppLaunchUITests.swift in Sources */,
+				C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
