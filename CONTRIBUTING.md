@@ -48,7 +48,9 @@ Never push directly to `main`, force-push it, or delete it. These are maintainer
 
 ## Validation
 
-For documentation-only work, run the repository checks listed in the pull request. For app changes, run the formatter/linter configured by OTK-001 plus the relevant xcodebuild test command. Include iPhone and iPad UI coverage for critical flows and record manual assistive-technology checks.
+For documentation-only work, run the repository checks listed in the pull request. For Swift changes, run `./Scripts/format.sh`, `./Scripts/lint.sh`, and the relevant shared `OTToolkit` test-plan invocation. Include iPhone and iPad UI coverage for critical flows and record manual assistive-technology checks.
+
+Xcode 16.4 and iOS 18.5 in GitHub CI are authoritative. A newer local Xcode run is useful supplemental validation but does not replace the pinned check. Unsigned simulator builds use `CODE_SIGNING_ALLOWED=NO`; signing and distribution configuration remain release work.
 
 ## Sensitive reports
 

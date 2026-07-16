@@ -1,10 +1,10 @@
 # OT Toolkit
 
-OT Toolkit is a planned native iPhone and iPad toolkit for pediatric occupational therapists. It prioritizes fast in-session support, calm child-facing visuals, accessibility, offline reliability, and minimal collection of sensitive data.
+OT Toolkit is a native iPhone and iPad toolkit for pediatric occupational therapists. It prioritizes fast in-session support, calm child-facing visuals, accessibility, offline reliability, and minimal collection of sensitive data.
 
 ## Status
 
-Planning baseline. The product and delivery plan have been reviewed; no Xcode project or app code exists yet. The first implementation issue is OTK-001, which will create the universal app, test targets, shared scheme/test plan, and real Xcode CI.
+Foundation baseline. The repository contains a universal SwiftUI app target, unit and UI-test targets, a shared scheme/test plan, and pinned Xcode CI. Feature implementation begins with the adaptive shell and Visual Timer milestones in the roadmap.
 
 ## Core private beta
 
@@ -32,6 +32,30 @@ Choice Board is gated behind core validation. Regulation Cards are gated behind 
 GitHub Issues are the active backlog and should use OTK-XXX identifiers. Milestones mirror ROADMAP.md. Pull requests link a primary issue and must not contain real child or patient information.
 
 The repository should remain private until ownership and licensing for source code, illustrations, sounds, and clinical content are explicitly decided.
+
+## Development
+
+Xcode 16.4 with the iOS 18.5 simulator is the authoritative CI baseline. Newer Xcode versions may be used locally when the same change passes pinned CI.
+
+Format and lint Swift source with the Apple toolchain:
+
+```sh
+./Scripts/format.sh
+./Scripts/lint.sh
+```
+
+Run the shared test plan with `xcodebuild`:
+
+```sh
+xcodebuild test \
+  -project OTToolkit.xcodeproj \
+  -scheme OTToolkit \
+  -testPlan OTToolkit \
+  -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' \
+  CODE_SIGNING_ALLOWED=NO
+```
+
+Use an installed local simulator name and OS when running a newer Xcode version. CI also runs the critical UI smoke flow on iPad and unsigned Debug and Release builds.
 
 ## Privacy reminder
 

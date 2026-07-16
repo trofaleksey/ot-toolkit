@@ -16,8 +16,9 @@ Shared abstractions are extracted only after a second real consumer demonstrates
 - Project: one OTToolkit.xcodeproj with app, unit-test, and UI-test targets.
 - Shared artifacts: OTToolkit scheme and OTToolkit test plan.
 - Language scope: English-only v1 with all user-facing strings in Localizable.xcstrings.
+- App Intents metadata extraction: disabled until an approved feature introduces AppIntents.
 
-Newer Xcode versions may be used locally only when the project still passes the pinned CI baseline. Changes to the deployment target or toolchain require an ADR and matching CI update.
+Newer Xcode versions may be used locally only when the project still passes the pinned CI baseline. Changes to the deployment target or toolchain require an ADR and matching CI update. A future App Intents feature must remove the metadata-extraction override and its bootstrap guard in the same change.
 
 ## Project structure
 
@@ -149,7 +150,12 @@ Child-facing state is never communicated through color, sound, haptics, or motio
 - Critical UI smoke flows run on iPhone and iPad.
 - Automated accessibility audits supplement, but do not replace, the manual release matrix.
 
-The canonical CI command will be installed by OTK-001 after the Xcode project and shared test plan exist:
+The canonical formatter commands use the Apple toolchain bundled with the selected Xcode:
+
+    ./Scripts/format.sh
+    ./Scripts/lint.sh
+
+The canonical iPhone CI command runs the shared unit and UI test plan:
 
     xcodebuild test \
       -project OTToolkit.xcodeproj \
@@ -158,7 +164,7 @@ The canonical CI command will be installed by OTK-001 after the Xcode project an
       -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5' \
       CODE_SIGNING_ALLOWED=NO
 
-Critical iPad UI smoke tests run in a second invocation:
+Critical iPad UI smoke tests run through the same plan in a second invocation:
 
     xcodebuild test \
       -project OTToolkit.xcodeproj \
@@ -168,7 +174,7 @@ Critical iPad UI smoke tests run in a second invocation:
       -destination 'platform=iOS Simulator,name=iPad (10th generation),OS=18.5' \
       CODE_SIGNING_ALLOWED=NO
 
-CI uses warnings-as-errors for project code, iPhone and iPad destinations, a result bundle on failures, read-only permissions, cancellation of superseded pull-request runs, and a bounded timeout. OTK-001/OTK-004 also determine and test any required-reason API declarations in PrivacyInfo.xcprivacy. No build workflow is presented as passing until the project exists.
+CI also performs unsigned Debug and Release simulator builds. It uses warnings-as-errors for project code, iPhone and iPad destinations, result bundles on failures, read-only permissions, cancellation of superseded pull-request runs, and a bounded timeout. OTK-001 establishes the no-tracking manifest with no required-reason declarations; OTK-004 re-audits it when persistence and preferences are introduced.
 
 ## Decision records
 

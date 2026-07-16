@@ -1,0 +1,39 @@
+{
+  "configurations" : [
+    {
+      "id" : "01DDE8EF-6BCB-41E5-B4E1-94487DC64462",
+      "name" : "Default",
+      "options" : {
+        "language" : "en",
+        "region" : "US"
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:OTToolkit.xcodeproj",
+      "identifier" : "E10000000000000000000001",
+      "name" : "OTToolkit"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:OTToolkit.xcodeproj",
+        "identifier" : "E10000000000000000000002",
+        "name" : "OTToolkitTests"
+      }
+    },
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:OTToolkit.xcodeproj",
+        "identifier" : "E10000000000000000000003",
+        "name" : "OTToolkitUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

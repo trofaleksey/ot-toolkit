@@ -10,7 +10,7 @@ Work in vertical slices and keep only one feature implementation in progress unl
 
 ## Current status
 
-The repository is at planning baseline. No Xcode project or application code exists yet. OTK-001 must make the first green app build; the documentation workflow is not a substitute for an Xcode test run.
+The repository has a universal Xcode foundation with app, unit-test, and UI-test targets plus pinned CI. OTK-001 establishes the first green build/test baseline; later milestone tickets own navigation, design tokens, persistence, and feature behavior.
 
 ## Milestone 0 — Foundation
 
