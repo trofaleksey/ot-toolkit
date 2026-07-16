@@ -136,6 +136,7 @@ jobs:
             phone: iPhone 17
             tablet: iPad (A16)
             runtime: "26.5"
+            runtime_identifier: com.apple.CoreSimulator.SimRuntime.iOS-26-5
           - name: Xcode 16.4 / iOS 18.5 compatibility
             id: ios-18-compatibility
             runner: macos-15
@@ -146,6 +147,7 @@ jobs:
             phone: iPhone 16
             tablet: iPad (10th generation)
             runtime: "18.5"
+            runtime_identifier: com.apple.CoreSimulator.SimRuntime.iOS-18-5
     env:
       DEVELOPER_DIR: ${{ matrix.developer_dir }}
       NSUnbufferedIO: "YES"
@@ -173,10 +175,16 @@ jobs:
             "${{ matrix.xcode_version }}"
           test "$(xcrun --sdk iphonesimulator --show-sdk-version)" = \
             "${{ matrix.sdk_version }}"
-          xcrun simctl list devices available \
-            | grep -F "${{ matrix.phone }} ("
-          xcrun simctl list devices available \
-            | grep -F "${{ matrix.tablet }} ("
+          device_inventory=$(xcrun simctl list --json devices available)
+          jq -e \
+            --arg runtime "${{ matrix.runtime_identifier }}" \
+            --arg phone "${{ matrix.phone }}" \
+            --arg tablet "${{ matrix.tablet }}" \
+            '
+              (.devices[$runtime] // []) as $devices
+              | any($devices[]; .name == $phone and .isAvailable)
+                and any($devices[]; .name == $tablet and .isAvailable)
+            ' <<<"${device_inventory}" >/dev/null
 
       - name: Lint Swift source
         run: ./Scripts/lint.sh
@@ -254,7 +262,7 @@ jobs:
             -project OTToolkit.xcodeproj \
             -scheme OTToolkit \
             -testPlan OTToolkit \
-            -destination 'platform=iOS Simulator,name=${{ matrix.phone }},OS=${{ matrix.runtime }}' \
+            -destination 'platform=iOS Simulator,arch=arm64,name=${{ matrix.phone }},OS=${{ matrix.runtime }}' \
             -derivedDataPath "${DERIVED_DATA_PATH}" \
             -resultBundlePath TestResults/iPhone.xcresult \
             CODE_SIGNING_ALLOWED=NO
@@ -266,7 +274,7 @@ jobs:
             -scheme OTToolkit \
             -testPlan OTToolkit \
             -only-testing:OTToolkitUITests \
-            -destination 'platform=iOS Simulator,name=${{ matrix.tablet }},OS=${{ matrix.runtime }}' \
+            -destination 'platform=iOS Simulator,arch=arm64,name=${{ matrix.tablet }},OS=${{ matrix.runtime }}' \
             -derivedDataPath "${DERIVED_DATA_PATH}" \
             -resultBundlePath TestResults/iPad.xcresult \
             CODE_SIGNING_ALLOWED=NO

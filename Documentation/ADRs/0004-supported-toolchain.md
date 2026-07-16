@@ -29,6 +29,6 @@ Running the full workflow twice increases macOS CI time and cost. Exact runner p
 
 - [Apple Xcode support](https://developer.apple.com/support/xcode/)
 - [Apple SDK minimum requirements](https://developer.apple.com/news/upcoming-requirements/)
-- [GitHub macOS 26 runner image](https://github.com/actions/runner-images/blob/main/images/macos/macos-26-Readme.md)
+- [GitHub macOS 26 runner image](https://github.com/actions/runner-images/blob/main/images/macos/macos-26-arm64-Readme.md)
 - [GitHub macOS 15 runner image](https://github.com/actions/runner-images/blob/main/images/macos/macos-15-arm64-Readme.md)
 - GitHub issue #29 (OTK-007)
