@@ -165,8 +165,11 @@ jobs:
             -derivedDataPath "${DERIVED_DATA_PATH}" \
             -showBuildSettings)
           grep -F "IPHONEOS_DEPLOYMENT_TARGET = 18.0" <<<"${settings}"
+          grep -F "LM_SKIP_METADATA_EXTRACTION = YES" <<<"${settings}"
           grep -F "SWIFT_VERSION = 6.0" <<<"${settings}"
           grep -F "TARGETED_DEVICE_FAMILY = 1,2" <<<"${settings}"
+          test "$(grep -c 'LM_SKIP_METADATA_EXTRACTION = YES;' \
+            OTToolkit.xcodeproj/project.pbxproj)" -eq 2
 
           if find OTToolkit -type f -name '*.entitlements' -print -quit | grep -q .; then
             echo "::error::OTK-001 must not add an entitlements file."
@@ -174,7 +177,7 @@ jobs:
           fi
 
           if git grep -nE \
-            'SystemCapabilities|XCRemoteSwiftPackageReference|XCSwiftPackageProductDependency|CODE_SIGN_ENTITLEMENTS|com\.apple\.developer\.|NS[A-Za-z]+UsageDescription' \
+            'SystemCapabilities|XCRemoteSwiftPackageReference|XCSwiftPackageProductDependency|CODE_SIGN_ENTITLEMENTS|com\.apple\.developer\.|AppIntents|NS[A-Za-z]+UsageDescription' \
             -- OTToolkit.xcodeproj OTToolkit; then
             echo "::error::A prohibited bootstrap capability or permission was found."
             exit 1

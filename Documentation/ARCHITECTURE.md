@@ -16,8 +16,9 @@ Shared abstractions are extracted only after a second real consumer demonstrates
 - Project: one OTToolkit.xcodeproj with app, unit-test, and UI-test targets.
 - Shared artifacts: OTToolkit scheme and OTToolkit test plan.
 - Language scope: English-only v1 with all user-facing strings in Localizable.xcstrings.
+- App Intents metadata extraction: disabled until an approved feature introduces AppIntents.
 
-Newer Xcode versions may be used locally only when the project still passes the pinned CI baseline. Changes to the deployment target or toolchain require an ADR and matching CI update.
+Newer Xcode versions may be used locally only when the project still passes the pinned CI baseline. Changes to the deployment target or toolchain require an ADR and matching CI update. A future App Intents feature must remove the metadata-extraction override and its bootstrap guard in the same change.
 
 ## Project structure
 
