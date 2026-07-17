@@ -39,6 +39,30 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertTrue(options.startsInChildFacingFixture)
     }
 
+    func testPositiveTimerDurationOverrideIsRecognized() {
+        let options = AppLaunchOptions(
+            arguments: ["OTToolkit", "-ui-test-timer-duration-seconds", "2"]
+        )
+
+        XCTAssertEqual(options.timerDurationOverrideSeconds, 2)
+    }
+
+    func testInvalidTimerDurationOverridesAreIgnored() {
+        let missingValue = AppLaunchOptions(
+            arguments: ["OTToolkit", "-ui-test-timer-duration-seconds"]
+        )
+        let zeroValue = AppLaunchOptions(
+            arguments: ["OTToolkit", "-ui-test-timer-duration-seconds", "0"]
+        )
+        let nonnumericValue = AppLaunchOptions(
+            arguments: ["OTToolkit", "-ui-test-timer-duration-seconds", "soon"]
+        )
+
+        XCTAssertNil(missingValue.timerDurationOverrideSeconds)
+        XCTAssertNil(zeroValue.timerDurationOverrideSeconds)
+        XCTAssertNil(nonnumericValue.timerDurationOverrideSeconds)
+    }
+
     func testDisableAnimationsArgumentRequiresAnExactMatch() {
         let options = AppLaunchOptions(arguments: ["OTToolkit", "--disable-animations"])
 
@@ -53,6 +77,7 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertFalse(options.enablesLayoutToggleFixture)
         XCTAssertFalse(options.forcesPrivacyCover)
         XCTAssertFalse(options.startsInChildFacingFixture)
+        XCTAssertNil(options.timerDurationOverrideSeconds)
     }
 
     func testAdaptiveShellUITestArgumentsRequireExactMatches() {

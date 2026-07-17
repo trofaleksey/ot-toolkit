@@ -146,15 +146,37 @@ final class AdaptiveNavigationUITests: XCTestCase {
         XCTAssertTrue(regularNavigation.waitForExistence(timeout: 5))
         AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
         openVisualTimer(in: app)
+        AccessibilityTestSupport.element(
+            in: app,
+            identifier: "visualTimer.action.start"
+        ).tap()
+        XCTAssertTrue(
+            AccessibilityTestSupport.element(
+                in: app,
+                identifier: "visualTimer.status.running"
+            ).waitForExistence(timeout: 5)
+        )
         AccessibilityTestSupport.assertMinimumHitTarget(toggle)
 
         toggle.tap()
         XCTAssertTrue(compactNavigation.waitForExistence(timeout: 5))
         assertVisualTimerDestinationExists(in: app)
+        XCTAssertTrue(
+            AccessibilityTestSupport.element(
+                in: app,
+                identifier: "visualTimer.status.running"
+            ).exists
+        )
 
         toggle.tap()
         XCTAssertTrue(regularNavigation.waitForExistence(timeout: 5))
         assertVisualTimerDestinationExists(in: app)
+        XCTAssertTrue(
+            AccessibilityTestSupport.element(
+                in: app,
+                identifier: "visualTimer.status.running"
+            ).exists
+        )
     }
 
     @MainActor

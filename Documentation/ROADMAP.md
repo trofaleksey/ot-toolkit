@@ -22,7 +22,7 @@ Goal: create the smallest testable universal app and remove architectural uncert
 | OTK-002 | Minimal adaptive shell and typed routes on iPhone and iPad | OTK-001 |
 | OTK-003 | Design tokens and accessibility test harness | OTK-001 |
 | OTK-004 | Store/container harness, file protection, explicit no-CloudKit configuration, reset, backup exclusion, and Privacy Manifest review | OTK-001 |
-| OTK-005 | Recruit five beta OTs and confirm three Gate A participants | none |
+| OTK-005 | Recruit five beta OTs and confirm three Gate A participants as parallel product validation | none |
 | OTK-006 | Solo-maintainer governance for private GitHub Free: local main-push guard, manual green-CI/squash workflow, ownership, and reporting handoff | none |
 | OTK-007 | Xcode 26.6 / iOS 26.5 authoritative CI with an Xcode 16.4 / iOS 18.5 compatibility lane | OTK-001 |
 
@@ -33,7 +33,7 @@ Exit gate:
 - CI runs on the pinned toolchain.
 - The app launches on iPhone and full/compact iPad layouts.
 - No networking, CloudKit, analytics, authentication, or unapproved permissions are present.
-- Three Gate A participants are confirmed before OTK-011 is considered complete.
+- OTK-005 recruitment continues in parallel and does not block OTK-011 engineering completion; three participants must still be confirmed before Gate A validation begins.
 
 ## Milestone 1 — Visual Timer
 

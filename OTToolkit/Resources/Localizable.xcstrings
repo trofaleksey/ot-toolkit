@@ -289,14 +289,326 @@
         }
       }
     },
-    "tool.visualTimer.placeholder.detail" : {
-      "comment" : "Temporary honest empty state until OTK-011 supplies timer controls.",
+    "visualTimer.accessibility.completionAnnouncement" : {
+      "comment" : "Exactly-once VoiceOver announcement when a timer completes.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Timer controls are coming in the next feature."
+            "value" : "Timer complete."
+          }
+        }
+      }
+    },
+    "visualTimer.accessibility.remaining" : {
+      "comment" : "VoiceOver label for the on-demand remaining-time value.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time remaining"
+          }
+        }
+      }
+    },
+    "visualTimer.action.another" : {
+      "comment" : "Action shown after completion to return to timer setup.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set another timer"
+          }
+        }
+      }
+    },
+    "visualTimer.action.childFacing" : {
+      "comment" : "Action that presents the active timer without therapist controls.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show child view"
+          }
+        }
+      }
+    },
+    "visualTimer.action.pause" : {
+      "comment" : "Pauses a running visual timer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
+    },
+    "visualTimer.action.reset" : {
+      "comment" : "Requests confirmation to reset an active timer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        }
+      }
+    },
+    "visualTimer.action.resume" : {
+      "comment" : "Resumes a paused visual timer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume"
+          }
+        }
+      }
+    },
+    "visualTimer.action.start" : {
+      "comment" : "Starts the timer using the selected duration.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start timer"
+          }
+        }
+      }
+    },
+    "visualTimer.preset.fifteenMinutes" : {
+      "comment" : "Fifteen-minute timer preset.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15 minutes"
+          }
+        }
+      }
+    },
+    "visualTimer.preset.fiveMinutes" : {
+      "comment" : "Five-minute timer preset and default selection.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 minutes"
+          }
+        }
+      }
+    },
+    "visualTimer.preset.oneMinute" : {
+      "comment" : "One-minute timer preset.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 minute"
+          }
+        }
+      }
+    },
+    "visualTimer.preset.tenMinutes" : {
+      "comment" : "Ten-minute timer preset.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10 minutes"
+          }
+        }
+      }
+    },
+    "visualTimer.preset.threeMinutes" : {
+      "comment" : "Three-minute timer preset.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 minutes"
+          }
+        }
+      }
+    },
+    "visualTimer.reset.confirm" : {
+      "comment" : "Destructive confirmation that resets the active timer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset timer"
+          }
+        }
+      }
+    },
+    "visualTimer.reset.message" : {
+      "comment" : "Explains the result of resetting an active timer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The current countdown will end and return to setup."
+          }
+        }
+      }
+    },
+    "visualTimer.reset.stay" : {
+      "comment" : "Cancel action that keeps the current timer active.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep timer"
+          }
+        }
+      }
+    },
+    "visualTimer.reset.title" : {
+      "comment" : "Confirmation heading shown before an active timer is reset.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset this timer?"
+          }
+        }
+      }
+    },
+    "visualTimer.setup.custom" : {
+      "comment" : "Heading and selection action for a custom timer duration.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom duration"
+          }
+        }
+      }
+    },
+    "visualTimer.setup.custom.adjust" : {
+      "comment" : "Label beside the custom whole-minute stepper.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust minutes"
+          }
+        }
+      }
+    },
+    "visualTimer.setup.duration" : {
+      "comment" : "Main timer-setup heading.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a duration"
+          }
+        }
+      }
+    },
+    "visualTimer.setup.maximum" : {
+      "comment" : "Explains the accepted custom-duration range.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start with a preset or choose 1 to 120 minutes."
+          }
+        }
+      }
+    },
+    "visualTimer.setup.presets" : {
+      "comment" : "Heading above timer preset buttons.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Presets"
+          }
+        }
+      }
+    },
+    "visualTimer.status.completed" : {
+      "comment" : "Visible and accessible completed-state label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer complete"
+          }
+        }
+      }
+    },
+    "visualTimer.status.paused" : {
+      "comment" : "Visible and accessible paused-state label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer paused"
+          }
+        }
+      }
+    },
+    "visualTimer.status.ready" : {
+      "comment" : "Ready state label used by shared timer presentation.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer ready"
+          }
+        }
+      }
+    },
+    "visualTimer.status.running" : {
+      "comment" : "Visible and accessible running-state label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer running"
+          }
+        }
+      }
+    },
+    "visualTimer.time.zero" : {
+      "comment" : "Accessible duration value when no time remains.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0 seconds"
           }
         }
       }
