@@ -66,6 +66,37 @@ final class VisualTimerUITests: XCTestCase {
     }
 
     @MainActor
+    func testSensoryFeedbackDefaultsOffAndLifecycleLimitsAreDisclosed() {
+        let app = AccessibilityTestSupport.launchApplication(forcesCompactNavigation: true)
+        openVisualTimer(in: app)
+
+        let sound = element(in: app, identifier: "visualTimer.feedback.sound")
+        let haptic = element(in: app, identifier: "visualTimer.feedback.haptic")
+        XCTAssertTrue(sound.waitForExistence(timeout: 5))
+        XCTAssertEqual(sound.value as? String, "0")
+        XCTAssertEqual(haptic.value as? String, "0")
+
+        for _ in 0..<3 where !sound.isHittable {
+            app.swipeUp()
+        }
+        AccessibilityTestSupport.assertMinimumHitTarget(sound)
+        sound.tap()
+
+        for _ in 0..<2 where !haptic.isHittable {
+            app.swipeUp()
+        }
+        AccessibilityTestSupport.assertMinimumHitTarget(haptic)
+        haptic.tap()
+        XCTAssertEqual(sound.value as? String, "1")
+        XCTAssertEqual(haptic.value as? String, "1")
+
+        XCTAssertTrue(
+            element(in: app, identifier: "visualTimer.lifecycle.disclosure")
+                .waitForExistence(timeout: 5)
+        )
+    }
+
+    @MainActor
     func testChildFacingModeUsesSameRunningTimerAndConfirmedAdultExit() {
         let app = AccessibilityTestSupport.launchApplication(forcesCompactNavigation: true)
         openVisualTimer(in: app)

@@ -5,6 +5,7 @@ struct AppSceneRootView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var navigation: AppNavigationState
     @State private var visualTimerController: VisualTimerController
+    @State private var visualTimerRuntimeCoordinator: VisualTimerRuntimeCoordinator
     @State private var fixtureForcesCompactNavigation = false
 
     private let launchOptions: AppLaunchOptions
@@ -23,6 +24,9 @@ struct AppSceneRootView: View {
                     .seconds($0)
                 }
             )
+        )
+        _visualTimerRuntimeCoordinator = State(
+            initialValue: VisualTimerRuntimeCoordinator()
         )
     }
 
@@ -73,15 +77,30 @@ struct AppSceneRootView: View {
             }
             .onChange(of: timeline.date) {
                 visualTimerController.refresh()
+                synchronizeVisualTimerRuntime()
             }
         }
         .animation(nil, value: isPrivacyCoverRequired)
+        .onAppear {
+            synchronizeVisualTimerRuntime()
+        }
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
+                visualTimerController.refresh()
+            }
+            synchronizeVisualTimerRuntime()
+        }
+        .onChange(of: visualTimerController.phase) {
+            synchronizeVisualTimerRuntime()
+        }
         .onChange(of: visualTimerController.completionSequence) {
-            guard UIAccessibility.isVoiceOverRunning else { return }
-            UIAccessibility.post(
-                notification: .announcement,
-                argument: String(localized: "visualTimer.accessibility.completionAnnouncement")
-            )
+            synchronizeVisualTimerRuntime()
+        }
+        .onChange(of: isVisualTimerPresented) {
+            synchronizeVisualTimerRuntime()
+        }
+        .onDisappear {
+            visualTimerRuntimeCoordinator.stop()
         }
     }
 
@@ -93,6 +112,20 @@ struct AppSceneRootView: View {
         AppPrivacyCoverPolicy.isCoverRequired(
             isSceneActive: scenePhase == .active,
             isForced: launchOptions.forcesPrivacyCover
+        )
+    }
+
+    private var isVisualTimerPresented: Bool {
+        navigation.childFacingDestination == .visualTimer
+            || (navigation.selectedSection == .tools
+                && navigation.selectedDestination == .visualTimer)
+    }
+
+    private func synchronizeVisualTimerRuntime() {
+        visualTimerRuntimeCoordinator.synchronize(
+            controller: visualTimerController,
+            isSceneActive: scenePhase == .active,
+            isTimerPresented: isVisualTimerPresented
         )
     }
 

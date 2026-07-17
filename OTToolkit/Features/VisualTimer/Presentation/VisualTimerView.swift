@@ -78,7 +78,86 @@ struct VisualTimerView: View {
             .accessibilityValue(controller.selectedDurationDescription)
             .accessibilityIdentifier("visualTimer.action.start")
             .keyboardShortcut(.defaultAction)
+
+            completionFeedbackSettings
+
+            lifecycleLimitDisclosure
         }
+    }
+
+    private var completionFeedbackSettings: some View {
+        VStack(alignment: .leading, spacing: OTSpacing.sm) {
+            Text("visualTimer.feedback.title")
+                .font(OTTypography.sectionHeading)
+                .foregroundStyle(OTColor.primaryText)
+                .accessibilityAddTraits(.isHeader)
+
+            Text("visualTimer.feedback.description")
+                .font(OTTypography.body)
+                .foregroundStyle(OTColor.secondaryText)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Toggle(
+                "visualTimer.feedback.sound",
+                isOn: Binding(
+                    get: { controller.isCompletionSoundEnabled },
+                    set: { controller.setCompletionSoundEnabled($0) }
+                )
+            )
+            .font(OTTypography.controlLabel)
+            .tint(OTColor.accent)
+            .otMinimumInteractiveSize()
+            .accessibilityIdentifier("visualTimer.feedback.sound")
+
+            Toggle(
+                "visualTimer.feedback.haptic",
+                isOn: Binding(
+                    get: { controller.isCompletionHapticEnabled },
+                    set: { controller.setCompletionHapticEnabled($0) }
+                )
+            )
+            .font(OTTypography.controlLabel)
+            .tint(OTColor.accent)
+            .otMinimumInteractiveSize()
+            .accessibilityIdentifier("visualTimer.feedback.haptic")
+        }
+        .padding(OTSpacing.md)
+        .background(OTColor.surface)
+        .clipShape(RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+                .stroke(OTColor.separator, lineWidth: 1)
+        }
+    }
+
+    private var lifecycleLimitDisclosure: some View {
+        HStack(alignment: .top, spacing: OTSpacing.sm) {
+            Image(systemName: "info.circle")
+                .foregroundStyle(OTColor.accent)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: OTSpacing.xs) {
+                Text("visualTimer.lifecycle.title")
+                    .font(OTTypography.sectionHeading)
+                    .foregroundStyle(OTColor.primaryText)
+                    .accessibilityAddTraits(.isHeader)
+
+                Text("visualTimer.lifecycle.detail")
+                    .font(OTTypography.body)
+                    .foregroundStyle(OTColor.secondaryText)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(OTSpacing.md)
+        .background(OTColor.surface)
+        .clipShape(RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+                .stroke(OTColor.separator, lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("visualTimer.lifecycle.disclosure")
     }
 
     private var customDurationControl: some View {

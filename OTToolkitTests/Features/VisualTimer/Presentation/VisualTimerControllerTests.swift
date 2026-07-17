@@ -9,6 +9,8 @@ final class VisualTimerControllerTests: XCTestCase {
 
         XCTAssertEqual(controller.selectedPreset, .fiveMinutes)
         XCTAssertEqual(controller.selectedDuration, .seconds(300))
+        XCTAssertFalse(controller.isCompletionSoundEnabled)
+        XCTAssertFalse(controller.isCompletionHapticEnabled)
 
         controller.select(.oneMinute)
         XCTAssertEqual(controller.selectedPreset, .oneMinute)
@@ -17,6 +19,17 @@ final class VisualTimerControllerTests: XCTestCase {
         controller.select(.fifteenMinutes)
         XCTAssertEqual(controller.selectedPreset, .fifteenMinutes)
         XCTAssertEqual(controller.selectedDuration, .seconds(900))
+    }
+
+    func testCompletionFeedbackOptionsCanBeChangedWithoutChangingTimerState() {
+        let controller = VisualTimerController(clock: ManualPresentationClock())
+
+        controller.setCompletionSoundEnabled(true)
+        controller.setCompletionHapticEnabled(true)
+
+        XCTAssertTrue(controller.isCompletionSoundEnabled)
+        XCTAssertTrue(controller.isCompletionHapticEnabled)
+        XCTAssertEqual(controller.phase, .idle)
     }
 
     func testCustomSelectionAcceptsOnlyOneThroughOneHundredTwentyMinutes() {

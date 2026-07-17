@@ -38,6 +38,7 @@ After each real-session use, ask:
 - Was anything confusing, overly stimulating, inaccessible, or unsafe?
 - Would the therapist choose to use it again next week? Why?
 - Is it acceptable that a running timer is not restored after force-quit/process loss in the private beta?
+- Is it acceptable that the private beta provides no background or lock-screen timer alert?
 - Is it acceptable that saved boards do not transfer through device backup?
 
 For Gate C, ask at least three OTs to create/use a Choice Board, find a Regulation Card within stated constraints, locate and explain its safety notes, and complete the core regression tasks.
@@ -69,7 +70,7 @@ Record:
 - Critical/high defect status.
 - Accessibility and sensory themes.
 - Schema migration result.
-- Acceptability of the timer-restoration and backup limitations.
+- Acceptability of the timer-restoration, background-alert, and backup limitations.
 - Go, conditional go, or no-go with reasons.
 
 The decision contains only aggregate, deidentified information.

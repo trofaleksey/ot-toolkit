@@ -337,6 +337,78 @@
         }
       }
     },
+    "visualTimer.feedback.description" : {
+      "comment" : "Explains completion feedback defaults, foreground limits, and visual fallback.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off by default. Enabled feedback plays only while OT Toolkit is active; completion always remains visible."
+          }
+        }
+      }
+    },
+    "visualTimer.feedback.haptic" : {
+      "comment" : "Toggle label for optional foreground completion haptics.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use a completion haptic"
+          }
+        }
+      }
+    },
+    "visualTimer.feedback.sound" : {
+      "comment" : "Toggle label for optional foreground completion sound.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play a completion sound"
+          }
+        }
+      }
+    },
+    "visualTimer.feedback.title" : {
+      "comment" : "Heading for optional Visual Timer completion feedback controls.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completion feedback"
+          }
+        }
+      }
+    },
+    "visualTimer.lifecycle.detail" : {
+      "comment" : "Discloses process-loss and background-alert limits for the private-beta timer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If OT Toolkit is force-quit or its process ends, the timer is lost. OT Toolkit does not send background or lock-screen alerts."
+          }
+        }
+      }
+    },
+    "visualTimer.lifecycle.title" : {
+      "comment" : "Heading for the private-beta timer lifecycle disclosure.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer lifecycle"
+          }
+        }
+      }
+    },
     "visualTimer.preset.fifteenMinutes" : {
       "comment" : "Fifteen-minute timer preset.",
       "extractionState" : "manual",
