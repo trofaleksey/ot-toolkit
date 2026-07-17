@@ -38,6 +38,24 @@ enum AccessibilityTestSupport {
         app.descendants(matching: .any)[identifier]
     }
 
+    static func showToolsContentIfNeeded(in app: XCUIApplication) {
+        let visualTimer = element(in: app, identifier: "home.tool.visualTimer")
+        if visualTimer.waitForExistence(timeout: 1) {
+            return
+        }
+
+        let showSidebarButton = app.buttons["Show Sidebar"]
+        guard showSidebarButton.waitForExistence(timeout: 2) else {
+            return
+        }
+
+        showSidebarButton.tap()
+        let toolsSidebarItem = element(in: app, identifier: "navigation.sidebar.tools")
+        if toolsSidebarItem.waitForExistence(timeout: 5) {
+            toolsSidebarItem.tap()
+        }
+    }
+
     static func assertMinimumHitTarget(
         _ element: XCUIElement,
         file: StaticString = #filePath,

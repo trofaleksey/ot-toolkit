@@ -33,6 +33,7 @@ final class AdaptiveNavigationUITests: XCTestCase {
             return
         }
 
+        AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
         openVisualTimer(in: app)
 
         if usesCompactTabs {
@@ -143,6 +144,7 @@ final class AdaptiveNavigationUITests: XCTestCase {
         )
 
         XCTAssertTrue(regularNavigation.waitForExistence(timeout: 5))
+        AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
         openVisualTimer(in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(toggle)
 

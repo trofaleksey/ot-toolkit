@@ -8,6 +8,7 @@ final class AppLaunchUITests: XCTestCase {
     @MainActor
     func testAppLaunchesWithAccessibleHomeTitle() {
         let app = AccessibilityTestSupport.launchApplication()
+        AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
 
         let homeTitle = app.staticTexts["home.title"]
         XCTAssertTrue(homeTitle.waitForExistence(timeout: 5))
@@ -25,6 +26,7 @@ final class AppLaunchUITests: XCTestCase {
     @MainActor
     func testHomeRemainsReadableAtLargestAccessibilityTextSize() throws {
         let app = AccessibilityTestSupport.launchApplication(usesLargestAccessibilityText: true)
+        AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
         let window = app.windows.firstMatch
         let homeTitle = app.staticTexts["home.title"]
         let visualTimer = AccessibilityTestSupport.element(
@@ -41,6 +43,7 @@ final class AppLaunchUITests: XCTestCase {
     func testHomePassesFocusedAccessibilityAudit() throws {
         continueAfterFailure = true
         let app = AccessibilityTestSupport.launchApplication()
+        AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
 
         try app.performAccessibilityAudit(
             for: [
