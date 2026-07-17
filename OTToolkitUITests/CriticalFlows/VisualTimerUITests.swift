@@ -45,6 +45,49 @@ final class VisualTimerUITests: XCTestCase {
     }
 
     @MainActor
+    func testBackShowsContinuingTimerBannerThatReopensAtLargestText() throws {
+        let app = AccessibilityTestSupport.launchApplication(
+            usesLargestAccessibilityText: true,
+            forcesCompactNavigation: true,
+            timerDurationOverrideSeconds: 10
+        )
+        openVisualTimer(in: app)
+
+        let start = element(in: app, identifier: "visualTimer.action.start")
+        reveal(start, in: app)
+        start.tap()
+        XCTAssertTrue(
+            element(in: app, identifier: "visualTimer.status.running")
+                .waitForExistence(timeout: 5)
+        )
+
+        let navigationBar = app.navigationBars["Visual Timer"]
+        XCTAssertTrue(navigationBar.waitForExistence(timeout: 5))
+        let back = navigationBar.buttons.firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 5))
+        back.tap()
+
+        let banner = element(in: app, identifier: "visualTimer.banner")
+        XCTAssertTrue(banner.waitForExistence(timeout: 5))
+        AccessibilityTestSupport.assertMinimumHitTarget(banner)
+        AccessibilityTestSupport.assertFitsHorizontally(banner, in: app.windows.firstMatch)
+        try app.performAccessibilityAudit(for: [.textClipped])
+
+        let completion = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value CONTAINS %@", "Timer complete"),
+            object: banner
+        )
+        XCTAssertEqual(XCTWaiter.wait(for: [completion], timeout: 15), .completed)
+
+        banner.tap()
+        XCTAssertTrue(
+            element(in: app, identifier: "visualTimer.status.completed")
+                .waitForExistence(timeout: 5)
+        )
+        XCTAssertFalse(banner.exists)
+    }
+
+    @MainActor
     func testTimerCompletesUsingDeterministicDurationAtLargestAccessibilityTextSize() throws {
         let app = AccessibilityTestSupport.launchApplication(
             usesLargestAccessibilityText: true,

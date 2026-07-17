@@ -31,52 +31,54 @@ struct AppSceneRootView: View {
     }
 
     var body: some View {
-        TimelineView(
-            .periodic(
-                from: .now,
-                by: visualTimerController.isRunning ? 0.25 : 60
-            )
-        ) { timeline in
-            ZStack(alignment: .topTrailing) {
-                appShell
-                    .disabled(isTherapistShellSuppressed)
-                    .allowsHitTesting(!isTherapistShellSuppressed)
-                    .accessibilityHidden(isTherapistShellSuppressed)
-                    .opacity(isTherapistShellSuppressed ? 0 : 1)
-
-                if navigation.childFacingDestination != nil {
-                    ChildFacingContainer {
-                        navigation.dismissChildFacing()
-                    } content: {
-                        childFacingContent
+        ZStack(alignment: .topTrailing) {
+            appShell
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    VisualTimerBanner(
+                        controller: visualTimerController,
+                        isTimerPresented: isVisualTimerPresented
+                    ) {
+                        navigation.show(.visualTimer)
                     }
-                    .disabled(isPrivacyCoverRequired)
-                    .allowsHitTesting(!isPrivacyCoverRequired)
-                    .accessibilityHidden(isPrivacyCoverRequired)
-                    .opacity(isPrivacyCoverRequired ? 0 : 1)
-                    .zIndex(1)
                 }
+                .disabled(isTherapistShellSuppressed)
+                .allowsHitTesting(!isTherapistShellSuppressed)
+                .accessibilityHidden(isTherapistShellSuppressed)
+                .opacity(isTherapistShellSuppressed ? 0 : 1)
 
-                if isPrivacyCoverRequired {
-                    PrivacyCoverView()
-                        .zIndex(2)
+            if navigation.childFacingDestination != nil {
+                ChildFacingContainer {
+                    navigation.dismissChildFacing()
+                } content: {
+                    childFacingContent
                 }
-
-                if launchOptions.enablesLayoutToggleFixture, !isTherapistShellSuppressed {
-                    Button {
-                        fixtureForcesCompactNavigation.toggle()
-                    } label: {
-                        Text(verbatim: "Toggle layout")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .otMinimumInteractiveSize()
-                    .accessibilityIdentifier("ui-test.navigation.layout.toggle")
-                    .padding(OTSpacing.sm)
-                    .zIndex(3)
-                }
+                .disabled(isPrivacyCoverRequired)
+                .allowsHitTesting(!isPrivacyCoverRequired)
+                .accessibilityHidden(isPrivacyCoverRequired)
+                .opacity(isPrivacyCoverRequired ? 0 : 1)
+                .zIndex(1)
             }
-            .onChange(of: timeline.date) {
-                visualTimerController.refresh()
+
+            if isPrivacyCoverRequired {
+                PrivacyCoverView()
+                    .zIndex(2)
+            }
+
+            if launchOptions.enablesLayoutToggleFixture, !isTherapistShellSuppressed {
+                Button {
+                    fixtureForcesCompactNavigation.toggle()
+                } label: {
+                    Text(verbatim: "Toggle layout")
+                }
+                .buttonStyle(.borderedProminent)
+                .otMinimumInteractiveSize()
+                .accessibilityIdentifier("ui-test.navigation.layout.toggle")
+                .padding(OTSpacing.sm)
+                .zIndex(3)
+            }
+        }
+        .background {
+            VisualTimerTimelineDriver(controller: visualTimerController) {
                 synchronizeVisualTimerRuntime()
             }
         }
@@ -88,12 +90,6 @@ struct AppSceneRootView: View {
             if scenePhase == .active {
                 visualTimerController.refresh()
             }
-            synchronizeVisualTimerRuntime()
-        }
-        .onChange(of: visualTimerController.phase) {
-            synchronizeVisualTimerRuntime()
-        }
-        .onChange(of: visualTimerController.completionSequence) {
             synchronizeVisualTimerRuntime()
         }
         .onChange(of: isVisualTimerPresented) {
@@ -158,6 +154,151 @@ struct AppSceneRootView: View {
 
     private var forcesCompactNavigation: Bool {
         launchOptions.forcesCompactNavigation || fixtureForcesCompactNavigation
+    }
+}
+
+private struct VisualTimerTimelineDriver: View {
+    let controller: VisualTimerController
+    let onSynchronizeRuntime: () -> Void
+
+    var body: some View {
+        TimelineView(
+            .periodic(
+                from: .now,
+                by: controller.isRunning ? 0.25 : 60
+            )
+        ) { timeline in
+            Color.clear
+                .frame(width: 0, height: 0)
+                .onAppear {
+                    refreshAndSynchronize()
+                }
+                .onChange(of: timeline.date) {
+                    refreshAndSynchronize()
+                }
+                .onChange(of: controller.phase) {
+                    onSynchronizeRuntime()
+                }
+                .onChange(of: controller.completionSequence) {
+                    onSynchronizeRuntime()
+                }
+        }
+        .accessibilityHidden(true)
+    }
+
+    private func refreshAndSynchronize() {
+        controller.refresh()
+        onSynchronizeRuntime()
+    }
+}
+
+private struct VisualTimerBanner: View {
+    @Environment(\.otAccessibilityPreferences) private var accessibilityPreferences
+
+    let controller: VisualTimerController
+    let isTimerPresented: Bool
+    let onOpenTimer: () -> Void
+
+    var body: some View {
+        if controller.phase != .idle, !isTimerPresented {
+            Button(action: onOpenTimer) {
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: OTSpacing.md) {
+                        bannerSymbol
+                        statusLabel
+                        Spacer(minLength: OTSpacing.sm)
+                        remainingTime
+                        openIndicator
+                    }
+
+                    HStack(alignment: .top, spacing: OTSpacing.md) {
+                        bannerSymbol
+                        VStack(alignment: .leading, spacing: OTSpacing.xs) {
+                            statusLabel
+                            remainingTime
+                        }
+                        Spacer(minLength: 0)
+                        openIndicator
+                    }
+                }
+                .padding(.horizontal, OTSpacing.md)
+                .padding(.vertical, OTSpacing.sm)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(OTColor.elevatedSurface)
+                .overlay(alignment: .top) {
+                    Rectangle()
+                        .fill(OTColor.separator)
+                        .frame(height: accessibilityPreferences.boundaryLineWidth)
+                        .accessibilityHidden(true)
+                }
+            }
+            .buttonStyle(.plain)
+            .otMinimumInteractiveSize()
+            .accessibilityLabel("visualTimer.banner.open")
+            .accessibilityValue(
+                Text(statusKey)
+                    + Text(verbatim: ", \(controller.remainingAccessibilityValue)")
+            )
+            .accessibilityIdentifier("visualTimer.banner")
+        }
+    }
+
+    private var bannerSymbol: some View {
+        Image(systemName: statusSymbol)
+            .font(OTTypography.sectionHeading)
+            .foregroundStyle(OTColor.accent)
+            .frame(minWidth: 44, minHeight: 44)
+            .accessibilityHidden(true)
+    }
+
+    private var statusLabel: some View {
+        Text(statusKey)
+            .font(OTTypography.controlLabel)
+            .foregroundStyle(OTColor.primaryText)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var remainingTime: some View {
+        Text(controller.remainingClockText)
+            .font(OTTypography.sectionHeading)
+            .monospacedDigit()
+            .foregroundStyle(OTColor.primaryText)
+            .lineLimit(1)
+            .minimumScaleFactor(0.75)
+    }
+
+    private var openIndicator: some View {
+        Image(systemName: "chevron.up")
+            .font(OTTypography.controlLabel)
+            .foregroundStyle(OTColor.secondaryText)
+            .frame(minWidth: 44, minHeight: 44)
+            .accessibilityHidden(true)
+    }
+
+    private var statusKey: LocalizedStringKey {
+        switch controller.phase {
+        case .idle:
+            "visualTimer.status.ready"
+        case .running:
+            "visualTimer.status.running"
+        case .paused:
+            "visualTimer.status.paused"
+        case .completed:
+            "visualTimer.status.completed"
+        }
+    }
+
+    private var statusSymbol: String {
+        switch controller.phase {
+        case .idle:
+            "timer"
+        case .running:
+            "timer"
+        case .paused:
+            "pause.circle.fill"
+        case .completed:
+            "checkmark.circle.fill"
+        }
     }
 }
 

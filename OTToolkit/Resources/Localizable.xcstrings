@@ -385,6 +385,18 @@
         }
       }
     },
+    "visualTimer.banner.open" : {
+      "comment" : "Accessible action label for the persistent timer banner.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Visual Timer"
+          }
+        }
+      }
+    },
     "visualTimer.feedback.description" : {
       "comment" : "Explains completion feedback defaults, foreground limits, and visual fallback.",
       "extractionState" : "manual",
