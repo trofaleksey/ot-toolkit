@@ -217,6 +217,54 @@
         }
       }
     },
+    "persistence.error.openingFailed" : {
+      "comment" : "Recoverable blocking-state message shown when the protected local store cannot be opened.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved data could not be opened."
+          }
+        }
+      }
+    },
+    "persistence.error.resetConfirmationRequired" : {
+      "comment" : "Message returned when a caller attempts destructive app-data reset without confirmation.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm before resetting app data."
+          }
+        }
+      }
+    },
+    "persistence.error.resetFailedDataPreserved" : {
+      "comment" : "Reset failure message confirming that the original saved data remains available.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App data could not be reset. Existing saved data was preserved."
+          }
+        }
+      }
+    },
+    "persistence.error.resetFailedRestoreFailed" : {
+      "comment" : "Reset failure message used when the original store could not be reopened automatically.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App data could not be reset or restored."
+          }
+        }
+      }
+    },
     "privacy.cover.detail" : {
       "comment" : "Generic copy shown while app content is hidden from inactive-scene snapshots.",
       "extractionState" : "manual",
