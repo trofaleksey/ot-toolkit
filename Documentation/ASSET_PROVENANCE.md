@@ -33,10 +33,15 @@ is reviewed by automated contrast tests as well as the manual accessibility rele
 | `OTDestructive` | Original semantic color | `OTToolkit/Resources/Assets.xcassets/OTDestructive.colorset/Contents.json` — `09a910ba689feb20dbb8706ff5b8696a482dd131af53f9050f3836eb986dbf7b` | Destructive foreground paired with explicit localized copy |
 | `OTSeparator` | Original semantic color | `OTToolkit/Resources/Assets.xcassets/OTSeparator.colorset/Contents.json` — `ea9cd7482a968661e2f63fdfbd216bbb830711260eb52b295a2d8d7bcea1b399` | Essential boundary color; no label |
 | `OTFocus` | Original semantic color | `OTToolkit/Resources/Assets.xcassets/OTFocus.colorset/Contents.json` — `e39c5e3a74fc6b94ea47446e3afd3d9f3d955df54d039c017c83141c99d33174` | Focus foreground or outline paired with shape and platform focus behavior |
-| `checkmark.circle.fill` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Decorative reinforcement for localized success text; hidden from assistive technologies |
+| `folder` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces the localized Saved navigation label; the text remains the primary meaning |
+| `gearshape` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces the localized Settings navigation label; the text remains the primary meaning |
+| `rectangle.portrait.and.arrow.right` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces the localized adult-exit label; the visible text and confirmation provide the primary meaning |
+| `square.grid.2x2` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces the localized Tools navigation label; the text remains the primary meaning |
+| `timer` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces localized Visual Timer text; decorative instances are hidden from assistive technologies |
 
 Engineering review date: 2026-07-16. Owning work item: GitHub issue OTK-003 (`#8`). The
 engineering reviewer is the Codex OTK-003 implementation audit. This is the initial original
-palette; it contains no modified third-party source material. The SF Symbol is referenced
-unchanged under the applicable Apple SDK terms and requires no in-app attribution. Product
-owner rights confirmation remains a release check.
+palette; it contains no modified third-party source material. SF Symbols referenced by OTK-002
+are unchanged Apple platform assets under the applicable SDK terms and require no in-app
+attribution. OTK-002 engineering review date: 2026-07-16. Product owner rights confirmation
+remains a release check.

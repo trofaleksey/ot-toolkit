@@ -24,10 +24,10 @@ struct OTToolkitApp: App {
     @ViewBuilder
     private var rootView: some View {
         if launchOptions.usesLargestAccessibilityText {
-            HomeView()
+            AppSceneRootView(launchOptions: launchOptions)
                 .dynamicTypeSize(.accessibility5)
         } else {
-            HomeView()
+            AppSceneRootView(launchOptions: launchOptions)
         }
     }
 }

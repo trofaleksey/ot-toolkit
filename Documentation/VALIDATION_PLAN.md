@@ -75,3 +75,10 @@ Record:
 The decision contains only aggregate, deidentified information.
 
 Gate C additionally records usability of each candidate-v1 feature, safety-note comprehension, core regression results, and the ship/defer decision for each addition.
+
+## Engineering manual gates
+
+- On iPad, open a tool and resize full width → compact multitasking → full width. Confirm the selected section and route remain unchanged. The automated OTK-002 fixture covers the same regular → compact → regular route transition; real Stage Manager and multitasking resizing remain manual checks.
+- For OTK-011, own the timer controller above the adaptive compact/regular shell branch, then repeat the resize check while the timer is running. Confirm elapsed-time state and controls survive without reset.
+- Move the app between active, inactive, and background states from therapist and child-facing screens. Confirm the privacy cover is immediate and opaque and the active route/tool state is preserved on return.
+- With VoiceOver, Switch Control, and Full Keyboard Access, enter child-facing mode. Confirm therapist navigation is unreachable, the adult exit remains reachable, confirmation is announced, and focus returns to the preserved therapist destination after exit.

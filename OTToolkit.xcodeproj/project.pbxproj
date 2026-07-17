@@ -28,6 +28,13 @@
 		C10000000000000000000013 /* SemanticColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000014 /* SemanticColorTests.swift */; };
 		C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000015 /* AccessibilityPreferencesTests.swift */; };
 		C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000016 /* AccessibilityTestSupport.swift */; };
+		C10000000000000000000016 /* AppNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000017 /* AppNavigation.swift */; };
+		C10000000000000000000017 /* AppShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000018 /* AppShellView.swift */; };
+		C10000000000000000000018 /* PrivacyCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000019 /* PrivacyCoverView.swift */; };
+		C10000000000000000000019 /* ChildFacingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001A /* ChildFacingContainer.swift */; };
+		C1000000000000000000001A /* OTAdultExitControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001B /* OTAdultExitControl.swift */; };
+		C1000000000000000000001B /* AppNavigationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001C /* AppNavigationStateTests.swift */; };
+		C1000000000000000000001C /* AdaptiveNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001D /* AdaptiveNavigationUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +77,13 @@
 		B10000000000000000000014 /* SemanticColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticColorTests.swift; sourceTree = "<group>"; };
 		B10000000000000000000015 /* AccessibilityPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityPreferencesTests.swift; sourceTree = "<group>"; };
 		B10000000000000000000016 /* AccessibilityTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityTestSupport.swift; sourceTree = "<group>"; };
+		B10000000000000000000017 /* AppNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigation.swift; sourceTree = "<group>"; };
+		B10000000000000000000018 /* AppShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShellView.swift; sourceTree = "<group>"; };
+		B10000000000000000000019 /* PrivacyCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCoverView.swift; sourceTree = "<group>"; };
+		B1000000000000000000001A /* ChildFacingContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildFacingContainer.swift; sourceTree = "<group>"; };
+		B1000000000000000000001B /* OTAdultExitControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTAdultExitControl.swift; sourceTree = "<group>"; };
+		B1000000000000000000001C /* AppNavigationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationStateTests.swift; sourceTree = "<group>"; };
+		B1000000000000000000001D /* AdaptiveNavigationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveNavigationUITests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,8 +149,12 @@
 		A10000000000000000000005 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B10000000000000000000017 /* AppNavigation.swift */,
+				B10000000000000000000018 /* AppShellView.swift */,
 				B10000000000000000000001 /* OTToolkitApp.swift */,
 				B10000000000000000000002 /* AppLaunchOptions.swift */,
+				B1000000000000000000001A /* ChildFacingContainer.swift */,
+				B10000000000000000000019 /* PrivacyCoverView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -197,6 +215,7 @@
 		A10000000000000000000013 /* Accessibility */ = {
 			isa = PBXGroup;
 			children = (
+				B1000000000000000000001B /* OTAdultExitControl.swift */,
 				B10000000000000000000012 /* OTAccessibilityPreferences.swift */,
 			);
 			path = Accessibility;
@@ -228,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				B10000000000000000000007 /* AppLaunchOptionsTests.swift */,
+				B1000000000000000000001C /* AppNavigationStateTests.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -294,6 +314,7 @@
 		A1000000000000000000000C /* CriticalFlows */ = {
 			isa = PBXGroup;
 			children = (
+				B1000000000000000000001D /* AdaptiveNavigationUITests.swift */,
 				B10000000000000000000008 /* AppLaunchUITests.swift */,
 			);
 			path = CriticalFlows;
@@ -438,9 +459,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C10000000000000000000016 /* AppNavigation.swift in Sources */,
+				C10000000000000000000017 /* AppShellView.swift in Sources */,
 				C10000000000000000000001 /* OTToolkitApp.swift in Sources */,
 				C10000000000000000000002 /* AppLaunchOptions.swift in Sources */,
+				C10000000000000000000019 /* ChildFacingContainer.swift in Sources */,
+				C10000000000000000000018 /* PrivacyCoverView.swift in Sources */,
 				C10000000000000000000011 /* OTAccessibilityPreferences.swift in Sources */,
+				C1000000000000000000001A /* OTAdultExitControl.swift in Sources */,
 				C1000000000000000000000F /* OTColor.swift in Sources */,
 				C10000000000000000000010 /* OTInteractiveTarget.swift in Sources */,
 				C1000000000000000000000D /* OTRadius.swift in Sources */,
@@ -457,6 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */,
+				C1000000000000000000001B /* AppNavigationStateTests.swift in Sources */,
 				C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */,
 				C10000000000000000000012 /* DesignTokenTests.swift in Sources */,
 				C10000000000000000000013 /* SemanticColorTests.swift in Sources */,
@@ -468,6 +495,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1000000000000000000001C /* AdaptiveNavigationUITests.swift in Sources */,
 				C10000000000000000000008 /* AppLaunchUITests.swift in Sources */,
 				C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */,
 			);

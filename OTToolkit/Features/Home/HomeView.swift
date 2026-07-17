@@ -2,7 +2,8 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(\.otAccessibilityPreferences) private var accessibilityPreferences
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    let onOpenVisualTimer: () -> Void
 
     var body: some View {
         ScrollView {
@@ -20,7 +21,7 @@ struct HomeView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
-                foundationStatus
+                visualTimerCard
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(OTSpacing.xl)
@@ -34,57 +35,43 @@ struct HomeView: View {
         }
     }
 
-    private var foundationStatus: some View {
-        VStack(alignment: .leading, spacing: OTSpacing.sm) {
-            foundationStatusHeader
+    private var visualTimerCard: some View {
+        Button {
+            onOpenVisualTimer()
+        } label: {
+            HStack(alignment: .top, spacing: OTSpacing.md) {
+                Image(systemName: "timer")
+                    .font(OTTypography.sectionHeading)
+                    .foregroundStyle(OTColor.accent)
+                    .accessibilityHidden(true)
 
-            Text("home.foundation.detail")
-                .font(OTTypography.body)
-                .foregroundStyle(OTColor.secondaryText)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(OTSpacing.md)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            OTColor.surface,
-            in: RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
-        )
-        .overlay {
-            RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
-                .stroke(
-                    OTColor.separator,
-                    lineWidth: accessibilityPreferences.boundaryLineWidth
-                )
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityIdentifier("home.foundation.status")
-    }
+                VStack(alignment: .leading, spacing: OTSpacing.xs) {
+                    Text("tool.visualTimer.title")
+                        .font(OTTypography.sectionHeading)
+                        .foregroundStyle(OTColor.primaryText)
 
-    @ViewBuilder
-    private var foundationStatusHeader: some View {
-        if dynamicTypeSize.isAccessibilitySize {
-            VStack(alignment: .leading, spacing: OTSpacing.sm) {
-                foundationStatusIcon
-                foundationStatusText
+                    Text("tool.visualTimer.summary")
+                        .font(OTTypography.body)
+                        .foregroundStyle(OTColor.secondaryText)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
-        } else {
-            Label {
-                foundationStatusText
-            } icon: {
-                foundationStatusIcon
+            .padding(OTSpacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                OTColor.surface,
+                in: RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+                    .stroke(
+                        OTColor.separator,
+                        lineWidth: accessibilityPreferences.boundaryLineWidth
+                    )
             }
         }
-    }
-
-    private var foundationStatusText: some View {
-        Text("home.foundation.status")
-            .font(OTTypography.sectionHeading)
-            .foregroundStyle(OTColor.primaryText)
-    }
-
-    private var foundationStatusIcon: some View {
-        Image(systemName: "checkmark.circle.fill")
-            .foregroundStyle(OTColor.success)
-            .accessibilityHidden(true)
+        .buttonStyle(.plain)
+        .otMinimumInteractiveSize()
+        .accessibilityIdentifier("home.tool.visualTimer")
     }
 }
