@@ -385,14 +385,26 @@
         }
       }
     },
-    "visualTimer.lifecycle.detail" : {
-      "comment" : "Discloses process-loss and background-alert limits for the private-beta timer.",
+    "visualTimer.lifecycle.noAlerts" : {
+      "comment" : "Discloses that the private-beta timer does not provide background or lock-screen alerts.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If OT Toolkit is force-quit or its process ends, the timer is lost. OT Toolkit does not send background or lock-screen alerts."
+            "value" : "OT Toolkit does not send background or lock-screen alerts."
+          }
+        }
+      }
+    },
+    "visualTimer.lifecycle.processLoss" : {
+      "comment" : "Discloses that force-quit or process loss ends the private-beta timer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If OT Toolkit is force-quit or its process ends, the timer is lost."
           }
         }
       }

@@ -45,55 +45,107 @@ final class VisualTimerUITests: XCTestCase {
     }
 
     @MainActor
-    func testTimerCompletesUsingDeterministicDuration() {
+    func testTimerCompletesUsingDeterministicDurationAtLargestAccessibilityTextSize() throws {
         let app = AccessibilityTestSupport.launchApplication(
+            usesLargestAccessibilityText: true,
             forcesCompactNavigation: true,
             timerDurationOverrideSeconds: 1
         )
         openVisualTimer(in: app)
-        element(in: app, identifier: "visualTimer.action.start").tap()
 
-        XCTAssertTrue(
-            element(in: app, identifier: "visualTimer.status.completed")
-                .waitForExistence(timeout: 5)
-        )
+        let start = element(in: app, identifier: "visualTimer.action.start")
+        reveal(start, in: app)
+        start.tap()
+
+        let window = app.windows.firstMatch
+        let completed = element(in: app, identifier: "visualTimer.status.completed")
+        XCTAssertTrue(completed.waitForExistence(timeout: 5))
+        AccessibilityTestSupport.assertFitsHorizontally(completed, in: window)
+
         let remaining = element(in: app, identifier: "visualTimer.remaining")
         XCTAssertEqual(remaining.value as? String, "0 seconds")
-        XCTAssertTrue(
-            element(in: app, identifier: "visualTimer.action.another")
-                .isHittable
-        )
+        AccessibilityTestSupport.assertFitsHorizontally(remaining, in: window)
+        try app.performAccessibilityAudit(for: [.textClipped])
+
+        let anotherTimer = element(in: app, identifier: "visualTimer.action.another")
+        reveal(anotherTimer, in: app)
+        AccessibilityTestSupport.assertMinimumHitTarget(anotherTimer)
+        AccessibilityTestSupport.assertFitsHorizontally(anotherTimer, in: window)
+        try app.performAccessibilityAudit(for: [.textClipped])
     }
 
     @MainActor
-    func testSensoryFeedbackDefaultsOffAndLifecycleLimitsAreDisclosed() {
-        let app = AccessibilityTestSupport.launchApplication(forcesCompactNavigation: true)
+    func testSensoryFeedbackFitsAtLargestAccessibilityTextSize() throws {
+        let app = AccessibilityTestSupport.launchApplication(
+            usesLargestAccessibilityText: true,
+            forcesCompactNavigation: true
+        )
         openVisualTimer(in: app)
 
+        let window = app.windows.firstMatch
         let sound = element(in: app, identifier: "visualTimer.feedback.sound")
         let haptic = element(in: app, identifier: "visualTimer.feedback.haptic")
         XCTAssertTrue(sound.waitForExistence(timeout: 5))
         XCTAssertEqual(sound.value as? String, "0")
         XCTAssertEqual(haptic.value as? String, "0")
 
-        for _ in 0..<3 where !sound.isHittable {
-            app.swipeUp()
-        }
+        reveal(sound, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(sound)
-        sound.tap()
+        AccessibilityTestSupport.assertFitsHorizontally(sound, in: window)
+        try app.performAccessibilityAudit(for: [.textClipped])
+        tapSwitch(sound)
 
-        for _ in 0..<2 where !haptic.isHittable {
-            app.swipeUp()
-        }
+        reveal(haptic, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(haptic)
-        haptic.tap()
+        AccessibilityTestSupport.assertFitsHorizontally(haptic, in: window)
+        try app.performAccessibilityAudit(for: [.textClipped])
+        tapSwitch(haptic)
         XCTAssertEqual(sound.value as? String, "1")
         XCTAssertEqual(haptic.value as? String, "1")
 
+        let disclosure = element(in: app, identifier: "visualTimer.lifecycle.disclosure")
+        reveal(disclosure, in: app, requiresHittable: false)
+        AccessibilityTestSupport.assertFitsHorizontally(disclosure, in: window)
+        try app.performAccessibilityAudit(for: [.textClipped])
+
+        let alertsDisclosure = element(
+            in: app,
+            identifier: "visualTimer.lifecycle.alertsDisclosure"
+        )
+        reveal(alertsDisclosure, in: app, requiresHittable: false)
+        AccessibilityTestSupport.assertFitsHorizontally(alertsDisclosure, in: window)
+        try app.performAccessibilityAudit(for: [.textClipped])
+    }
+
+    @MainActor
+    func testCompletedTimerActionRemainsReachableInPhoneLandscapeAtLargestText() throws {
+        guard UIDevice.current.userInterfaceIdiom == .phone else {
+            throw XCTSkip("This compact-height check requires an iPhone simulator.")
+        }
+
+        let app = AccessibilityTestSupport.launchApplication(
+            usesLargestAccessibilityText: true,
+            forcesCompactNavigation: true,
+            timerDurationOverrideSeconds: 1
+        )
+        openVisualTimer(in: app)
+
+        let start = element(in: app, identifier: "visualTimer.action.start")
+        reveal(start, in: app)
+        start.tap()
         XCTAssertTrue(
-            element(in: app, identifier: "visualTimer.lifecycle.disclosure")
+            element(in: app, identifier: "visualTimer.status.completed")
                 .waitForExistence(timeout: 5)
         )
+
+        XCUIDevice.shared.orientation = .landscapeLeft
+        defer { XCUIDevice.shared.orientation = .portrait }
+
+        let anotherTimer = element(in: app, identifier: "visualTimer.action.another")
+        reveal(anotherTimer, in: app)
+        AccessibilityTestSupport.assertMinimumHitTarget(anotherTimer)
+        AccessibilityTestSupport.assertFitsHorizontally(anotherTimer, in: app.windows.firstMatch)
+        try app.performAccessibilityAudit(for: [.textClipped])
     }
 
     @MainActor
@@ -174,5 +226,61 @@ final class VisualTimerUITests: XCTestCase {
     @MainActor
     private func element(in app: XCUIApplication, identifier: String) -> XCUIElement {
         AccessibilityTestSupport.element(in: app, identifier: identifier)
+    }
+
+    @MainActor
+    private func tapSwitch(_ element: XCUIElement) {
+        element.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+    }
+
+    @MainActor
+    private func reveal(
+        _ element: XCUIElement,
+        in app: XCUIApplication,
+        maximumSwipes: Int = 8,
+        requiresHittable: Bool = true
+    ) {
+        XCTAssertTrue(element.waitForExistence(timeout: 5))
+        for _ in 0..<maximumSwipes {
+            if isFullyVisible(element, in: app, requiresHittable: requiresHittable) {
+                break
+            }
+
+            let shouldScrollDown = element.frame.minY < app.windows.firstMatch.frame.minY
+            let startY = shouldScrollDown ? 0.35 : 0.75
+            let endY = shouldScrollDown ? 0.75 : 0.35
+            app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: startY))
+                .press(
+                    forDuration: 0.05,
+                    thenDragTo: app.coordinate(
+                        withNormalizedOffset: CGVector(dx: 0.5, dy: endY)
+                    )
+                )
+        }
+        let tabBar = app.tabBars.firstMatch
+        XCTAssertTrue(
+            isFullyVisible(element, in: app, requiresHittable: requiresHittable),
+            "Element \(element.identifier) with frame \(element.frame) did not fit in "
+                + "window \(app.windows.firstMatch.frame) above tab bar \(tabBar.frame)."
+        )
+    }
+
+    @MainActor
+    private func isFullyVisible(
+        _ element: XCUIElement,
+        in app: XCUIApplication,
+        requiresHittable: Bool
+    ) -> Bool {
+        if requiresHittable, !element.isHittable {
+            return false
+        }
+
+        let windowFrame = app.windows.firstMatch.frame
+        let tabBar = app.tabBars.firstMatch
+        let visibleBottom = tabBar.exists ? tabBar.frame.minY : windowFrame.maxY
+        let tolerance: CGFloat = 0.5
+
+        return element.frame.minY >= windowFrame.minY - tolerance
+            && element.frame.maxY <= visibleBottom + tolerance
     }
 }
