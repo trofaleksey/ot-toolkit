@@ -7,7 +7,8 @@ enum AccessibilityTestSupport {
         forcesCompactNavigation: Bool = false,
         enablesLayoutToggleFixture: Bool = false,
         forcesPrivacyCover: Bool = false,
-        startsInChildFacingFixture: Bool = false
+        startsInChildFacingFixture: Bool = false,
+        timerDurationOverrideSeconds: Int? = nil
     ) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = [
@@ -29,6 +30,12 @@ enum AccessibilityTestSupport {
         }
         if startsInChildFacingFixture {
             app.launchArguments.append("-ui-test-start-child-facing-fixture")
+        }
+        if let timerDurationOverrideSeconds {
+            app.launchArguments.append(contentsOf: [
+                "-ui-test-timer-duration-seconds",
+                String(timerDurationOverrideSeconds),
+            ])
         }
         app.launch()
         return app

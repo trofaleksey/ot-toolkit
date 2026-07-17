@@ -4,6 +4,7 @@ import UIKit
 struct AppSceneRootView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var navigation: AppNavigationState
+    @State private var visualTimerController: VisualTimerController
     @State private var fixtureForcesCompactNavigation = false
 
     private let launchOptions: AppLaunchOptions
@@ -16,48 +17,72 @@ struct AppSceneRootView: View {
             initialNavigation.presentChildFacing(.visualTimer)
         }
         _navigation = State(initialValue: initialNavigation)
+        _visualTimerController = State(
+            initialValue: VisualTimerController(
+                startDurationOverride: launchOptions.timerDurationOverrideSeconds.map {
+                    .seconds($0)
+                }
+            )
+        )
     }
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            appShell
-                .disabled(isTherapistShellSuppressed)
-                .allowsHitTesting(!isTherapistShellSuppressed)
-                .accessibilityHidden(isTherapistShellSuppressed)
-                .opacity(isTherapistShellSuppressed ? 0 : 1)
+        TimelineView(
+            .periodic(
+                from: .now,
+                by: visualTimerController.isRunning ? 0.25 : 60
+            )
+        ) { timeline in
+            ZStack(alignment: .topTrailing) {
+                appShell
+                    .disabled(isTherapistShellSuppressed)
+                    .allowsHitTesting(!isTherapistShellSuppressed)
+                    .accessibilityHidden(isTherapistShellSuppressed)
+                    .opacity(isTherapistShellSuppressed ? 0 : 1)
 
-            if navigation.childFacingDestination != nil {
-                ChildFacingContainer {
-                    navigation.dismissChildFacing()
-                } content: {
-                    ChildFacingFixtureView()
+                if navigation.childFacingDestination != nil {
+                    ChildFacingContainer {
+                        navigation.dismissChildFacing()
+                    } content: {
+                        childFacingContent
+                    }
+                    .disabled(isPrivacyCoverRequired)
+                    .allowsHitTesting(!isPrivacyCoverRequired)
+                    .accessibilityHidden(isPrivacyCoverRequired)
+                    .opacity(isPrivacyCoverRequired ? 0 : 1)
+                    .zIndex(1)
                 }
-                .disabled(isPrivacyCoverRequired)
-                .allowsHitTesting(!isPrivacyCoverRequired)
-                .accessibilityHidden(isPrivacyCoverRequired)
-                .opacity(isPrivacyCoverRequired ? 0 : 1)
-                .zIndex(1)
-            }
 
-            if isPrivacyCoverRequired {
-                PrivacyCoverView()
-                    .zIndex(2)
-            }
-
-            if launchOptions.enablesLayoutToggleFixture, !isTherapistShellSuppressed {
-                Button {
-                    fixtureForcesCompactNavigation.toggle()
-                } label: {
-                    Text(verbatim: "Toggle layout")
+                if isPrivacyCoverRequired {
+                    PrivacyCoverView()
+                        .zIndex(2)
                 }
-                .buttonStyle(.borderedProminent)
-                .otMinimumInteractiveSize()
-                .accessibilityIdentifier("ui-test.navigation.layout.toggle")
-                .padding(OTSpacing.sm)
-                .zIndex(3)
+
+                if launchOptions.enablesLayoutToggleFixture, !isTherapistShellSuppressed {
+                    Button {
+                        fixtureForcesCompactNavigation.toggle()
+                    } label: {
+                        Text(verbatim: "Toggle layout")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .otMinimumInteractiveSize()
+                    .accessibilityIdentifier("ui-test.navigation.layout.toggle")
+                    .padding(OTSpacing.sm)
+                    .zIndex(3)
+                }
+            }
+            .onChange(of: timeline.date) {
+                visualTimerController.refresh()
             }
         }
         .animation(nil, value: isPrivacyCoverRequired)
+        .onChange(of: visualTimerController.completionSequence) {
+            guard UIAccessibility.isVoiceOverRunning else { return }
+            UIAccessibility.post(
+                notification: .announcement,
+                argument: String(localized: "visualTimer.accessibility.completionAnnouncement")
+            )
+        }
     }
 
     private var isTherapistShellSuppressed: Bool {
@@ -76,14 +101,25 @@ struct AppSceneRootView: View {
         if forcesCompactNavigation {
             AppShellView(
                 navigation: $navigation,
+                visualTimerController: visualTimerController,
                 forcesCompactNavigation: true
             )
             .environment(\.horizontalSizeClass, .compact)
         } else {
             AppShellView(
                 navigation: $navigation,
+                visualTimerController: visualTimerController,
                 forcesCompactNavigation: false
             )
+        }
+    }
+
+    @ViewBuilder
+    private var childFacingContent: some View {
+        if launchOptions.startsInChildFacingFixture {
+            ChildFacingFixtureView()
+        } else {
+            VisualTimerChildView(controller: visualTimerController)
         }
     }
 
@@ -96,6 +132,7 @@ struct AppShellView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Binding var navigation: AppNavigationState
 
+    let visualTimerController: VisualTimerController
     let forcesCompactNavigation: Bool
 
     var body: some View {
@@ -223,7 +260,12 @@ struct AppShellView: View {
     private func destinationView(for destination: AppDestination) -> some View {
         switch destination {
         case .visualTimer:
-            ToolPlaceholderView()
+            VisualTimerView(
+                controller: visualTimerController,
+                onPresentChildFacing: {
+                    navigation.presentChildFacing(.visualTimer)
+                }
+            )
         }
     }
 
@@ -286,18 +328,6 @@ struct AppShellView: View {
             get: { navigation.compactToolsPath },
             set: { navigation.compactToolsPath = $0 }
         )
-    }
-}
-
-private struct ToolPlaceholderView: View {
-    var body: some View {
-        ContentUnavailableView {
-            Label("tool.visualTimer.title", systemImage: "timer")
-        } description: {
-            Text("tool.visualTimer.placeholder.detail")
-        }
-        .accessibilityIdentifier("tool.visualTimer.destination")
-        .navigationTitle("tool.visualTimer.title")
     }
 }
 

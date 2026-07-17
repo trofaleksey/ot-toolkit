@@ -35,6 +35,10 @@
 		C1000000000000000000001A /* OTAdultExitControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001B /* OTAdultExitControl.swift */; };
 		C1000000000000000000001B /* AppNavigationStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001C /* AppNavigationStateTests.swift */; };
 		C1000000000000000000001C /* AdaptiveNavigationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001D /* AdaptiveNavigationUITests.swift */; };
+		C1000000000000000000001D /* VisualTimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001E /* VisualTimerController.swift */; };
+		C1000000000000000000001E /* VisualTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001F /* VisualTimerView.swift */; };
+		C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000020 /* VisualTimerControllerTests.swift */; };
+		C10000000000000000000020 /* VisualTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000021 /* VisualTimerUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +88,10 @@
 		B1000000000000000000001B /* OTAdultExitControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTAdultExitControl.swift; sourceTree = "<group>"; };
 		B1000000000000000000001C /* AppNavigationStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationStateTests.swift; sourceTree = "<group>"; };
 		B1000000000000000000001D /* AdaptiveNavigationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveNavigationUITests.swift; sourceTree = "<group>"; };
+		B1000000000000000000001E /* VisualTimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerController.swift; sourceTree = "<group>"; };
+		B1000000000000000000001F /* VisualTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerView.swift; sourceTree = "<group>"; };
+		B10000000000000000000020 /* VisualTimerControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerControllerTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000021 /* VisualTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerUITests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000000E /* Domain */,
+				A10000000000000000000019 /* Presentation */,
 			);
 			path = VisualTimer;
 			sourceTree = "<group>";
@@ -191,6 +200,15 @@
 				B1000000000000000000000B /* VisualTimerStateMachine.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000019 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B1000000000000000000001E /* VisualTimerController.swift */,
+				B1000000000000000000001F /* VisualTimerView.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000008 /* Resources */ = {
@@ -264,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000011 /* Domain */,
+				A1000000000000000000001A /* Presentation */,
 			);
 			path = VisualTimer;
 			sourceTree = "<group>";
@@ -274,6 +293,14 @@
 				B1000000000000000000000C /* VisualTimerStateMachineTests.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		A1000000000000000000001A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000020 /* VisualTimerControllerTests.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000015 /* Core */ = {
@@ -316,6 +343,7 @@
 			children = (
 				B1000000000000000000001D /* AdaptiveNavigationUITests.swift */,
 				B10000000000000000000008 /* AppLaunchUITests.swift */,
+				B10000000000000000000021 /* VisualTimerUITests.swift */,
 			);
 			path = CriticalFlows;
 			sourceTree = "<group>";
@@ -475,6 +503,8 @@
 				C10000000000000000000003 /* HomeView.swift in Sources */,
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
+				C1000000000000000000001D /* VisualTimerController.swift in Sources */,
+				C1000000000000000000001E /* VisualTimerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +518,7 @@
 				C10000000000000000000012 /* DesignTokenTests.swift in Sources */,
 				C10000000000000000000013 /* SemanticColorTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
+				C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +529,7 @@
 				C1000000000000000000001C /* AdaptiveNavigationUITests.swift in Sources */,
 				C10000000000000000000008 /* AppLaunchUITests.swift in Sources */,
 				C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */,
+				C10000000000000000000020 /* VisualTimerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
