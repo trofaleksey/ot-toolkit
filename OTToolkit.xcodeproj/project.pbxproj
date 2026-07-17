@@ -41,6 +41,10 @@
 		C10000000000000000000020 /* VisualTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000021 /* VisualTimerUITests.swift */; };
 		C10000000000000000000021 /* VisualTimerRuntimeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000022 /* VisualTimerRuntimeCoordinator.swift */; };
 		C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000023 /* VisualTimerRuntimeCoordinatorTests.swift */; };
+		C40000000000000000000001 /* LocalStoreFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000001 /* LocalStoreFileSystem.swift */; };
+		C40000000000000000000002 /* LocalStoreContainerLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */; };
+		C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000003 /* LocalStoreFileSystemTests.swift */; };
+		C40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +100,10 @@
 		B10000000000000000000021 /* VisualTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerUITests.swift; sourceTree = "<group>"; };
 		B10000000000000000000022 /* VisualTimerRuntimeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerRuntimeCoordinator.swift; sourceTree = "<group>"; };
 		B10000000000000000000023 /* VisualTimerRuntimeCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerRuntimeCoordinatorTests.swift; sourceTree = "<group>"; };
+		B40000000000000000000001 /* LocalStoreFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreFileSystem.swift; sourceTree = "<group>"; };
+		B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreContainerLifecycle.swift; sourceTree = "<group>"; };
+		B40000000000000000000003 /* LocalStoreFileSystemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreFileSystemTests.swift; sourceTree = "<group>"; };
+		B40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreContainerLifecycleTests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,6 +239,7 @@
 			children = (
 				A10000000000000000000013 /* Accessibility */,
 				A10000000000000000000014 /* DesignSystem */,
+				A40000000000000000000001 /* Persistence */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -254,6 +263,15 @@
 				B1000000000000000000000F /* OTTypography.swift */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000001 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */,
+				B40000000000000000000001 /* LocalStoreFileSystem.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000009 /* OTToolkitTests */ = {
@@ -314,6 +332,7 @@
 			children = (
 				A10000000000000000000016 /* Accessibility */,
 				A10000000000000000000017 /* DesignSystem */,
+				A40000000000000000000002 /* Persistence */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -333,6 +352,15 @@
 				B10000000000000000000014 /* SemanticColorTests.swift */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000002 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift */,
+				B40000000000000000000003 /* LocalStoreFileSystemTests.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		A1000000000000000000000B /* OTToolkitUITests */ = {
@@ -506,6 +534,8 @@
 				C1000000000000000000000D /* OTRadius.swift in Sources */,
 				C1000000000000000000000C /* OTSpacing.swift in Sources */,
 				C1000000000000000000000E /* OTTypography.swift in Sources */,
+				C40000000000000000000002 /* LocalStoreContainerLifecycle.swift in Sources */,
+				C40000000000000000000001 /* LocalStoreFileSystem.swift in Sources */,
 				C10000000000000000000003 /* HomeView.swift in Sources */,
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
@@ -524,6 +554,8 @@
 				C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */,
 				C10000000000000000000012 /* DesignTokenTests.swift in Sources */,
 				C10000000000000000000013 /* SemanticColorTests.swift in Sources */,
+				C40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift in Sources */,
+				C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 				C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */,
 				C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */,

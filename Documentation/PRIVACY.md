@@ -86,7 +86,7 @@ Regulation Cards provide therapist-reviewed reference content, not individualize
 
 ## Privacy manifest baseline
 
-The OTK-001 bootstrap collects no data, performs no tracking, and directly uses no required-reason API. Its PrivacyInfo.xcprivacy declares `NSPrivacyTracking` as false and omits unused data-collection and accessed-API declarations. OTK-004 must re-audit the manifest when SwiftData, AppStorage/UserDefaults, file timestamps, or other persistence APIs are introduced; later tickets repeat the review whenever the implemented data flow or API surface changes.
+OTK-004 introduces direct UserDefaults access only to snapshot, clear, and, after a failed reset, restore app-owned preferences. PrivacyInfo.xcprivacy declares the UserDefaults required-reason category with reason `CA92.1` and continues to declare `NSPrivacyTracking` as false. The persistence boundary does not access file timestamps, so it does not declare the file-timestamp category. Later tickets repeat the review whenever the implemented data flow or API surface changes.
 
 ## Public disclosures and release gate
 

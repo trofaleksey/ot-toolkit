@@ -94,13 +94,13 @@ final class VisualTimerUITests: XCTestCase {
         AccessibilityTestSupport.assertFitsHorizontally(sound, in: window)
         try app.performAccessibilityAudit(for: [.textClipped])
         tapSwitch(sound)
+        XCTAssertEqual(sound.value as? String, "1")
 
         reveal(haptic, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(haptic)
         AccessibilityTestSupport.assertFitsHorizontally(haptic, in: window)
         try app.performAccessibilityAudit(for: [.textClipped])
         tapSwitch(haptic)
-        XCTAssertEqual(sound.value as? String, "1")
         XCTAssertEqual(haptic.value as? String, "1")
 
         let disclosure = element(in: app, identifier: "visualTimer.lifecycle.disclosure")
@@ -230,7 +230,9 @@ final class VisualTimerUITests: XCTestCase {
 
     @MainActor
     private func tapSwitch(_ element: XCUIElement) {
-        element.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        element.coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 0.5))
+            .withOffset(CGVector(dx: -25, dy: 0))
+            .tap()
     }
 
     @MainActor
