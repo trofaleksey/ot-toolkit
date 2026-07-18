@@ -49,7 +49,6 @@ terminate_command() {
       || kill -KILL "${command_pid}" 2>/dev/null \
       || true
     wait "${command_pid}" 2>/dev/null || true
-    xcrun simctl shutdown all >/dev/null 2>&1 || true
   fi
   command_pid=
 }
@@ -66,7 +65,7 @@ trap cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-"$@" > >(tee "${log_path}") 2>&1 &
+"$@" > "${log_path}" 2>&1 &
 command_pid=$!
 
 (
@@ -93,10 +92,10 @@ status=$?
 set -e
 command_pid=
 stop_watchdog
+tail -n 500 "${log_path}" || true
 
 if [[ -f "${timeout_marker}" ]]; then
   rm -f "${timeout_marker}"
-  xcrun simctl shutdown all >/dev/null 2>&1 || true
   exit 124
 fi
 
