@@ -1,3 +1,4 @@
+import Observation
 import Synchronization
 import XCTest
 @testable import OTToolkit
@@ -101,6 +102,21 @@ final class VisualTimerControllerTests: XCTestCase {
         clock.advance(by: .seconds(1))
         controller.refresh()
         XCTAssertEqual(controller.completionSequence, 2)
+    }
+
+    func testRefreshDoesNotPublishAnUnchangedSnapshot() {
+        let controller = VisualTimerController(clock: ManualPresentationClock())
+        let didPublishChange = Mutex(false)
+
+        withObservationTracking {
+            _ = controller.snapshot
+        } onChange: {
+            didPublishChange.withLock { $0 = true }
+        }
+
+        controller.refresh()
+
+        XCTAssertFalse(didPublishChange.withLock { $0 })
     }
 
     func testDisplayRoundsPartialRemainingSecondsUp() {

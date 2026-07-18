@@ -78,7 +78,7 @@ struct AppSceneRootView: View {
             }
         }
         .background {
-            VisualTimerTimelineDriver(controller: visualTimerController) {
+            VisualTimerTickDriver(controller: visualTimerController) {
                 synchronizeVisualTimerRuntime()
             }
         }
@@ -157,33 +157,32 @@ struct AppSceneRootView: View {
     }
 }
 
-private struct VisualTimerTimelineDriver: View {
+private struct VisualTimerTickDriver: View {
     let controller: VisualTimerController
     let onSynchronizeRuntime: () -> Void
 
     var body: some View {
-        TimelineView(
-            .periodic(
-                from: .now,
-                by: controller.isRunning ? 0.25 : 60
-            )
-        ) { timeline in
-            Color.clear
-                .frame(width: 0, height: 0)
-                .onAppear {
+        Color.clear
+            .frame(width: 0, height: 0)
+            .task(id: controller.phase) {
+                onSynchronizeRuntime()
+
+                guard controller.isRunning else { return }
+
+                while !Task.isCancelled, controller.isRunning {
+                    do {
+                        try await Task.sleep(for: .milliseconds(250))
+                    } catch {
+                        return
+                    }
+
                     refreshAndSynchronize()
                 }
-                .onChange(of: timeline.date) {
-                    refreshAndSynchronize()
-                }
-                .onChange(of: controller.phase) {
-                    onSynchronizeRuntime()
-                }
-                .onChange(of: controller.completionSequence) {
-                    onSynchronizeRuntime()
-                }
-        }
-        .accessibilityHidden(true)
+            }
+            .onChange(of: controller.completionSequence) {
+                onSynchronizeRuntime()
+            }
+            .accessibilityHidden(true)
     }
 
     private func refreshAndSynchronize() {

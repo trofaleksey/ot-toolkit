@@ -153,7 +153,10 @@ final class VisualTimerController {
     }
 
     func refresh() {
-        snapshot = stateMachine.reconcile()
+        let refreshedSnapshot = stateMachine.reconcile()
+        if refreshedSnapshot != snapshot {
+            snapshot = refreshedSnapshot
+        }
         consumePendingCompletion()
     }
 
