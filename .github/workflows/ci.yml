@@ -260,8 +260,10 @@ jobs:
         timeout-minutes: 5
         shell: bash
         run: |
-          set -o pipefail
-          xcodebuild test \
+          ./Scripts/run_xcodebuild_with_timeout.sh \
+            240 \
+            TestResults/iPhoneUnit.log \
+            xcodebuild test \
             -project OTToolkit.xcodeproj \
             -scheme OTToolkit \
             -testPlan OTToolkit \
@@ -272,15 +274,16 @@ jobs:
             -test-timeouts-enabled YES \
             -default-test-execution-time-allowance 120 \
             -maximum-test-execution-time-allowance 300 \
-            CODE_SIGNING_ALLOWED=NO 2>&1 \
-            | tee TestResults/iPhoneUnit.log
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Test iPhone UI tests
         timeout-minutes: 25
         shell: bash
         run: |
-          set -o pipefail
-          xcodebuild test \
+          ./Scripts/run_xcodebuild_with_timeout.sh \
+            1440 \
+            TestResults/iPhoneUI.log \
+            xcodebuild test \
             -project OTToolkit.xcodeproj \
             -scheme OTToolkit \
             -testPlan OTToolkit \
@@ -291,15 +294,16 @@ jobs:
             -test-timeouts-enabled YES \
             -default-test-execution-time-allowance 120 \
             -maximum-test-execution-time-allowance 300 \
-            CODE_SIGNING_ALLOWED=NO 2>&1 \
-            | tee TestResults/iPhoneUI.log
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Test iPad critical flow
         timeout-minutes: 20
         shell: bash
         run: |
-          set -o pipefail
-          xcodebuild test \
+          ./Scripts/run_xcodebuild_with_timeout.sh \
+            1140 \
+            TestResults/iPad.log \
+            xcodebuild test \
             -project OTToolkit.xcodeproj \
             -scheme OTToolkit \
             -testPlan OTToolkit \
@@ -310,16 +314,24 @@ jobs:
             -test-timeouts-enabled YES \
             -default-test-execution-time-allowance 120 \
             -maximum-test-execution-time-allowance 300 \
-            CODE_SIGNING_ALLOWED=NO 2>&1 \
-            | tee TestResults/iPad.log
+            CODE_SIGNING_ALLOWED=NO
 
-      - name: Upload failure diagnostics
+      - name: Upload failure logs
+        timeout-minutes: 2
+        if: ${{ always() && (failure() || cancelled()) }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: xcode-logs-${{ matrix.id }}-${{ github.run_attempt }}
+          path: TestResults/*.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload failure result bundles
+        timeout-minutes: 5
         if: ${{ always() && (failure() || cancelled()) }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: xcode-result-bundles-${{ matrix.id }}-${{ github.run_attempt }}
-          path: |
-            TestResults/*.xcresult
-            TestResults/*.log
+          path: TestResults/*.xcresult
           if-no-files-found: ignore
           retention-days: 7
