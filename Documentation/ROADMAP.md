@@ -6,11 +6,46 @@ GitHub Issues are the source of truth for active work, status, assignee, priorit
 
 OTK roadmap IDs are allocated here by the maintainer and must be unique. GitHub issue numbers are separate and are the references pull requests use to close work.
 
-Work in vertical slices and keep only one feature implementation in progress unless two tickets have no shared files or decisions. Extract shared board infrastructure after a second feature proves the common behavior.
+Work in vertical slices and keep only one feature implementation in progress unless two tickets have no shared files or decisions. Optimize the private beta for a complete therapist journey across all three core tools, not for polish or reusable infrastructure within the first tool. Extract shared board infrastructure only when duplication is causing material maintenance cost; a second consumer alone does not make extraction release-blocking.
+
+## Core-beta operating target
+
+The private-beta journey is:
+
+> Open the app, select a core tool, configure it quickly, enter child-facing mode, complete the activity, exit safely, and optionally reuse a saved board.
+
+Work that neither enables nor protects this journey is deferred until after Gate B. In particular, the core-beta sequence excludes alternate timer visuals, nonessential appearance themes, board duplication, elaborate celebrations, speculative shared-board components, Choice Board, and Regulation Cards.
+
+Delivery uses two evidence levels:
+
+### Feature complete
+
+A feature can advance to the next vertical slice when:
+
+- Its bounded therapist and child-facing journey works end to end.
+- Pure domain tests and required persistence/migration tests pass.
+- Focused automated critical-flow coverage passes on iPhone and iPad.
+- Required semantics, labels, non-color state indicators, Dynamic Type layout, and adult exit are implemented and receive focused checks relevant to the changed flow.
+- No known critical privacy, data-loss, timer, or accessibility defect remains.
+
+Feature completion does not require rerunning and recording the entire manual release matrix after every intermediate pull request. A feature-specific manual check remains required when behavior cannot be meaningfully verified through automation.
+
+### Beta ready
+
+Before TestFlight use in real sessions, the complete shared test plan, full manual accessibility matrix, lifecycle and real-device checks, privacy and storage checks, asset provenance review, and regression across all three tools must pass. Deferring repeated exhaustive verification to this gate does not defer implementation of accessibility or privacy requirements.
 
 ## Current status
 
-The repository has a universal Xcode foundation with app, unit-test, and UI-test targets plus pinned CI. OTK-001 established the first green build/test baseline, and OTK-007 updates it for current App Store Connect requirements while retaining iOS 18 compatibility coverage. Later milestone tickets own navigation, design tokens, persistence, and feature behavior.
+The universal Xcode foundation, adaptive navigation, design/accessibility tokens, protected local-store boundary, deterministic timer domain, accessible timer UI, and timer lifecycle/feedback closeout are implemented. Timer enhancements are frozen unless Gate A or a critical defect demonstrates a need. The remaining MVP work is organized as three delivery slices: First–Then, Token Board, and Beta Release.
+
+## Lean delivery sequence
+
+1. **Timer closeout:** OTK-012 is complete; run Gate A when participants are available and keep noncritical timer enhancements parked.
+2. **First–Then slice:** complete OTK-020, OTK-021, and OTK-022 consecutively without unrelated infrastructure or polish work between them.
+3. **Token Board slice:** complete OTK-030 and OTK-031 using the smallest concrete implementation that satisfies the journey. Direct local duplication is acceptable when an abstraction would delay the usable tool.
+4. **Beta Release slice:** complete a trimmed OTK-040, then OTK-041 and OTK-042. Settings include only controls and disclosures required by shipped behavior; no theme system or general settings framework is required.
+
+OTK-032 is deferred until after Gate B. Reopen or reschedule it only if the completed First–Then and Token Board implementations reveal costly repeated behavior with a stable common shape.
 
 ## Milestone 0 — Foundation
 
@@ -43,6 +78,8 @@ Exit gate:
 | OTK-011 | Accessible timer setup, running, paused, completed, and child-facing UI | OTK-002, OTK-003, OTK-010 |
 | OTK-012 | Foreground sensory settings, idle-timer ownership, lifecycle-limit disclosure, and tester-acceptability check | OTK-011 |
 
+After OTK-012, issue 37 and other noncritical timer enhancements remain outside the core-beta sequence.
+
 Gate A:
 
 - Three practicing pediatric OTs complete the scripted task in VALIDATION_PLAN.md.
@@ -73,7 +110,8 @@ Exit gate:
 | --- | --- | --- |
 | OTK-030 | Token domain, goals, add/remove, reward, and completion tests | OTK-003 |
 | OTK-031 | Saved templates and accessible child-facing token flow | OTK-020, OTK-030 |
-| OTK-032 | Extract only shared board components proven by two consumers | OTK-021, OTK-031 |
+
+OTK-032 is not part of this milestone's exit gate. It is deferred until after Gate B and requires evidence that extraction will reduce current maintenance cost.
 
 Exit gate:
 
@@ -85,7 +123,7 @@ Exit gate:
 
 | Issue | Outcome | Depends on |
 | --- | --- | --- |
-| OTK-040 | Settings, idempotent reset, inactive-screen redaction, privacy copy, and support guidance | Milestones 1–3 |
+| OTK-040 | Essential shipped-behavior settings, idempotent reset, inactive-screen redaction, privacy copy, and support guidance | Milestones 1–3 |
 | OTK-041 | Pre-beta privacy policy/reporting channel, asset provenance, signing/App Store Connect setup, Privacy Manifest verification, TestFlight metadata, and manual beta protocol | OTK-040 |
 | OTK-042 | Resolve beta defects and record Gate B decision | OTK-041 |
 
@@ -132,12 +170,13 @@ An issue is ready only when it has:
 
 ## Definition of done
 
+- Use the **Feature complete** evidence level for intermediate feature delivery and the **Beta ready** evidence level before TestFlight use in real sessions.
 - Acceptance criteria are demonstrated.
 - Focused tests pass; critical flows include iPhone and iPad coverage.
 - Formatting/linting configured by OTK-001 passes.
 - Debug and Release builds add no warnings.
 - Persistence changes include versioned migration and real-store fixtures.
-- VoiceOver, largest Dynamic Type, Reduce Motion, Increase Contrast, and Differentiate Without Color checks are recorded.
+- Relevant automated and feature-specific manual accessibility checks are recorded during implementation; the full VoiceOver, largest Dynamic Type, Reduce Motion, Increase Contrast, Differentiate Without Color, Reduce Transparency, Switch Control, and keyboard matrix is recorded at the beta gate.
 - Privacy/content/permission documentation matches behavior.
 - No real child or patient data appears in source, fixtures, issues, logs, or artifacts.
 - Remaining manual checks and risks are listed in the pull request.
