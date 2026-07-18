@@ -33,14 +33,6 @@ struct AppSceneRootView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             appShell
-                .safeAreaInset(edge: .bottom, spacing: 0) {
-                    VisualTimerBanner(
-                        controller: visualTimerController,
-                        isTimerPresented: isVisualTimerPresented
-                    ) {
-                        navigation.show(.visualTimer)
-                    }
-                }
                 .disabled(isTherapistShellSuppressed)
                 .allowsHitTesting(!isTherapistShellSuppressed)
                 .accessibilityHidden(isTherapistShellSuppressed)
@@ -314,6 +306,9 @@ struct AppShellView: View {
             compactNavigation
         case .regularSplit:
             regularNavigation
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    visualTimerBanner
+                }
         }
     }
 
@@ -322,6 +317,9 @@ struct AppShellView: View {
             NavigationStack(path: compactToolsPathBinding) {
                 HomeView {
                     navigation.show(.visualTimer)
+                }
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    visualTimerBanner
                 }
                 .navigationDestination(for: AppDestination.self) { destination in
                     destinationView(for: destination)
@@ -335,6 +333,9 @@ struct AppShellView: View {
 
             NavigationStack {
                 sectionPlaceholder(for: .saved)
+                    .safeAreaInset(edge: .bottom, spacing: 0) {
+                        visualTimerBanner
+                    }
             }
             .tabItem {
                 Label(AppSection.saved.titleKey, systemImage: AppSection.saved.symbolName)
@@ -344,6 +345,9 @@ struct AppShellView: View {
 
             NavigationStack {
                 sectionPlaceholder(for: .settings)
+                    .safeAreaInset(edge: .bottom, spacing: 0) {
+                        visualTimerBanner
+                    }
             }
             .tabItem {
                 Label(AppSection.settings.titleKey, systemImage: AppSection.settings.symbolName)
@@ -352,6 +356,21 @@ struct AppShellView: View {
             .tag(AppSection.settings)
         }
         .accessibilityIdentifier("navigation.compact")
+    }
+
+    private var visualTimerBanner: some View {
+        VisualTimerBanner(
+            controller: visualTimerController,
+            isTimerPresented: isVisualTimerPresented
+        ) {
+            navigation.show(.visualTimer)
+        }
+    }
+
+    private var isVisualTimerPresented: Bool {
+        navigation.childFacingDestination == .visualTimer
+            || (navigation.selectedSection == .tools
+                && navigation.selectedDestination == .visualTimer)
     }
 
     private var regularNavigation: some View {

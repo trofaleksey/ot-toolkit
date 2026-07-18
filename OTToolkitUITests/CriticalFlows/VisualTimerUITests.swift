@@ -71,6 +71,9 @@ final class VisualTimerUITests: XCTestCase {
         XCTAssertTrue(banner.waitForExistence(timeout: 5))
         AccessibilityTestSupport.assertMinimumHitTarget(banner)
         AccessibilityTestSupport.assertFitsHorizontally(banner, in: app.windows.firstMatch)
+        let tabBar = app.tabBars.firstMatch
+        XCTAssertTrue(tabBar.waitForExistence(timeout: 5))
+        XCTAssertLessThanOrEqual(banner.frame.maxY, tabBar.frame.minY + 0.5)
         try app.performAccessibilityAudit(for: [.textClipped])
 
         let completion = XCTNSPredicateExpectation(
