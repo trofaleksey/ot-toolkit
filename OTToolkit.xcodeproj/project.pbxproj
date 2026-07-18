@@ -45,6 +45,10 @@
 		C40000000000000000000002 /* LocalStoreContainerLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */; };
 		C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000003 /* LocalStoreFileSystemTests.swift */; };
 		C40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift */; };
+		C50000000000000000000001 /* FirstThenSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000001 /* FirstThenSchemaV1.swift */; };
+		C50000000000000000000002 /* OTToolkitSchemaMigrationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000002 /* OTToolkitSchemaMigrationPlan.swift */; };
+		C50000000000000000000003 /* FirstThenBoardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000003 /* FirstThenBoardStore.swift */; };
+		C50000000000000000000004 /* FirstThenBoardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000004 /* FirstThenBoardStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +108,10 @@
 		B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreContainerLifecycle.swift; sourceTree = "<group>"; };
 		B40000000000000000000003 /* LocalStoreFileSystemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreFileSystemTests.swift; sourceTree = "<group>"; };
 		B40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreContainerLifecycleTests.swift; sourceTree = "<group>"; };
+		B50000000000000000000001 /* FirstThenSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenSchemaV1.swift; sourceTree = "<group>"; };
+		B50000000000000000000002 /* OTToolkitSchemaMigrationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTToolkitSchemaMigrationPlan.swift; sourceTree = "<group>"; };
+		B50000000000000000000003 /* FirstThenBoardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenBoardStore.swift; sourceTree = "<group>"; };
+		B50000000000000000000004 /* FirstThenBoardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenBoardStoreTests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +190,7 @@
 		A10000000000000000000006 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				A50000000000000000000001 /* FirstThen */,
 				A10000000000000000000007 /* Home */,
 				A1000000000000000000000D /* VisualTimer */,
 			);
@@ -194,6 +203,23 @@
 				B10000000000000000000003 /* HomeView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000001 /* FirstThen */ = {
+			isa = PBXGroup;
+			children = (
+				A50000000000000000000002 /* Persistence */,
+			);
+			path = FirstThen;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000002 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B50000000000000000000003 /* FirstThenBoardStore.swift */,
+				B50000000000000000000001 /* FirstThenSchemaV1.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		A1000000000000000000000D /* VisualTimer */ = {
@@ -270,6 +296,7 @@
 			children = (
 				B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */,
 				B40000000000000000000001 /* LocalStoreFileSystem.swift */,
+				B50000000000000000000002 /* OTToolkitSchemaMigrationPlan.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -296,9 +323,26 @@
 		A1000000000000000000000F /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				A50000000000000000000003 /* FirstThen */,
 				A10000000000000000000010 /* VisualTimer */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000003 /* FirstThen */ = {
+			isa = PBXGroup;
+			children = (
+				A50000000000000000000004 /* Persistence */,
+			);
+			path = FirstThen;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000004 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B50000000000000000000004 /* FirstThenBoardStoreTests.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		A10000000000000000000010 /* VisualTimer */ = {
@@ -536,6 +580,9 @@
 				C1000000000000000000000E /* OTTypography.swift in Sources */,
 				C40000000000000000000002 /* LocalStoreContainerLifecycle.swift in Sources */,
 				C40000000000000000000001 /* LocalStoreFileSystem.swift in Sources */,
+				C50000000000000000000002 /* OTToolkitSchemaMigrationPlan.swift in Sources */,
+				C50000000000000000000003 /* FirstThenBoardStore.swift in Sources */,
+				C50000000000000000000001 /* FirstThenSchemaV1.swift in Sources */,
 				C10000000000000000000003 /* HomeView.swift in Sources */,
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
@@ -556,6 +603,7 @@
 				C10000000000000000000013 /* SemanticColorTests.swift in Sources */,
 				C40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift in Sources */,
 				C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */,
+				C50000000000000000000004 /* FirstThenBoardStoreTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 				C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */,
 				C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */,
