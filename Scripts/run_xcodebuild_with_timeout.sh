@@ -19,7 +19,8 @@ fi
 
 mkdir -p "$(dirname "${log_path}")"
 timeout_marker="${log_path}.timeout"
-rm -f "${timeout_marker}"
+bounded_log_path="${log_path}.bounded"
+rm -f "${timeout_marker}" "${bounded_log_path}"
 
 command_pid=
 watchdog_pid=
@@ -53,11 +54,22 @@ terminate_command() {
   command_pid=
 }
 
+compact_log() {
+  if [[ -f "${log_path}" ]]; then
+    if tail -c 10485760 "${log_path}" > "${bounded_log_path}"; then
+      mv "${bounded_log_path}" "${log_path}"
+    else
+      rm -f "${bounded_log_path}"
+    fi
+  fi
+}
+
 cleanup() {
   status=$?
   trap - EXIT INT TERM
   stop_watchdog
   terminate_command
+  compact_log
   exit "${status}"
 }
 
@@ -92,7 +104,9 @@ status=$?
 set -e
 command_pid=
 stop_watchdog
+compact_log
 tail -n 500 "${log_path}" || true
+trap - EXIT INT TERM
 
 if [[ -f "${timeout_marker}" ]]; then
   rm -f "${timeout_marker}"
