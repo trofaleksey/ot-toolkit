@@ -6,6 +6,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     static let largestAccessibilityTextArgument = "-ui-test-largest-accessibility-text"
     static let startChildFacingFixtureArgument = "-ui-test-start-child-facing-fixture"
     static let timerDurationOverrideArgument = "-ui-test-timer-duration-seconds"
+    static let useInMemoryStoreArgument = "-ui-test-in-memory-store"
 
     let disablesAnimations: Bool
     let forcesCompactNavigation: Bool
@@ -14,6 +15,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     let usesLargestAccessibilityText: Bool
     let startsInChildFacingFixture: Bool
     let timerDurationOverrideSeconds: Int?
+    let usesInMemoryStore: Bool
 
     init(arguments: [String]) {
         disablesAnimations = arguments.contains(Self.disableAnimationsArgument)
@@ -22,6 +24,7 @@ struct AppLaunchOptions: Equatable, Sendable {
         forcesPrivacyCover = arguments.contains(Self.forcePrivacyCoverArgument)
         usesLargestAccessibilityText = arguments.contains(Self.largestAccessibilityTextArgument)
         startsInChildFacingFixture = arguments.contains(Self.startChildFacingFixtureArgument)
+        usesInMemoryStore = arguments.contains(Self.useInMemoryStoreArgument)
         timerDurationOverrideSeconds = Self.positiveInteger(
             following: Self.timerDurationOverrideArgument,
             in: arguments

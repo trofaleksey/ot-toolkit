@@ -30,6 +30,7 @@ final class AppLaunchOptionsTests: XCTestCase {
                 "-ui-test-enable-layout-toggle-fixture",
                 "-ui-test-force-privacy-cover",
                 "-ui-test-start-child-facing-fixture",
+                "-ui-test-in-memory-store",
             ]
         )
 
@@ -37,6 +38,7 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertTrue(options.enablesLayoutToggleFixture)
         XCTAssertTrue(options.forcesPrivacyCover)
         XCTAssertTrue(options.startsInChildFacingFixture)
+        XCTAssertTrue(options.usesInMemoryStore)
     }
 
     func testPositiveTimerDurationOverrideIsRecognized() {
@@ -77,6 +79,7 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertFalse(options.enablesLayoutToggleFixture)
         XCTAssertFalse(options.forcesPrivacyCover)
         XCTAssertFalse(options.startsInChildFacingFixture)
+        XCTAssertFalse(options.usesInMemoryStore)
         XCTAssertNil(options.timerDurationOverrideSeconds)
     }
 
@@ -88,6 +91,7 @@ final class AppLaunchOptionsTests: XCTestCase {
                 "--ui-test-enable-layout-toggle-fixture",
                 "--ui-test-force-privacy-cover",
                 "--ui-test-start-child-facing-fixture",
+                "--ui-test-in-memory-store",
             ]
         )
 
@@ -95,5 +99,6 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertFalse(options.enablesLayoutToggleFixture)
         XCTAssertFalse(options.forcesPrivacyCover)
         XCTAssertFalse(options.startsInChildFacingFixture)
+        XCTAssertFalse(options.usesInMemoryStore)
     }
 }
