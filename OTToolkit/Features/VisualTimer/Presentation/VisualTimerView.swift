@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct VisualTimerView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var isConfirmingReset = false
 
     let controller: VisualTimerController
@@ -16,7 +18,8 @@ struct VisualTimerView: View {
                 }
             }
             .frame(maxWidth: 720)
-            .padding(OTSpacing.xl)
+            .padding(.horizontal, horizontalContentPadding)
+            .padding(.vertical, OTSpacing.xl)
             .frame(maxWidth: .infinity)
         }
         .background(OTColor.background.ignoresSafeArea())
@@ -78,6 +81,105 @@ struct VisualTimerView: View {
             .accessibilityValue(controller.selectedDurationDescription)
             .accessibilityIdentifier("visualTimer.action.start")
             .keyboardShortcut(.defaultAction)
+
+            completionFeedbackSettings
+
+            lifecycleLimitDisclosure
+        }
+    }
+
+    private var completionFeedbackSettings: some View {
+        VStack(alignment: .leading, spacing: OTSpacing.sm) {
+            Text("visualTimer.feedback.title")
+                .font(OTTypography.sectionHeading)
+                .foregroundStyle(OTColor.primaryText)
+                .accessibilityAddTraits(.isHeader)
+
+            Text("visualTimer.feedback.description")
+                .font(OTTypography.body)
+                .foregroundStyle(OTColor.secondaryText)
+                .fixedSize(horizontal: false, vertical: true)
+
+            feedbackToggle(
+                "visualTimer.feedback.sound",
+                isOn: Binding(
+                    get: { controller.isCompletionSoundEnabled },
+                    set: { controller.setCompletionSoundEnabled($0) }
+                ),
+                identifier: "visualTimer.feedback.sound"
+            )
+
+            feedbackToggle(
+                "visualTimer.feedback.haptic",
+                isOn: Binding(
+                    get: { controller.isCompletionHapticEnabled },
+                    set: { controller.setCompletionHapticEnabled($0) }
+                ),
+                identifier: "visualTimer.feedback.haptic"
+            )
+        }
+        .padding(OTSpacing.md)
+        .background(OTColor.surface)
+        .clipShape(RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+                .stroke(OTColor.separator, lineWidth: 1)
+        }
+    }
+
+    private var horizontalContentPadding: CGFloat {
+        horizontalSizeClass == .compact ? OTSpacing.md : OTSpacing.xl
+    }
+
+    private func feedbackToggle(
+        _ titleKey: LocalizedStringKey,
+        isOn: Binding<Bool>,
+        identifier: String
+    ) -> some View {
+        Toggle(isOn: isOn) {
+            Text(titleKey)
+                .font(OTTypography.controlLabel)
+                .foregroundStyle(OTColor.primaryText)
+                .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
+        }
+        .tint(OTColor.accent)
+        .otMinimumInteractiveSize()
+        .accessibilityIdentifier(identifier)
+    }
+
+    private var lifecycleLimitDisclosure: some View {
+        HStack(alignment: .top, spacing: OTSpacing.sm) {
+            Image(systemName: "info.circle")
+                .foregroundStyle(OTColor.accent)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: OTSpacing.xs) {
+                Text("visualTimer.lifecycle.title")
+                    .font(OTTypography.sectionHeading)
+                    .foregroundStyle(OTColor.primaryText)
+                    .accessibilityAddTraits(.isHeader)
+
+                Text("visualTimer.lifecycle.processLoss")
+                    .font(OTTypography.body)
+                    .foregroundStyle(OTColor.secondaryText)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("visualTimer.lifecycle.disclosure")
+
+                Text("visualTimer.lifecycle.noAlerts")
+                    .font(OTTypography.body)
+                    .foregroundStyle(OTColor.secondaryText)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("visualTimer.lifecycle.alertsDisclosure")
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(OTSpacing.md)
+        .background(OTColor.surface)
+        .clipShape(RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+                .stroke(OTColor.separator, lineWidth: 1)
         }
     }
 
@@ -137,25 +239,40 @@ struct VisualTimerView: View {
         }
     }
 
+    @ViewBuilder
     private var activeContent: some View {
-        VStack(spacing: OTSpacing.lg) {
-            VisualTimerStatusView(controller: controller)
+        if verticalSizeClass == .compact {
+            HStack(spacing: OTSpacing.lg) {
+                VisualTimerStatusView(controller: controller)
+                    .frame(maxWidth: .infinity)
 
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: OTSpacing.sm) {
-                    primaryStateButton
-                    resetButton
-                    childFacingButton
-                }
-
-                VStack(spacing: OTSpacing.sm) {
-                    primaryStateButton
-                    resetButton
-                    childFacingButton
-                }
+                activeControls
+                    .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
+        } else {
+            VStack(spacing: OTSpacing.lg) {
+                VisualTimerStatusView(controller: controller)
+
+                activeControls
+            }
         }
+    }
+
+    private var activeControls: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: OTSpacing.sm) {
+                primaryStateButton
+                resetButton
+                childFacingButton
+            }
+
+            VStack(spacing: OTSpacing.sm) {
+                primaryStateButton
+                resetButton
+                childFacingButton
+            }
+        }
+        .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder

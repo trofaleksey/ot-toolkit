@@ -33,6 +33,7 @@ is reviewed by automated contrast tests as well as the manual accessibility rele
 | `OTDestructive` | Original semantic color | `OTToolkit/Resources/Assets.xcassets/OTDestructive.colorset/Contents.json` — `09a910ba689feb20dbb8706ff5b8696a482dd131af53f9050f3836eb986dbf7b` | Destructive foreground paired with explicit localized copy |
 | `OTSeparator` | Original semantic color | `OTToolkit/Resources/Assets.xcassets/OTSeparator.colorset/Contents.json` — `ea9cd7482a968661e2f63fdfbd216bbb830711260eb52b295a2d8d7bcea1b399` | Essential boundary color; no label |
 | `OTFocus` | Original semantic color | `OTToolkit/Resources/Assets.xcassets/OTFocus.colorset/Contents.json` — `e39c5e3a74fc6b94ea47446e3afd3d9f3d955df54d039c017c83141c99d33174` | Focus foreground or outline paired with shape and platform focus behavior |
+| `visualTimer.completionTone` | Original programmatic audio | `OTToolkit/Features/VisualTimer/Presentation/VisualTimerRuntimeCoordinator.swift` — `722ee857da4be58efc4b2ead96e5f330efc348792b3f9e5893a7fc88610e7c16` | Optional foreground-only completion cue, off by default; visible completed text, shape, and zero-time value remain the primary meaning |
 | `folder` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces the localized Saved navigation label; the text remains the primary meaning |
 | `gearshape` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces the localized Settings navigation label; the text remains the primary meaning |
 | `rectangle.portrait.and.arrow.right` | Referenced SF Symbol; not copied | Apple platform asset referenced by symbol name; repository source and hash not applicable | Reinforces the localized adult-exit label; the visible text and confirmation provide the primary meaning |
@@ -45,3 +46,10 @@ palette; it contains no modified third-party source material. SF Symbols referen
 are unchanged Apple platform assets under the applicable SDK terms and require no in-app
 attribution. OTK-002 engineering review date: 2026-07-16. Product owner rights confirmation
 remains a release check.
+
+The `visualTimer.completionTone` waveform is deterministic original OT Toolkit code created
+on 2026-07-16 for OTK-012 (`#12`). It is a 220-millisecond, 659.25 Hz sine tone with a short
+attack and release envelope, generated in memory at runtime. It has no external provider,
+model, source recording, or third-party license; it is project-owned, all rights reserved,
+and requires no attribution. Engineering review confirms that it is optional, calm, and not
+used as the sole completion cue. Real-device sensory acceptability remains part of Gate B.

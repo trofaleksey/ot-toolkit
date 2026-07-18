@@ -121,7 +121,7 @@ jobs:
     needs: repository-policy
     name: Build and test (${{ matrix.name }})
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
+    timeout-minutes: 55
     strategy:
       fail-fast: false
       matrix:
@@ -256,20 +256,54 @@ jobs:
             -resultBundlePath TestResults/ReleaseBuild.xcresult \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Test iPhone
+      - name: Test iPhone unit tests
+        timeout-minutes: 5
+        shell: bash
         run: |
-          xcodebuild test \
+          ./Scripts/run_xcodebuild_with_timeout.sh \
+            240 \
+            TestResults/iPhoneUnit.log \
+            xcodebuild test \
             -project OTToolkit.xcodeproj \
             -scheme OTToolkit \
             -testPlan OTToolkit \
+            -only-testing:OTToolkitTests \
             -destination 'platform=iOS Simulator,arch=arm64,name=${{ matrix.phone }},OS=${{ matrix.runtime }}' \
             -derivedDataPath "${DERIVED_DATA_PATH}" \
-            -resultBundlePath TestResults/iPhone.xcresult \
+            -resultBundlePath TestResults/iPhoneUnit.xcresult \
+            -test-timeouts-enabled YES \
+            -default-test-execution-time-allowance 120 \
+            -maximum-test-execution-time-allowance 300 \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Test iPhone UI tests
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          ./Scripts/run_xcodebuild_with_timeout.sh \
+            1440 \
+            TestResults/iPhoneUI.log \
+            xcodebuild test \
+            -project OTToolkit.xcodeproj \
+            -scheme OTToolkit \
+            -testPlan OTToolkit \
+            -only-testing:OTToolkitUITests \
+            -destination 'platform=iOS Simulator,arch=arm64,name=${{ matrix.phone }},OS=${{ matrix.runtime }}' \
+            -derivedDataPath "${DERIVED_DATA_PATH}" \
+            -resultBundlePath TestResults/iPhoneUI.xcresult \
+            -test-timeouts-enabled YES \
+            -default-test-execution-time-allowance 120 \
+            -maximum-test-execution-time-allowance 300 \
             CODE_SIGNING_ALLOWED=NO
 
       - name: Test iPad critical flow
+        timeout-minutes: 20
+        shell: bash
         run: |
-          xcodebuild test \
+          ./Scripts/run_xcodebuild_with_timeout.sh \
+            1140 \
+            TestResults/iPad.log \
+            xcodebuild test \
             -project OTToolkit.xcodeproj \
             -scheme OTToolkit \
             -testPlan OTToolkit \
@@ -277,10 +311,24 @@ jobs:
             -destination 'platform=iOS Simulator,arch=arm64,name=${{ matrix.tablet }},OS=${{ matrix.runtime }}' \
             -derivedDataPath "${DERIVED_DATA_PATH}" \
             -resultBundlePath TestResults/iPad.xcresult \
+            -test-timeouts-enabled YES \
+            -default-test-execution-time-allowance 120 \
+            -maximum-test-execution-time-allowance 300 \
             CODE_SIGNING_ALLOWED=NO
 
+      - name: Upload failure logs
+        timeout-minutes: 2
+        if: ${{ always() && (failure() || cancelled()) }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: xcode-logs-${{ matrix.id }}-${{ github.run_attempt }}
+          path: TestResults/*.log
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Upload failure result bundles
-        if: ${{ failure() }}
+        timeout-minutes: 5
+        if: ${{ always() && (failure() || cancelled()) }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: xcode-result-bundles-${{ matrix.id }}-${{ github.run_attempt }}

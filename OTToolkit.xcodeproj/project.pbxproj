@@ -39,6 +39,8 @@
 		C1000000000000000000001E /* VisualTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000000000000000000001F /* VisualTimerView.swift */; };
 		C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000020 /* VisualTimerControllerTests.swift */; };
 		C10000000000000000000020 /* VisualTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000021 /* VisualTimerUITests.swift */; };
+		C10000000000000000000021 /* VisualTimerRuntimeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000022 /* VisualTimerRuntimeCoordinator.swift */; };
+		C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000023 /* VisualTimerRuntimeCoordinatorTests.swift */; };
 		C40000000000000000000001 /* LocalStoreFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000001 /* LocalStoreFileSystem.swift */; };
 		C40000000000000000000002 /* LocalStoreContainerLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */; };
 		C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40000000000000000000003 /* LocalStoreFileSystemTests.swift */; };
@@ -96,6 +98,8 @@
 		B1000000000000000000001F /* VisualTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerView.swift; sourceTree = "<group>"; };
 		B10000000000000000000020 /* VisualTimerControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerControllerTests.swift; sourceTree = "<group>"; };
 		B10000000000000000000021 /* VisualTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerUITests.swift; sourceTree = "<group>"; };
+		B10000000000000000000022 /* VisualTimerRuntimeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerRuntimeCoordinator.swift; sourceTree = "<group>"; };
+		B10000000000000000000023 /* VisualTimerRuntimeCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualTimerRuntimeCoordinatorTests.swift; sourceTree = "<group>"; };
 		B40000000000000000000001 /* LocalStoreFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreFileSystem.swift; sourceTree = "<group>"; };
 		B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreContainerLifecycle.swift; sourceTree = "<group>"; };
 		B40000000000000000000003 /* LocalStoreFileSystemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreFileSystemTests.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				B1000000000000000000001E /* VisualTimerController.swift */,
+				B10000000000000000000022 /* VisualTimerRuntimeCoordinator.swift */,
 				B1000000000000000000001F /* VisualTimerView.swift */,
 			);
 			path = Presentation;
@@ -317,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				B10000000000000000000020 /* VisualTimerControllerTests.swift */,
+				B10000000000000000000023 /* VisualTimerRuntimeCoordinatorTests.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -534,6 +540,7 @@
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
 				C1000000000000000000001D /* VisualTimerController.swift in Sources */,
+				C10000000000000000000021 /* VisualTimerRuntimeCoordinator.swift in Sources */,
 				C1000000000000000000001E /* VisualTimerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,6 +558,7 @@
 				C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 				C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */,
+				C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

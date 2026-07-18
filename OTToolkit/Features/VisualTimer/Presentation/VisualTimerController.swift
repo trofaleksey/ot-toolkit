@@ -28,6 +28,8 @@ final class VisualTimerController {
     private(set) var selectedPreset: VisualTimerPreset? = .fiveMinutes
     private(set) var customMinutes = defaultCustomMinutes
     private(set) var completionSequence = 0
+    private(set) var isCompletionSoundEnabled = false
+    private(set) var isCompletionHapticEnabled = false
 
     init(
         clock: any VisualTimerClock = ContinuousClock(),
@@ -116,6 +118,14 @@ final class VisualTimerController {
         selectedPreset = nil
     }
 
+    func setCompletionSoundEnabled(_ isEnabled: Bool) {
+        isCompletionSoundEnabled = isEnabled
+    }
+
+    func setCompletionHapticEnabled(_ isEnabled: Bool) {
+        isCompletionHapticEnabled = isEnabled
+    }
+
     @discardableResult
     func start() -> Bool {
         let duration = startDurationOverride ?? selectedDuration
@@ -143,7 +153,10 @@ final class VisualTimerController {
     }
 
     func refresh() {
-        snapshot = stateMachine.reconcile()
+        let refreshedSnapshot = stateMachine.reconcile()
+        if refreshedSnapshot != snapshot {
+            snapshot = refreshedSnapshot
+        }
         consumePendingCompletion()
     }
 
