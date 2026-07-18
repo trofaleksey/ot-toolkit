@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import UIKit
 
 struct AppSceneRootView: View {
@@ -6,11 +7,12 @@ struct AppSceneRootView: View {
     @State private var navigation: AppNavigationState
     @State private var visualTimerController: VisualTimerController
     @State private var visualTimerRuntimeCoordinator: VisualTimerRuntimeCoordinator
+    @State private var firstThenBoardController: FirstThenBoardController
     @State private var fixtureForcesCompactNavigation = false
 
     private let launchOptions: AppLaunchOptions
 
-    init(launchOptions: AppLaunchOptions) {
+    init(launchOptions: AppLaunchOptions, modelContext: ModelContext) {
         self.launchOptions = launchOptions
 
         var initialNavigation = AppNavigationState()
@@ -27,6 +29,11 @@ struct AppSceneRootView: View {
         )
         _visualTimerRuntimeCoordinator = State(
             initialValue: VisualTimerRuntimeCoordinator()
+        )
+        _firstThenBoardController = State(
+            initialValue: FirstThenBoardController(
+                store: FirstThenBoardStore(modelContext: modelContext)
+            )
         )
     }
 
@@ -123,6 +130,7 @@ struct AppSceneRootView: View {
             AppShellView(
                 navigation: $navigation,
                 visualTimerController: visualTimerController,
+                firstThenBoardController: firstThenBoardController,
                 forcesCompactNavigation: true
             )
             .environment(\.horizontalSizeClass, .compact)
@@ -130,6 +138,7 @@ struct AppSceneRootView: View {
             AppShellView(
                 navigation: $navigation,
                 visualTimerController: visualTimerController,
+                firstThenBoardController: firstThenBoardController,
                 forcesCompactNavigation: false
             )
         }
@@ -298,6 +307,7 @@ struct AppShellView: View {
     @Binding var navigation: AppNavigationState
 
     let visualTimerController: VisualTimerController
+    let firstThenBoardController: FirstThenBoardController
     let forcesCompactNavigation: Bool
 
     var body: some View {
@@ -315,9 +325,14 @@ struct AppShellView: View {
     private var compactNavigation: some View {
         TabView(selection: selectedSectionBinding) {
             NavigationStack(path: compactToolsPathBinding) {
-                HomeView {
-                    navigation.show(.visualTimer)
-                }
+                HomeView(
+                    onOpenVisualTimer: {
+                        navigation.show(.visualTimer)
+                    },
+                    onOpenFirstThenBoards: {
+                        navigation.show(.firstThenBoards)
+                    }
+                )
                 .safeAreaInset(edge: .bottom, spacing: 0) {
                     visualTimerBanner
                 }
@@ -402,9 +417,14 @@ struct AppShellView: View {
     private var sectionContent: some View {
         switch navigation.selectedSection {
         case .tools:
-            HomeView {
-                navigation.show(.visualTimer)
-            }
+            HomeView(
+                onOpenVisualTimer: {
+                    navigation.show(.visualTimer)
+                },
+                onOpenFirstThenBoards: {
+                    navigation.show(.firstThenBoards)
+                }
+            )
         case .saved:
             sectionPlaceholder(for: .saved)
         case .settings:
@@ -451,6 +471,8 @@ struct AppShellView: View {
     @ViewBuilder
     private func destinationView(for destination: AppDestination) -> some View {
         switch destination {
+        case .firstThenBoards:
+            FirstThenBoardsView(controller: firstThenBoardController)
         case .visualTimer:
             VisualTimerView(
                 controller: visualTimerController,

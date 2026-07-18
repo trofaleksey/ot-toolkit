@@ -15,6 +15,7 @@ enum AccessibilityTestSupport {
             "-AppleLanguages", "(en)",
             "-AppleLocale", "en_US",
             "-disable-animations",
+            "-ui-test-in-memory-store",
         ]
         if usesLargestAccessibilityText {
             app.launchArguments.append("-ui-test-largest-accessibility-text")

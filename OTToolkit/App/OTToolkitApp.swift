@@ -1,12 +1,18 @@
 import Foundation
+import SwiftData
 import SwiftUI
 
 @main
 struct OTToolkitApp: App {
     private let launchOptions: AppLaunchOptions
+    @State private var dataController: AppDataController
 
     init() {
-        launchOptions = AppLaunchOptions(arguments: ProcessInfo.processInfo.arguments)
+        let options = AppLaunchOptions(arguments: ProcessInfo.processInfo.arguments)
+        launchOptions = options
+        _dataController = State(
+            initialValue: AppDataController(usesInMemoryStore: options.usesInMemoryStore)
+        )
     }
 
     var body: some Scene {
@@ -23,11 +29,21 @@ struct OTToolkitApp: App {
 
     @ViewBuilder
     private var rootView: some View {
-        if launchOptions.usesLargestAccessibilityText {
-            AppSceneRootView(launchOptions: launchOptions)
+        if let modelContext = dataController.modelContainer?.mainContext {
+            if launchOptions.usesLargestAccessibilityText {
+                AppSceneRootView(
+                    launchOptions: launchOptions,
+                    modelContext: modelContext
+                )
                 .dynamicTypeSize(.accessibility5)
+            } else {
+                AppSceneRootView(
+                    launchOptions: launchOptions,
+                    modelContext: modelContext
+                )
+            }
         } else {
-            AppSceneRootView(launchOptions: launchOptions)
+            PersistenceRecoveryView(controller: dataController)
         }
     }
 }

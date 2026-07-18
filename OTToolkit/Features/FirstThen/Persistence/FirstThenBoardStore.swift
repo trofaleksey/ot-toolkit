@@ -21,6 +21,14 @@ enum FirstThenBoardValidationError: Error, Equatable {
 }
 
 @MainActor
+protocol FirstThenBoardStoring {
+    func create(_ draft: FirstThenBoardDraft) throws -> FirstThenBoard
+    func fetchBoards() throws -> [FirstThenBoard]
+    func update(_ board: FirstThenBoard, with draft: FirstThenBoardDraft) throws
+    func delete(_ board: FirstThenBoard) throws
+}
+
+@MainActor
 struct FirstThenBoardStore {
     typealias Now = @MainActor () -> Date
 
@@ -229,5 +237,16 @@ struct FirstThenBoardStore {
             modelContext.rollback()
             throw error
         }
+    }
+}
+
+extension FirstThenBoardStore: FirstThenBoardStoring {
+    func create(_ draft: FirstThenBoardDraft) throws -> FirstThenBoard {
+        try create(
+            draft,
+            boardID: UUID(),
+            firstItemID: UUID(),
+            thenItemID: UUID()
+        )
     }
 }

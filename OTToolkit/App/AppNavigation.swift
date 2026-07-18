@@ -7,6 +7,7 @@ enum AppSection: CaseIterable, Hashable, Identifiable, Sendable {
 }
 
 enum AppDestination: Hashable, Identifiable, Sendable {
+    case firstThenBoards
     case visualTimer
 
     var id: Self { self }
