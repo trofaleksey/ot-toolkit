@@ -49,7 +49,7 @@ final class VisualTimerUITests: XCTestCase {
         let app = AccessibilityTestSupport.launchApplication(
             usesLargestAccessibilityText: true,
             forcesCompactNavigation: true,
-            timerDurationOverrideSeconds: 10
+            timerDurationOverrideSeconds: 30
         )
         openVisualTimer(in: app)
 
@@ -76,16 +76,26 @@ final class VisualTimerUITests: XCTestCase {
         XCTAssertLessThanOrEqual(banner.frame.maxY, tabBar.frame.minY + 0.5)
         try app.performAccessibilityAudit(for: [.textClipped])
 
-        let completion = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "value CONTAINS %@", "Timer complete"),
+        let initialBannerValue = try XCTUnwrap(banner.value as? String)
+        XCTAssertTrue(initialBannerValue.contains("Timer running"))
+        let countdownContinues = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value != %@", initialBannerValue),
             object: banner
         )
-        XCTAssertEqual(XCTWaiter.wait(for: [completion], timeout: 15), .completed)
+        XCTAssertEqual(XCTWaiter.wait(for: [countdownContinues], timeout: 5), .completed)
+        XCTAssertTrue((banner.value as? String)?.contains("Timer running") == true)
+        XCTAssertTrue(banner.isHittable)
 
         banner.tap()
         XCTAssertTrue(
-            element(in: app, identifier: "visualTimer.status.completed")
-                .waitForExistence(timeout: 5)
+            element(in: app, identifier: "tool.visualTimer.destination")
+                .waitForExistence(timeout: 10),
+            "Tapping the active timer banner did not reopen Visual Timer."
+        )
+        XCTAssertTrue(
+            element(in: app, identifier: "visualTimer.status.running")
+                .waitForExistence(timeout: 10),
+            "Visual Timer reopened without showing the running state."
         )
         XCTAssertFalse(banner.exists)
     }
