@@ -4,6 +4,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     static let enableLayoutToggleFixtureArgument = "-ui-test-enable-layout-toggle-fixture"
     static let forcePrivacyCoverArgument = "-ui-test-force-privacy-cover"
     static let largestAccessibilityTextArgument = "-ui-test-largest-accessibility-text"
+    static let seedFirstThenBoardArgument = "-ui-test-seed-first-then-board"
     static let startChildFacingFixtureArgument = "-ui-test-start-child-facing-fixture"
     static let timerDurationOverrideArgument = "-ui-test-timer-duration-seconds"
     static let useInMemoryStoreArgument = "-ui-test-in-memory-store"
@@ -13,6 +14,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     let enablesLayoutToggleFixture: Bool
     let forcesPrivacyCover: Bool
     let usesLargestAccessibilityText: Bool
+    let seedsFirstThenBoard: Bool
     let startsInChildFacingFixture: Bool
     let timerDurationOverrideSeconds: Int?
     let usesInMemoryStore: Bool
@@ -23,6 +25,7 @@ struct AppLaunchOptions: Equatable, Sendable {
         enablesLayoutToggleFixture = arguments.contains(Self.enableLayoutToggleFixtureArgument)
         forcesPrivacyCover = arguments.contains(Self.forcePrivacyCoverArgument)
         usesLargestAccessibilityText = arguments.contains(Self.largestAccessibilityTextArgument)
+        seedsFirstThenBoard = arguments.contains(Self.seedFirstThenBoardArgument)
         startsInChildFacingFixture = arguments.contains(Self.startChildFacingFixtureArgument)
         usesInMemoryStore = arguments.contains(Self.useInMemoryStoreArgument)
         timerDurationOverrideSeconds = Self.positiveInteger(

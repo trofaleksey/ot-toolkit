@@ -92,11 +92,29 @@ final class AppNavigationStateTests: XCTestCase {
         var navigation = AppNavigationState()
         navigation.presentChildFacing(.visualTimer)
 
+        XCTAssertEqual(navigation.childFacingDestination, .visualTimer)
+
         navigation.dismissChildFacing()
 
         XCTAssertNil(navigation.childFacingDestination)
         XCTAssertEqual(navigation.selectedSection, .tools)
         XCTAssertEqual(navigation.selectedDestination, .visualTimer)
+    }
+
+    func testFirstThenChildPresentationPreservesTheBoardToolRoute() {
+        let boardID = UUID()
+        var navigation = AppNavigationState()
+
+        navigation.presentChildFacing(.firstThenBoard(boardID))
+
+        XCTAssertEqual(navigation.childFacingDestination, .firstThenBoard(boardID))
+        XCTAssertEqual(navigation.selectedSection, .tools)
+        XCTAssertEqual(navigation.selectedDestination, .firstThenBoards)
+
+        navigation.dismissChildFacing()
+
+        XCTAssertNil(navigation.childFacingDestination)
+        XCTAssertEqual(navigation.selectedDestination, .firstThenBoards)
     }
 
     func testPrivacyCoverPolicyFailsClosedAndHonorsTestOverride() {

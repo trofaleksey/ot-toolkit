@@ -110,6 +110,7 @@
       }
     },
     "firstThen.action.cancel" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } } } },
+    "firstThen.action.childFacing" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Open child view" } } } },
     "firstThen.action.completeFirst" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Mark First complete" } } } },
     "firstThen.action.create" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Create board" } } } },
     "firstThen.action.delete" : { "localizations" : { "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete" } } } },

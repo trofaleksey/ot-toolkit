@@ -130,6 +130,100 @@ final class FirstThenBoardUITests: XCTestCase {
     }
 
     @MainActor
+    func testChildFacingFlowCompletesAndReturnsToSameCompactBoardAtLargestText() throws {
+        let app = AccessibilityTestSupport.launchApplication(
+            usesLargestAccessibilityText: true,
+            forcesCompactNavigation: true,
+            seedsFirstThenBoard: true
+        )
+        openFirstThenBoards(in: app)
+
+        let savedBoardTitle = app.staticTexts["Morning Routine"]
+        XCTAssertTrue(savedBoardTitle.waitForExistence(timeout: 5))
+        savedBoardTitle.tap()
+
+        let present = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "firstThen.action.childFacing"
+        )
+        reveal(present, in: app)
+        AccessibilityTestSupport.assertMinimumHitTarget(present)
+        present.tap()
+
+        let childContent = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "firstThen.child.content"
+        )
+        XCTAssertTrue(childContent.waitForExistence(timeout: 5))
+        XCTAssertTrue(childContent.label.contains("Morning Routine"))
+
+        let firstCard = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "firstThen.child.first"
+        )
+        let thenCard = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "firstThen.child.then"
+        )
+        XCTAssertEqual(firstCard.label, "First, Get dressed")
+        XCTAssertEqual(firstCard.value as? String, "Now")
+        XCTAssertEqual(thenCard.label, "Then, Read together")
+        XCTAssertEqual(thenCard.value as? String, "Next")
+        XCTAssertFalse(
+            AccessibilityTestSupport.element(
+                in: app,
+                identifier: "firstThen.board.use.edit"
+            ).isHittable
+        )
+
+        let complete = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "firstThen.child.completeFirst"
+        )
+        reveal(complete, in: app)
+        AccessibilityTestSupport.assertMinimumHitTarget(complete)
+        complete.tap()
+
+        XCTAssertEqual(firstCard.value as? String, "Completed")
+        XCTAssertEqual(thenCard.value as? String, "Now")
+        let transition = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "firstThen.child.transition"
+        )
+        reveal(transition, in: app, requiresHittable: false)
+        try app.performAccessibilityAudit(for: [.textClipped])
+
+        let exit = app.buttons["Exit child view"]
+        AccessibilityTestSupport.assertMinimumHitTarget(exit)
+        exit.tap()
+        let confirmation = app.alerts["Return to therapist controls?"]
+        XCTAssertTrue(confirmation.waitForExistence(timeout: 5))
+        confirmation.buttons["Return to controls"].tap()
+
+        XCTAssertFalse(childContent.exists)
+        XCTAssertTrue(
+            AccessibilityTestSupport.element(
+                in: app,
+                identifier: "firstThen.board.use"
+            ).waitForExistence(timeout: 5)
+        )
+        XCTAssertEqual(
+            AccessibilityTestSupport.element(
+                in: app,
+                identifier: "firstThen.board.first"
+            ).value as? String,
+            "Completed"
+        )
+        XCTAssertEqual(
+            AccessibilityTestSupport.element(
+                in: app,
+                identifier: "firstThen.board.then"
+            ).value as? String,
+            "Now"
+        )
+    }
+
+    @MainActor
     private func openFirstThenBoards(in app: XCUIApplication) {
         AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
         let firstThen = AccessibilityTestSupport.element(
@@ -166,5 +260,24 @@ final class FirstThenBoardUITests: XCTestCase {
         field.press(forDuration: 1)
         app.menuItems["Select All"].tap()
         field.typeText(text)
+    }
+
+    @MainActor
+    private func reveal(
+        _ element: XCUIElement,
+        in app: XCUIApplication,
+        requiresHittable: Bool = true
+    ) {
+        XCTAssertTrue(element.waitForExistence(timeout: 5))
+        for _ in 0..<8 {
+            if !requiresHittable || element.isHittable {
+                return
+            }
+            app.swipeUp()
+        }
+
+        if requiresHittable {
+            XCTAssertTrue(element.isHittable)
+        }
     }
 }

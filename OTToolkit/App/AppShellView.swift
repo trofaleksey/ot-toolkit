@@ -8,6 +8,7 @@ struct AppSceneRootView: View {
     @State private var visualTimerController: VisualTimerController
     @State private var visualTimerRuntimeCoordinator: VisualTimerRuntimeCoordinator
     @State private var firstThenBoardController: FirstThenBoardController
+    @State private var firstThenSessionController: FirstThenBoardSessionController
     @State private var fixtureForcesCompactNavigation = false
 
     private let launchOptions: AppLaunchOptions
@@ -30,10 +31,20 @@ struct AppSceneRootView: View {
         _visualTimerRuntimeCoordinator = State(
             initialValue: VisualTimerRuntimeCoordinator()
         )
-        _firstThenBoardController = State(
-            initialValue: FirstThenBoardController(
-                store: FirstThenBoardStore(modelContext: modelContext)
+        let firstThenStore = FirstThenBoardStore(modelContext: modelContext)
+        if launchOptions.seedsFirstThenBoard {
+            _ = try? firstThenStore.create(
+                FirstThenBoardUITestFixture.draft,
+                boardID: FirstThenBoardUITestFixture.boardID,
+                firstItemID: FirstThenBoardUITestFixture.firstItemID,
+                thenItemID: FirstThenBoardUITestFixture.thenItemID
             )
+        }
+        _firstThenBoardController = State(
+            initialValue: FirstThenBoardController(store: firstThenStore)
+        )
+        _firstThenSessionController = State(
+            initialValue: FirstThenBoardSessionController()
         )
     }
 
@@ -131,6 +142,7 @@ struct AppSceneRootView: View {
                 navigation: $navigation,
                 visualTimerController: visualTimerController,
                 firstThenBoardController: firstThenBoardController,
+                firstThenSessionController: firstThenSessionController,
                 forcesCompactNavigation: true
             )
             .environment(\.horizontalSizeClass, .compact)
@@ -139,6 +151,7 @@ struct AppSceneRootView: View {
                 navigation: $navigation,
                 visualTimerController: visualTimerController,
                 firstThenBoardController: firstThenBoardController,
+                firstThenSessionController: firstThenSessionController,
                 forcesCompactNavigation: false
             )
         }
@@ -146,16 +159,44 @@ struct AppSceneRootView: View {
 
     @ViewBuilder
     private var childFacingContent: some View {
-        if launchOptions.startsInChildFacingFixture {
-            ChildFacingFixtureView()
-        } else {
-            VisualTimerChildView(controller: visualTimerController)
+        switch navigation.childFacingDestination {
+        case let .firstThenBoard(boardID):
+            FirstThenBoardChildView(
+                controller: firstThenBoardController,
+                sessionController: firstThenSessionController,
+                boardID: boardID
+            )
+        case .visualTimer:
+            if launchOptions.startsInChildFacingFixture {
+                ChildFacingFixtureView()
+            } else {
+                VisualTimerChildView(controller: visualTimerController)
+            }
+        case nil:
+            EmptyView()
         }
     }
 
     private var forcesCompactNavigation: Bool {
         launchOptions.forcesCompactNavigation || fixtureForcesCompactNavigation
     }
+}
+
+private enum FirstThenBoardUITestFixture {
+    static let boardID = UUID(
+        uuid: (0x10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x01)
+    )
+    static let firstItemID = UUID(
+        uuid: (0x20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x01)
+    )
+    static let thenItemID = UUID(
+        uuid: (0x30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x01)
+    )
+    static let draft = FirstThenBoardDraft(
+        name: "Morning Routine",
+        first: FirstThenItemDraft(label: "Get dressed", systemSymbolName: "tshirt"),
+        then: FirstThenItemDraft(label: "Read together", systemSymbolName: "book.closed")
+    )
 }
 
 private struct VisualTimerTickDriver: View {
@@ -308,6 +349,7 @@ struct AppShellView: View {
 
     let visualTimerController: VisualTimerController
     let firstThenBoardController: FirstThenBoardController
+    let firstThenSessionController: FirstThenBoardSessionController
     let forcesCompactNavigation: Bool
 
     var body: some View {
@@ -472,7 +514,13 @@ struct AppShellView: View {
     private func destinationView(for destination: AppDestination) -> some View {
         switch destination {
         case .firstThenBoards:
-            FirstThenBoardsView(controller: firstThenBoardController)
+            FirstThenBoardsView(
+                controller: firstThenBoardController,
+                sessionController: firstThenSessionController,
+                onPresentChildFacing: { boardID in
+                    navigation.presentChildFacing(.firstThenBoard(boardID))
+                }
+            )
         case .visualTimer:
             VisualTimerView(
                 controller: visualTimerController,

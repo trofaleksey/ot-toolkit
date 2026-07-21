@@ -1,3 +1,5 @@
+import Foundation
+
 enum AppSection: CaseIterable, Hashable, Identifiable, Sendable {
     case tools
     case saved
@@ -11,6 +13,11 @@ enum AppDestination: Hashable, Identifiable, Sendable {
     case visualTimer
 
     var id: Self { self }
+}
+
+enum AppChildFacingDestination: Equatable, Sendable {
+    case firstThenBoard(UUID)
+    case visualTimer
 }
 
 enum AppNavigationLayout: Equatable, Sendable {
@@ -51,7 +58,7 @@ enum AppNavigationLayoutResolver {
 struct AppNavigationState: Equatable, Sendable {
     var selectedSection = AppSection.tools
     var selectedDestination: AppDestination?
-    var childFacingDestination: AppDestination?
+    var childFacingDestination: AppChildFacingDestination?
 
     var compactToolsPath: [AppDestination] {
         get {
@@ -74,8 +81,13 @@ struct AppNavigationState: Equatable, Sendable {
         selectedDestination = destination
     }
 
-    mutating func presentChildFacing(_ destination: AppDestination) {
-        show(destination)
+    mutating func presentChildFacing(_ destination: AppChildFacingDestination) {
+        switch destination {
+        case .firstThenBoard:
+            show(.firstThenBoards)
+        case .visualTimer:
+            show(.visualTimer)
+        }
         childFacingDestination = destination
     }
 
