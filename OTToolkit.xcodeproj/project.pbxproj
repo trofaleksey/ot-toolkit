@@ -56,6 +56,8 @@
 		C50000000000000000000006 /* FirstThenBoardControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000006 /* FirstThenBoardControllerTests.swift */; };
 		C50000000000000000000007 /* FirstThenBoardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000007 /* FirstThenBoardsView.swift */; };
 		C50000000000000000000008 /* FirstThenBoardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50000000000000000000008 /* FirstThenBoardUITests.swift */; };
+		C10000000000000000000023 /* TypographyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000024 /* TypographyTests.swift */; };
+		C10000000000000000000024 /* AdultExitControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000025 /* AdultExitControlTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +128,8 @@
 		B50000000000000000000006 /* FirstThenBoardControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenBoardControllerTests.swift; sourceTree = "<group>"; };
 		B50000000000000000000007 /* FirstThenBoardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenBoardsView.swift; sourceTree = "<group>"; };
 		B50000000000000000000008 /* FirstThenBoardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenBoardUITests.swift; sourceTree = "<group>"; };
+		B10000000000000000000024 /* TypographyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypographyTests.swift; sourceTree = "<group>"; };
+		B10000000000000000000025 /* AdultExitControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultExitControlTests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -419,6 +423,7 @@
 		A10000000000000000000016 /* Accessibility */ = {
 			isa = PBXGroup;
 			children = (
+				B10000000000000000000025 /* AdultExitControlTests.swift */,
 				B10000000000000000000015 /* AccessibilityPreferencesTests.swift */,
 			);
 			path = Accessibility;
@@ -429,6 +434,7 @@
 			children = (
 				B10000000000000000000013 /* DesignTokenTests.swift */,
 				B10000000000000000000014 /* SemanticColorTests.swift */,
+				B10000000000000000000024 /* TypographyTests.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -640,8 +646,10 @@
 				C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */,
 				C1000000000000000000001B /* AppNavigationStateTests.swift in Sources */,
 				C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */,
+				C10000000000000000000024 /* AdultExitControlTests.swift in Sources */,
 				C10000000000000000000012 /* DesignTokenTests.swift in Sources */,
 				C10000000000000000000013 /* SemanticColorTests.swift in Sources */,
+				C10000000000000000000023 /* TypographyTests.swift in Sources */,
 				C40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift in Sources */,
 				C40000000000000000000007 /* AppDataControllerTests.swift in Sources */,
 				C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */,
