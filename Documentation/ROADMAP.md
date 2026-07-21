@@ -60,6 +60,7 @@ Goal: create the smallest testable universal app and remove architectural uncert
 | OTK-005 | Recruit five beta OTs and confirm three Gate A participants as parallel product validation | none |
 | OTK-006 | Solo-maintainer governance for private GitHub Free: local main-push guard, manual green-CI/squash workflow, ownership, and reporting handoff | none |
 | OTK-007 | Xcode 26.6 / iOS 26.5 authoritative CI with an Xcode 16.4 / iOS 18.5 compatibility lane | OTK-001 |
+| OTK-008 | Visible, non-blocking app-target test coverage with focused design/accessibility coverage | OTK-001, OTK-003, OTK-007 |
 
 Exit gate:
 
