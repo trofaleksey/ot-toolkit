@@ -181,10 +181,17 @@ final class AdaptiveNavigationUITests: XCTestCase {
 
     @MainActor
     func testPrivacyCoverMakesUnderlyingContentInert() {
-        let app = AccessibilityTestSupport.launchApplication(forcesPrivacyCover: true)
+        let app = AccessibilityTestSupport.launchApplication(
+            forcesPrivacyCover: true,
+            startsInChildFacingFixture: true
+        )
         let privacyCover = AccessibilityTestSupport.element(
             in: app,
             identifier: "privacy.cover"
+        )
+        let underlyingChildContent = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "child.fixture"
         )
         let underlyingVisualTimer = AccessibilityTestSupport.element(
             in: app,
@@ -194,6 +201,7 @@ final class AdaptiveNavigationUITests: XCTestCase {
         XCTAssertTrue(privacyCover.waitForExistence(timeout: 5))
         XCTAssertTrue(privacyCover.label.contains("OT Toolkit"))
         XCTAssertTrue(privacyCover.label.contains("Content hidden for privacy."))
+        AccessibilityTestSupport.assertSuppressed(underlyingChildContent)
         AccessibilityTestSupport.assertSuppressed(underlyingVisualTimer)
     }
 

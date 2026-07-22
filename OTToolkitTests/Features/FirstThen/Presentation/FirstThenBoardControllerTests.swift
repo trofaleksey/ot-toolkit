@@ -5,6 +5,35 @@ import XCTest
 
 @MainActor
 final class FirstThenBoardControllerTests: XCTestCase {
+    func testSessionTransitionsFromFirstToThenAndRemainsCompleted() {
+        var session = FirstThenBoardSession()
+
+        XCTAssertEqual(session.phase, .first)
+        XCTAssertFalse(session.isFirstComplete)
+
+        session.completeFirst()
+        session.completeFirst()
+
+        XCTAssertEqual(session.phase, .then)
+        XCTAssertTrue(session.isFirstComplete)
+    }
+
+    func testSessionControllerSharesCompletionAndCanResetOrDiscardIt() {
+        let boardID = UUID()
+        let controller = FirstThenBoardSessionController()
+
+        controller.start(boardID: boardID)
+        controller.completeFirst(boardID: boardID)
+        XCTAssertTrue(controller.session(for: boardID).isFirstComplete)
+
+        controller.start(boardID: boardID)
+        XCTAssertFalse(controller.session(for: boardID).isFirstComplete)
+
+        controller.completeFirst(boardID: boardID)
+        controller.discardSession(boardID: boardID)
+        XCTAssertEqual(controller.session(for: boardID), FirstThenBoardSession())
+    }
+
     func testCreateUpdateAndDeleteRefreshValueSnapshots() throws {
         let container = try makeContainer()
         let controller = FirstThenBoardController(

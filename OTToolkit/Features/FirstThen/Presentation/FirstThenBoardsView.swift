@@ -51,6 +51,8 @@ struct FirstThenBoardsView: View {
     @State private var editorRoute: FirstThenEditorRoute?
 
     let controller: FirstThenBoardController
+    let sessionController: FirstThenBoardSessionController
+    let onPresentChildFacing: (UUID) -> Void
 
     var body: some View {
         ScrollView {
@@ -158,7 +160,12 @@ struct FirstThenBoardsView: View {
     private func boardRow(_ board: FirstThenBoardSnapshot) -> some View {
         HStack(alignment: .top, spacing: OTSpacing.sm) {
             NavigationLink {
-                FirstThenBoardUseView(controller: controller, boardID: board.id)
+                FirstThenBoardUseView(
+                    controller: controller,
+                    sessionController: sessionController,
+                    boardID: board.id,
+                    onPresentChildFacing: onPresentChildFacing
+                )
             } label: {
                 VStack(alignment: .leading, spacing: OTSpacing.sm) {
                     Text(board.name)
@@ -485,12 +492,14 @@ private struct FirstThenBoardEditorView: View {
 
 private struct FirstThenBoardUseView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var isFirstComplete = false
+    @State private var didStartSession = false
     @State private var editorRoute: FirstThenEditorRoute?
     @State private var isConfirmingDelete = false
 
     let controller: FirstThenBoardController
+    let sessionController: FirstThenBoardSessionController
     let boardID: UUID
+    let onPresentChildFacing: (UUID) -> Void
 
     var body: some View {
         Group {
@@ -503,6 +512,11 @@ private struct FirstThenBoardUseView: View {
         .background(OTColor.background.ignoresSafeArea())
         .navigationTitle(controller.board(id: boardID)?.name ?? "")
         .accessibilityIdentifier("firstThen.board.use")
+        .onAppear {
+            guard !didStartSession else { return }
+            sessionController.start(boardID: boardID)
+            didStartSession = true
+        }
         .toolbar {
             if let board = controller.board(id: boardID) {
                 ToolbarItemGroup(placement: .primaryAction) {
@@ -529,6 +543,7 @@ private struct FirstThenBoardUseView: View {
             Button("firstThen.delete.cancel", role: .cancel) {}
             Button("firstThen.delete.confirm", role: .destructive) {
                 if controller.delete(id: boardID) {
+                    sessionController.discardSession(boardID: boardID)
                     dismiss()
                 }
             }
@@ -540,62 +555,155 @@ private struct FirstThenBoardUseView: View {
     private func boardContent(_ board: FirstThenBoardSnapshot) -> some View {
         ScrollView {
             VStack(spacing: OTSpacing.lg) {
-                boardItem(
-                    roleKey: "firstThen.role.first",
-                    item: board.first,
-                    stateKey: isFirstComplete
-                        ? "firstThen.state.completed" : "firstThen.state.current",
-                    stateSymbol: isFirstComplete ? "checkmark.circle.fill" : "1.circle.fill",
-                    isProminent: !isFirstComplete,
-                    identifier: "firstThen.board.first"
-                )
-
-                Image(systemName: "arrow.down")
-                    .font(OTTypography.sectionHeading)
-                    .foregroundStyle(OTColor.secondaryText)
-                    .accessibilityHidden(true)
-
-                boardItem(
-                    roleKey: "firstThen.role.then",
-                    item: board.then,
-                    stateKey: isFirstComplete ? "firstThen.state.current" : "firstThen.state.next",
-                    stateSymbol: isFirstComplete ? "play.circle.fill" : "2.circle",
-                    isProminent: isFirstComplete,
-                    identifier: "firstThen.board.then"
-                )
-
-                if !isFirstComplete {
-                    Button {
-                        isFirstComplete = true
-                    } label: {
-                        Label(
-                            "firstThen.action.completeFirst",
-                            systemImage: "checkmark.circle"
-                        )
+                Button {
+                    onPresentChildFacing(boardID)
+                } label: {
+                    Label("firstThen.action.childFacing", systemImage: "rectangle.inset.filled")
                         .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(OTColor.accent)
-                    .controlSize(.large)
-                    .otMinimumInteractiveSize()
-                    .accessibilityIdentifier("firstThen.action.completeFirst")
-                    .keyboardShortcut(.defaultAction)
-                } else {
-                    Label("firstThen.transition.then", systemImage: "arrow.right.circle.fill")
-                        .font(OTTypography.sectionHeading)
-                        .foregroundStyle(OTColor.primaryText)
-                        .padding(OTSpacing.md)
-                        .frame(maxWidth: .infinity)
-                        .background(OTColor.elevatedSurface)
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
-                        )
-                        .accessibilityIdentifier("firstThen.transition.then")
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(OTColor.accent)
+                .controlSize(.large)
+                .otMinimumInteractiveSize()
+                .accessibilityIdentifier("firstThen.action.childFacing")
+
+                FirstThenBoardSequenceView(
+                    board: board,
+                    session: sessionController.session(for: boardID),
+                    context: .therapist
+                ) {
+                    sessionController.completeFirst(boardID: boardID)
                 }
             }
             .frame(maxWidth: 720)
             .padding(OTSpacing.xl)
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var unavailableState: some View {
+        VStack(spacing: OTSpacing.md) {
+            Text("firstThen.unavailable.title")
+                .font(OTTypography.sectionHeading)
+                .foregroundStyle(OTColor.primaryText)
+            Text("firstThen.unavailable.message")
+                .font(OTTypography.body)
+                .foregroundStyle(OTColor.secondaryText)
+                .multilineTextAlignment(.center)
+            Button("firstThen.unavailable.back") {
+                dismiss()
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding(OTSpacing.xl)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+struct FirstThenBoardChildView: View {
+    let controller: FirstThenBoardController
+    let sessionController: FirstThenBoardSessionController
+    let boardID: UUID
+
+    var body: some View {
+        Group {
+            if let board = controller.board(id: boardID) {
+                VStack(spacing: OTSpacing.lg) {
+                    Text(board.name)
+                        .font(OTTypography.screenTitle)
+                        .foregroundStyle(OTColor.primaryText)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityIdentifier("firstThen.child.content")
+
+                    FirstThenBoardSequenceView(
+                        board: board,
+                        session: sessionController.session(for: boardID),
+                        context: .child
+                    ) {
+                        sessionController.completeFirst(boardID: boardID)
+                    }
+                }
+                .frame(maxWidth: 720)
+            } else {
+                VStack(spacing: OTSpacing.md) {
+                    Text("firstThen.unavailable.title")
+                        .font(OTTypography.sectionHeading)
+                        .foregroundStyle(OTColor.primaryText)
+                        .accessibilityAddTraits(.isHeader)
+                    Text("firstThen.unavailable.message")
+                        .font(OTTypography.body)
+                        .foregroundStyle(OTColor.secondaryText)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("firstThen.child.unavailable")
+            }
+        }
+    }
+}
+
+private struct FirstThenBoardSequenceView: View {
+    let board: FirstThenBoardSnapshot
+    let session: FirstThenBoardSession
+    let context: FirstThenBoardSequenceContext
+    let onCompleteFirst: () -> Void
+
+    var body: some View {
+        VStack(spacing: OTSpacing.lg) {
+            boardItem(
+                roleKey: "firstThen.role.first",
+                item: board.first,
+                stateKey: session.isFirstComplete
+                    ? "firstThen.state.completed" : "firstThen.state.current",
+                stateSymbol: session.isFirstComplete ? "checkmark.circle.fill" : "1.circle.fill",
+                isProminent: !session.isFirstComplete,
+                identifier: context.firstIdentifier
+            )
+
+            Image(systemName: "arrow.down")
+                .font(OTTypography.sectionHeading)
+                .foregroundStyle(OTColor.secondaryText)
+                .accessibilityHidden(true)
+
+            boardItem(
+                roleKey: "firstThen.role.then",
+                item: board.then,
+                stateKey: session.isFirstComplete
+                    ? "firstThen.state.current" : "firstThen.state.next",
+                stateSymbol: session.isFirstComplete ? "play.circle.fill" : "2.circle",
+                isProminent: session.isFirstComplete,
+                identifier: context.thenIdentifier
+            )
+
+            if !session.isFirstComplete {
+                Button(action: onCompleteFirst) {
+                    Label(
+                        "firstThen.action.completeFirst",
+                        systemImage: "checkmark.circle"
+                    )
+                    .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(OTColor.accent)
+                .controlSize(.large)
+                .otMinimumInteractiveSize()
+                .accessibilityIdentifier(context.completeFirstIdentifier)
+                .keyboardShortcut(.defaultAction)
+            } else {
+                Label("firstThen.transition.then", systemImage: "arrow.right.circle.fill")
+                    .font(OTTypography.sectionHeading)
+                    .foregroundStyle(OTColor.primaryText)
+                    .padding(OTSpacing.md)
+                    .frame(maxWidth: .infinity)
+                    .background(OTColor.elevatedSurface)
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+                    )
+                    .accessibilityIdentifier(context.transitionIdentifier)
+            }
         }
     }
 
@@ -653,22 +761,37 @@ private struct FirstThenBoardUseView: View {
         .accessibilityValue(stateKey)
         .accessibilityIdentifier(identifier)
     }
+}
 
-    private var unavailableState: some View {
-        VStack(spacing: OTSpacing.md) {
-            Text("firstThen.unavailable.title")
-                .font(OTTypography.sectionHeading)
-                .foregroundStyle(OTColor.primaryText)
-            Text("firstThen.unavailable.message")
-                .font(OTTypography.body)
-                .foregroundStyle(OTColor.secondaryText)
-                .multilineTextAlignment(.center)
-            Button("firstThen.unavailable.back") {
-                dismiss()
-            }
-            .buttonStyle(.borderedProminent)
+private enum FirstThenBoardSequenceContext {
+    case child
+    case therapist
+
+    var firstIdentifier: String {
+        switch self {
+        case .child: "firstThen.child.first"
+        case .therapist: "firstThen.board.first"
         }
-        .padding(OTSpacing.xl)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    var thenIdentifier: String {
+        switch self {
+        case .child: "firstThen.child.then"
+        case .therapist: "firstThen.board.then"
+        }
+    }
+
+    var completeFirstIdentifier: String {
+        switch self {
+        case .child: "firstThen.child.completeFirst"
+        case .therapist: "firstThen.action.completeFirst"
+        }
+    }
+
+    var transitionIdentifier: String {
+        switch self {
+        case .child: "firstThen.child.transition"
+        case .therapist: "firstThen.transition.then"
+        }
     }
 }

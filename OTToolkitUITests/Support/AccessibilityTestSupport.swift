@@ -7,6 +7,7 @@ enum AccessibilityTestSupport {
         forcesCompactNavigation: Bool = false,
         enablesLayoutToggleFixture: Bool = false,
         forcesPrivacyCover: Bool = false,
+        seedsFirstThenBoard: Bool = false,
         startsInChildFacingFixture: Bool = false,
         timerDurationOverrideSeconds: Int? = nil
     ) -> XCUIApplication {
@@ -28,6 +29,9 @@ enum AccessibilityTestSupport {
         }
         if forcesPrivacyCover {
             app.launchArguments.append("-ui-test-force-privacy-cover")
+        }
+        if seedsFirstThenBoard {
+            app.launchArguments.append("-ui-test-seed-first-then-board")
         }
         if startsInChildFacingFixture {
             app.launchArguments.append("-ui-test-start-child-facing-fixture")

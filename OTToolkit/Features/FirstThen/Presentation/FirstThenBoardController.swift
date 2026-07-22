@@ -1,6 +1,47 @@
 import Foundation
 import Observation
 
+enum FirstThenBoardSessionPhase: Equatable, Sendable {
+    case first
+    case then
+}
+
+struct FirstThenBoardSession: Equatable, Sendable {
+    private(set) var phase = FirstThenBoardSessionPhase.first
+
+    var isFirstComplete: Bool {
+        phase == .then
+    }
+
+    mutating func completeFirst() {
+        phase = .then
+    }
+}
+
+@MainActor
+@Observable
+final class FirstThenBoardSessionController {
+    private var sessionsByBoardID: [UUID: FirstThenBoardSession] = [:]
+
+    func start(boardID: UUID) {
+        sessionsByBoardID[boardID] = FirstThenBoardSession()
+    }
+
+    func session(for boardID: UUID) -> FirstThenBoardSession {
+        sessionsByBoardID[boardID] ?? FirstThenBoardSession()
+    }
+
+    func completeFirst(boardID: UUID) {
+        var session = session(for: boardID)
+        session.completeFirst()
+        sessionsByBoardID[boardID] = session
+    }
+
+    func discardSession(boardID: UUID) {
+        sessionsByBoardID[boardID] = nil
+    }
+}
+
 struct FirstThenItemSnapshot: Equatable, Sendable {
     let label: String
     let systemSymbolName: String

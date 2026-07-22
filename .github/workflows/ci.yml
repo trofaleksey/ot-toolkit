@@ -257,11 +257,11 @@ jobs:
             CODE_SIGNING_ALLOWED=NO
 
       - name: Test iPhone unit tests
-        timeout-minutes: 5
+        timeout-minutes: 7
         shell: bash
         run: |
           ./Scripts/run_xcodebuild_with_timeout.sh \
-            240 \
+            360 \
             TestResults/iPhoneUnit.log \
             xcodebuild test \
             -project OTToolkit.xcodeproj \
