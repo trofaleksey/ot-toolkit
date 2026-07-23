@@ -8,6 +8,7 @@ enum AccessibilityTestSupport {
         enablesLayoutToggleFixture: Bool = false,
         forcesPrivacyCover: Bool = false,
         seedsFirstThenBoard: Bool = false,
+        seedsTokenBoard: Bool = false,
         startsInChildFacingFixture: Bool = false,
         timerDurationOverrideSeconds: Int? = nil
     ) -> XCUIApplication {
@@ -32,6 +33,9 @@ enum AccessibilityTestSupport {
         }
         if seedsFirstThenBoard {
             app.launchArguments.append("-ui-test-seed-first-then-board")
+        }
+        if seedsTokenBoard {
+            app.launchArguments.append("-ui-test-seed-token-board")
         }
         if startsInChildFacingFixture {
             app.launchArguments.append("-ui-test-start-child-facing-fixture")

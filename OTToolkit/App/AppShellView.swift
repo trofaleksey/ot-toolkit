@@ -9,6 +9,8 @@ struct AppSceneRootView: View {
     @State private var visualTimerRuntimeCoordinator: VisualTimerRuntimeCoordinator
     @State private var firstThenBoardController: FirstThenBoardController
     @State private var firstThenSessionController: FirstThenBoardSessionController
+    @State private var tokenBoardController: TokenBoardController
+    @State private var tokenBoardSessionController: TokenBoardSessionController
     @State private var fixtureForcesCompactNavigation = false
 
     private let launchOptions: AppLaunchOptions
@@ -45,6 +47,19 @@ struct AppSceneRootView: View {
         )
         _firstThenSessionController = State(
             initialValue: FirstThenBoardSessionController()
+        )
+        let tokenStore = TokenBoardTemplateStore(modelContext: modelContext)
+        if launchOptions.seedsTokenBoard {
+            _ = try? tokenStore.create(
+                TokenBoardUITestFixture.draft,
+                templateID: TokenBoardUITestFixture.templateID
+            )
+        }
+        _tokenBoardController = State(
+            initialValue: TokenBoardController(store: tokenStore)
+        )
+        _tokenBoardSessionController = State(
+            initialValue: TokenBoardSessionController()
         )
     }
 
@@ -143,6 +158,8 @@ struct AppSceneRootView: View {
                 visualTimerController: visualTimerController,
                 firstThenBoardController: firstThenBoardController,
                 firstThenSessionController: firstThenSessionController,
+                tokenBoardController: tokenBoardController,
+                tokenBoardSessionController: tokenBoardSessionController,
                 forcesCompactNavigation: true
             )
             .environment(\.horizontalSizeClass, .compact)
@@ -152,6 +169,8 @@ struct AppSceneRootView: View {
                 visualTimerController: visualTimerController,
                 firstThenBoardController: firstThenBoardController,
                 firstThenSessionController: firstThenSessionController,
+                tokenBoardController: tokenBoardController,
+                tokenBoardSessionController: tokenBoardSessionController,
                 forcesCompactNavigation: false
             )
         }
@@ -165,6 +184,12 @@ struct AppSceneRootView: View {
                 controller: firstThenBoardController,
                 sessionController: firstThenSessionController,
                 boardID: boardID
+            )
+        case let .tokenBoard(templateID):
+            TokenBoardChildView(
+                controller: tokenBoardController,
+                sessionController: tokenBoardSessionController,
+                templateID: templateID
             )
         case .visualTimer:
             if launchOptions.startsInChildFacingFixture {
@@ -196,6 +221,17 @@ private enum FirstThenBoardUITestFixture {
         name: "Morning Routine",
         first: FirstThenItemDraft(label: "Get dressed", systemSymbolName: "tshirt"),
         then: FirstThenItemDraft(label: "Read together", systemSymbolName: "book.closed")
+    )
+}
+
+private enum TokenBoardUITestFixture {
+    static let templateID = UUID(
+        uuid: (0x40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x01)
+    )
+    static let draft = TokenBoardTemplateDraft(
+        name: "Table Time",
+        goal: .three,
+        reward: TokenBoardReward(label: "Bubbles", systemSymbolName: "star")
     )
 }
 
@@ -350,6 +386,8 @@ struct AppShellView: View {
     let visualTimerController: VisualTimerController
     let firstThenBoardController: FirstThenBoardController
     let firstThenSessionController: FirstThenBoardSessionController
+    let tokenBoardController: TokenBoardController
+    let tokenBoardSessionController: TokenBoardSessionController
     let forcesCompactNavigation: Bool
 
     var body: some View {
@@ -373,6 +411,9 @@ struct AppShellView: View {
                     },
                     onOpenFirstThenBoards: {
                         navigation.show(.firstThenBoards)
+                    },
+                    onOpenTokenBoards: {
+                        navigation.show(.tokenBoards)
                     }
                 )
                 .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -465,6 +506,9 @@ struct AppShellView: View {
                 },
                 onOpenFirstThenBoards: {
                     navigation.show(.firstThenBoards)
+                },
+                onOpenTokenBoards: {
+                    navigation.show(.tokenBoards)
                 }
             )
         case .saved:
@@ -519,6 +563,14 @@ struct AppShellView: View {
                 sessionController: firstThenSessionController,
                 onPresentChildFacing: { boardID in
                     navigation.presentChildFacing(.firstThenBoard(boardID))
+                }
+            )
+        case .tokenBoards:
+            TokenBoardsView(
+                controller: tokenBoardController,
+                sessionController: tokenBoardSessionController,
+                onPresentChildFacing: { templateID in
+                    navigation.presentChildFacing(.tokenBoard(templateID))
                 }
             )
         case .visualTimer:

@@ -66,6 +66,10 @@
 		C60000000000000000000006 /* TokenBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000006 /* TokenBoardController.swift */; };
 		C60000000000000000000007 /* TokenBoardTemplateStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000007 /* TokenBoardTemplateStoreTests.swift */; };
 		C60000000000000000000008 /* TokenBoardControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000008 /* TokenBoardControllerTests.swift */; };
+		C60000000000000000000009 /* TokenBoardSessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000009 /* TokenBoardSessionController.swift */; };
+		C6000000000000000000000A /* TokenBoardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000000000000000000000A /* TokenBoardsView.swift */; };
+		C6000000000000000000000B /* TokenBoardSessionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000000000000000000000B /* TokenBoardSessionControllerTests.swift */; };
+		C6000000000000000000000C /* TokenBoardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000000000000000000000C /* TokenBoardUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +150,10 @@
 		B60000000000000000000006 /* TokenBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardController.swift; sourceTree = "<group>"; };
 		B60000000000000000000007 /* TokenBoardTemplateStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardTemplateStoreTests.swift; sourceTree = "<group>"; };
 		B60000000000000000000008 /* TokenBoardControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardControllerTests.swift; sourceTree = "<group>"; };
+		B60000000000000000000009 /* TokenBoardSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardSessionController.swift; sourceTree = "<group>"; };
+		B6000000000000000000000A /* TokenBoardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardsView.swift; sourceTree = "<group>"; };
+		B6000000000000000000000B /* TokenBoardSessionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardSessionControllerTests.swift; sourceTree = "<group>"; };
+		B6000000000000000000000C /* TokenBoardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardUITests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -483,6 +491,7 @@
 				B1000000000000000000001D /* AdaptiveNavigationUITests.swift */,
 				B10000000000000000000008 /* AppLaunchUITests.swift */,
 				B50000000000000000000008 /* FirstThenBoardUITests.swift */,
+				B6000000000000000000000C /* TokenBoardUITests.swift */,
 				B10000000000000000000021 /* VisualTimerUITests.swift */,
 			);
 			path = CriticalFlows;
@@ -519,6 +528,8 @@
 			isa = PBXGroup;
 			children = (
 				B60000000000000000000006 /* TokenBoardController.swift */,
+				B60000000000000000000009 /* TokenBoardSessionController.swift */,
+				B6000000000000000000000A /* TokenBoardsView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -553,6 +564,7 @@
 			isa = PBXGroup;
 			children = (
 				B60000000000000000000008 /* TokenBoardControllerTests.swift */,
+				B6000000000000000000000B /* TokenBoardSessionControllerTests.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -701,6 +713,8 @@
 				C60000000000000000000004 /* TokenBoardTemplate.swift in Sources */,
 				C60000000000000000000005 /* TokenBoardTemplateStore.swift in Sources */,
 				C60000000000000000000006 /* TokenBoardController.swift in Sources */,
+				C60000000000000000000009 /* TokenBoardSessionController.swift in Sources */,
+				C6000000000000000000000A /* TokenBoardsView.swift in Sources */,
 				C10000000000000000000016 /* AppNavigation.swift in Sources */,
 				C10000000000000000000017 /* AppShellView.swift in Sources */,
 				C10000000000000000000001 /* OTToolkitApp.swift in Sources */,
@@ -739,6 +753,7 @@
 				C60000000000000000000002 /* TokenBoardStateMachineTests.swift in Sources */,
 				C60000000000000000000007 /* TokenBoardTemplateStoreTests.swift in Sources */,
 				C60000000000000000000008 /* TokenBoardControllerTests.swift in Sources */,
+				C6000000000000000000000B /* TokenBoardSessionControllerTests.swift in Sources */,
 				C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */,
 				C1000000000000000000001B /* AppNavigationStateTests.swift in Sources */,
 				C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */,
@@ -764,6 +779,7 @@
 				C1000000000000000000001C /* AdaptiveNavigationUITests.swift in Sources */,
 				C10000000000000000000008 /* AppLaunchUITests.swift in Sources */,
 				C50000000000000000000008 /* FirstThenBoardUITests.swift in Sources */,
+				C6000000000000000000000C /* TokenBoardUITests.swift in Sources */,
 				C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */,
 				C10000000000000000000020 /* VisualTimerUITests.swift in Sources */,
 			);
