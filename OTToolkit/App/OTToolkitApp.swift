@@ -33,13 +33,15 @@ struct OTToolkitApp: App {
             if launchOptions.usesLargestAccessibilityText {
                 AppSceneRootView(
                     launchOptions: launchOptions,
-                    modelContext: modelContext
+                    modelContext: modelContext,
+                    dataController: dataController
                 )
                 .dynamicTypeSize(.accessibility5)
             } else {
                 AppSceneRootView(
                     launchOptions: launchOptions,
-                    modelContext: modelContext
+                    modelContext: modelContext,
+                    dataController: dataController
                 )
             }
         } else {

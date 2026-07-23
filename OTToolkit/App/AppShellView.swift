@@ -14,9 +14,26 @@ struct AppSceneRootView: View {
     @State private var fixtureForcesCompactNavigation = false
 
     private let launchOptions: AppLaunchOptions
+    private let dataController: AppDataController
 
-    init(launchOptions: AppLaunchOptions, modelContext: ModelContext) {
+    init(
+        launchOptions: AppLaunchOptions,
+        modelContext: ModelContext,
+        dataController: AppDataController
+    ) {
         self.launchOptions = launchOptions
+        self.dataController = dataController
+
+        // UI tests get a volatile preference suite so toggles cannot leak
+        // between launches and make runs order-dependent.
+        let preferences: OTPreferences
+        if launchOptions.usesInMemoryStore {
+            let suiteName = "OTToolkitUITests.preferences"
+            UserDefaults().removePersistentDomain(forName: suiteName)
+            preferences = OTPreferences(defaults: UserDefaults(suiteName: suiteName) ?? .standard)
+        } else {
+            preferences = OTPreferences()
+        }
 
         var initialNavigation = AppNavigationState()
         if launchOptions.startsInChildFacingFixture {
@@ -27,7 +44,8 @@ struct AppSceneRootView: View {
             initialValue: VisualTimerController(
                 startDurationOverride: launchOptions.timerDurationOverrideSeconds.map {
                     .seconds($0)
-                }
+                },
+                preferences: preferences
             )
         )
         _visualTimerRuntimeCoordinator = State(
@@ -59,7 +77,7 @@ struct AppSceneRootView: View {
             initialValue: TokenBoardController(store: tokenStore)
         )
         _tokenBoardSessionController = State(
-            initialValue: TokenBoardSessionController()
+            initialValue: TokenBoardSessionController(preferences: preferences)
         )
     }
 
@@ -160,6 +178,7 @@ struct AppSceneRootView: View {
                 firstThenSessionController: firstThenSessionController,
                 tokenBoardController: tokenBoardController,
                 tokenBoardSessionController: tokenBoardSessionController,
+                dataController: dataController,
                 forcesCompactNavigation: true
             )
             .environment(\.horizontalSizeClass, .compact)
@@ -171,6 +190,7 @@ struct AppSceneRootView: View {
                 firstThenSessionController: firstThenSessionController,
                 tokenBoardController: tokenBoardController,
                 tokenBoardSessionController: tokenBoardSessionController,
+                dataController: dataController,
                 forcesCompactNavigation: false
             )
         }
@@ -388,6 +408,7 @@ struct AppShellView: View {
     let firstThenSessionController: FirstThenBoardSessionController
     let tokenBoardController: TokenBoardController
     let tokenBoardSessionController: TokenBoardSessionController
+    let dataController: AppDataController
     let forcesCompactNavigation: Bool
 
     var body: some View {
@@ -442,7 +463,7 @@ struct AppShellView: View {
             .tag(AppSection.saved)
 
             NavigationStack {
-                sectionPlaceholder(for: .settings)
+                settingsView
                     .safeAreaInset(edge: .bottom, spacing: 0) {
                         visualTimerBanner
                     }
@@ -514,7 +535,7 @@ struct AppShellView: View {
         case .saved:
             sectionPlaceholder(for: .saved)
         case .settings:
-            sectionPlaceholder(for: .settings)
+            settingsView
         }
     }
 
@@ -581,6 +602,14 @@ struct AppShellView: View {
                 }
             )
         }
+    }
+
+    private var settingsView: some View {
+        SettingsView(
+            dataController: dataController,
+            visualTimerController: visualTimerController,
+            tokenBoardSessionController: tokenBoardSessionController
+        )
     }
 
     private func sectionPlaceholder(for section: AppSection) -> some View {
