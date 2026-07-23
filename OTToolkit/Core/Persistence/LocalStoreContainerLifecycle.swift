@@ -2,8 +2,9 @@ import Foundation
 import SwiftData
 
 enum OTAppStorageKeys {
-    // Every future @AppStorage/UserDefaults key must be registered here so reset stays complete.
-    static let all: Set<String> = []
+    // Derived from OTPreference so reset always clears every app-owned key.
+    // Declare new preferences there rather than adding raw keys here.
+    static let all: Set<String> = Set(OTPreference.allCases.map(\.rawValue))
 }
 
 struct AppOwnedPreferences {
