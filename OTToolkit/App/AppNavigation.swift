@@ -10,6 +10,7 @@ enum AppSection: CaseIterable, Hashable, Identifiable, Sendable {
 
 enum AppDestination: Hashable, Identifiable, Sendable {
     case firstThenBoards
+    case tokenBoards
     case visualTimer
 
     var id: Self { self }
@@ -17,6 +18,7 @@ enum AppDestination: Hashable, Identifiable, Sendable {
 
 enum AppChildFacingDestination: Equatable, Sendable {
     case firstThenBoard(UUID)
+    case tokenBoard(UUID)
     case visualTimer
 }
 
@@ -85,6 +87,8 @@ struct AppNavigationState: Equatable, Sendable {
         switch destination {
         case .firstThenBoard:
             show(.firstThenBoards)
+        case .tokenBoard:
+            show(.tokenBoards)
         case .visualTimer:
             show(.visualTimer)
         }
