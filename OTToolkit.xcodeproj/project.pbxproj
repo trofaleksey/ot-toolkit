@@ -60,6 +60,12 @@
 		C10000000000000000000024 /* AdultExitControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000025 /* AdultExitControlTests.swift */; };
 		C60000000000000000000001 /* TokenBoardStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000001 /* TokenBoardStateMachine.swift */; };
 		C60000000000000000000002 /* TokenBoardStateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000002 /* TokenBoardStateMachineTests.swift */; };
+		C60000000000000000000003 /* OTToolkitSchemaV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000003 /* OTToolkitSchemaV2.swift */; };
+		C60000000000000000000004 /* TokenBoardTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000004 /* TokenBoardTemplate.swift */; };
+		C60000000000000000000005 /* TokenBoardTemplateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000005 /* TokenBoardTemplateStore.swift */; };
+		C60000000000000000000006 /* TokenBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000006 /* TokenBoardController.swift */; };
+		C60000000000000000000007 /* TokenBoardTemplateStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000007 /* TokenBoardTemplateStoreTests.swift */; };
+		C60000000000000000000008 /* TokenBoardControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60000000000000000000008 /* TokenBoardControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +140,12 @@
 		B10000000000000000000025 /* AdultExitControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdultExitControlTests.swift; sourceTree = "<group>"; };
 		B60000000000000000000001 /* TokenBoardStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardStateMachine.swift; sourceTree = "<group>"; };
 		B60000000000000000000002 /* TokenBoardStateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardStateMachineTests.swift; sourceTree = "<group>"; };
+		B60000000000000000000003 /* OTToolkitSchemaV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTToolkitSchemaV2.swift; sourceTree = "<group>"; };
+		B60000000000000000000004 /* TokenBoardTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardTemplate.swift; sourceTree = "<group>"; };
+		B60000000000000000000005 /* TokenBoardTemplateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardTemplateStore.swift; sourceTree = "<group>"; };
+		B60000000000000000000006 /* TokenBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardController.swift; sourceTree = "<group>"; };
+		B60000000000000000000007 /* TokenBoardTemplateStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardTemplateStoreTests.swift; sourceTree = "<group>"; };
+		B60000000000000000000008 /* TokenBoardControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardControllerTests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -332,6 +344,7 @@
 				B40000000000000000000002 /* LocalStoreContainerLifecycle.swift */,
 				B40000000000000000000001 /* LocalStoreFileSystem.swift */,
 				B50000000000000000000002 /* OTToolkitSchemaMigrationPlan.swift */,
+				B60000000000000000000003 /* OTToolkitSchemaV2.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -487,8 +500,27 @@
 			isa = PBXGroup;
 			children = (
 				A60000000000000000000002 /* Domain */,
+				A60000000000000000000005 /* Persistence */,
+				A60000000000000000000006 /* Presentation */,
 			);
 			path = Token;
+			sourceTree = "<group>";
+		};
+		A60000000000000000000005 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B60000000000000000000004 /* TokenBoardTemplate.swift */,
+				B60000000000000000000005 /* TokenBoardTemplateStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		A60000000000000000000006 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B60000000000000000000006 /* TokenBoardController.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		A60000000000000000000002 /* Domain */ = {
@@ -503,8 +535,26 @@
 			isa = PBXGroup;
 			children = (
 				A60000000000000000000004 /* Domain */,
+				A60000000000000000000007 /* Persistence */,
+				A60000000000000000000008 /* Presentation */,
 			);
 			path = Token;
+			sourceTree = "<group>";
+		};
+		A60000000000000000000007 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B60000000000000000000007 /* TokenBoardTemplateStoreTests.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		A60000000000000000000008 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B60000000000000000000008 /* TokenBoardControllerTests.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		A60000000000000000000004 /* Domain */ = {
@@ -647,6 +697,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C60000000000000000000001 /* TokenBoardStateMachine.swift in Sources */,
+				C60000000000000000000003 /* OTToolkitSchemaV2.swift in Sources */,
+				C60000000000000000000004 /* TokenBoardTemplate.swift in Sources */,
+				C60000000000000000000005 /* TokenBoardTemplateStore.swift in Sources */,
+				C60000000000000000000006 /* TokenBoardController.swift in Sources */,
 				C10000000000000000000016 /* AppNavigation.swift in Sources */,
 				C10000000000000000000017 /* AppShellView.swift in Sources */,
 				C10000000000000000000001 /* OTToolkitApp.swift in Sources */,
@@ -683,6 +737,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C60000000000000000000002 /* TokenBoardStateMachineTests.swift in Sources */,
+				C60000000000000000000007 /* TokenBoardTemplateStoreTests.swift in Sources */,
+				C60000000000000000000008 /* TokenBoardControllerTests.swift in Sources */,
 				C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */,
 				C1000000000000000000001B /* AppNavigationStateTests.swift in Sources */,
 				C10000000000000000000014 /* AccessibilityPreferencesTests.swift in Sources */,

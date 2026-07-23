@@ -5,16 +5,19 @@ import XCTest
 
 final class FirstThenBoardStoreTests: XCTestCase {
     @MainActor
-    func testSchemaV1AndMigrationPlanExposeOnlyFirstThenModels() {
+    func testSchemaV1RemainsUnchangedWhileTheAppTargetsV2() {
         XCTAssertEqual(OTToolkitSchemaV1.versionIdentifier, Schema.Version(1, 0, 0))
         XCTAssertEqual(OTToolkitSchemaV1.models.count, 2)
-        XCTAssertEqual(OTToolkitSchemaMigrationPlan.schemas.count, 1)
-        XCTAssertTrue(OTToolkitSchemaMigrationPlan.stages.isEmpty)
 
-        let schema = LocalModelContainerFactory.appSchema
-        XCTAssertEqual(schema.version, OTToolkitSchemaV1.versionIdentifier)
-        XCTAssertNotNil(schema.entity(for: FirstThenBoard.self))
-        XCTAssertNotNil(schema.entity(for: FirstThenItem.self))
+        let v1Schema = Schema(versionedSchema: OTToolkitSchemaV1.self)
+        XCTAssertEqual(v1Schema.version, OTToolkitSchemaV1.versionIdentifier)
+        XCTAssertNotNil(v1Schema.entity(for: FirstThenBoard.self))
+        XCTAssertNotNil(v1Schema.entity(for: FirstThenItem.self))
+
+        let appSchema = LocalModelContainerFactory.appSchema
+        XCTAssertEqual(appSchema.version, OTToolkitSchemaV2.versionIdentifier)
+        XCTAssertNotNil(appSchema.entity(for: FirstThenBoard.self))
+        XCTAssertNotNil(appSchema.entity(for: FirstThenItem.self))
     }
 
     @MainActor
