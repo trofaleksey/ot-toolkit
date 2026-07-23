@@ -1,4 +1,4 @@
-import SwiftData
+@preconcurrency import SwiftData
 
 /// Second versioned schema. It keeps the immutable First–Then V1 models and adds
 /// the Token Board template introduced by OTK-031. First–Then models are
