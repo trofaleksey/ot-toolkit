@@ -36,7 +36,9 @@ Before TestFlight use in real sessions, the complete shared test plan, full manu
 
 ## Current status
 
-The universal Xcode foundation, adaptive navigation, design/accessibility tokens, protected local-store boundary, deterministic timer domain, accessible timer UI, and timer lifecycle/feedback closeout are implemented. Timer enhancements are frozen unless Gate A or a critical defect demonstrates a need. The remaining MVP work is organized as three delivery slices: First–Then, Token Board, and Beta Release.
+All three core tools are implemented. The universal Xcode foundation, adaptive navigation, design/accessibility tokens, protected local-store boundary, deterministic timer domain, accessible timer UI, timer lifecycle/feedback closeout, First–Then schema and boards, Token Board domain and templates, and the OTK-040 settings/disclosure/reset slice are complete. Timer enhancements remain frozen unless Gate A or a critical defect demonstrates a need.
+
+Remaining beta work is distribution readiness and validation. OTK-041 has completed its repository-side deliverables — privacy policy text, App Store privacy answers, privacy-manifest re-audit, export-compliance configuration, asset-provenance re-review with a CI guard, and the beta protocol — and now carries four owner actions tracked in `Documentation/BETA_RELEASE.md` section 8: publishing the policy URL, publishing a monitored security contact, completing Apple Developer and App Store Connect setup, and running the real-device checks. Gate A has not yet run; OTK-005 recruitment gates both Gate A and Gate B and is the critical path.
 
 ## Lean delivery sequence
 

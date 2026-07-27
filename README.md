@@ -4,7 +4,7 @@ OT Toolkit is a native iPhone and iPad toolkit for pediatric occupational therap
 
 ## Status
 
-Foundation baseline. The repository contains a universal SwiftUI app target, unit and UI-test targets, a shared scheme/test plan, and pinned Xcode CI. Feature implementation begins with the adaptive shell and Visual Timer milestones in the roadmap.
+All three core-beta tools — Visual Timer, First–Then Board, and Token Board — are implemented, along with the adaptive shell, design and accessibility foundation, protected local store, required settings and disclosures, and idempotent reset. Remaining beta work is distribution readiness and the Gate B validation run.
 
 ## Core private beta
 
@@ -22,6 +22,9 @@ Choice Board is gated behind core validation. Regulation Cards are gated behind 
 - [Architecture](Documentation/ARCHITECTURE.md)
 - [Design system](Documentation/DESIGN_SYSTEM.md)
 - [Privacy](Documentation/PRIVACY.md)
+- [Privacy policy](Documentation/PRIVACY_POLICY.md)
+- [Beta release readiness](Documentation/BETA_RELEASE.md)
+- [Asset provenance](Documentation/ASSET_PROVENANCE.md)
 - [Validation plan](Documentation/VALIDATION_PLAN.md)
 - [Regulation content governance](Documentation/CONTENT_GOVERNANCE.md)
 - [Architecture decisions](Documentation/ADRs)

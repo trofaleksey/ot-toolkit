@@ -39,9 +39,12 @@ jobs:
             Documentation/ADRs/0003-local-data-and-media.md
             Documentation/ADRs/0004-supported-toolchain.md
             Documentation/ARCHITECTURE.md
+            Documentation/ASSET_PROVENANCE.md
+            Documentation/BETA_RELEASE.md
             Documentation/CONTENT_GOVERNANCE.md
             Documentation/DESIGN_SYSTEM.md
             Documentation/PRIVACY.md
+            Documentation/PRIVACY_POLICY.md
             Documentation/PRODUCT.md
             Documentation/ROADMAP.md
             Documentation/VALIDATION_PLAN.md
@@ -52,6 +55,7 @@ jobs:
             README.md
             Scripts/format.sh
             Scripts/lint.sh
+            Scripts/verify_asset_provenance.sh
             SECURITY.md
           )
           for path in "${required[@]}"; do
@@ -59,6 +63,40 @@ jobs:
           done
           test -x Scripts/format.sh
           test -x Scripts/lint.sh
+          test -x Scripts/verify_asset_provenance.sh
+
+      - name: Verify beta privacy and release invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # OTK-041: the beta may not transmit anything or log anything. These
+          # are the invariants the published privacy policy and the App Store
+          # "no data collected" answer depend on.
+          if git grep -nE \
+            '\b(URLSession|URLRequest|NWConnection|NWBrowser|NWListener|WKWebView|NSURLConnection|CFURLRequest)\b|^[[:space:]]*import[[:space:]]+(Network|CloudKit|WebKit)([[:space:]]|$)' \
+            -- OTToolkit; then
+            echo "::error::The app target must make no network requests."
+            exit 1
+          fi
+
+          if git grep -nE '\b(print|debugPrint|dump|NSLog|os_log)\(|\bLogger\(' \
+            -- OTToolkit; then
+            echo "::error::The app target must not log; logs could carry board labels."
+            exit 1
+          fi
+
+          configurations=$(git grep -c 'ModelConfiguration(' -- OTToolkit \
+            | awk -F: '{ total += $2 } END { print total + 0 }')
+          disabled=$(git grep -c 'cloudKitDatabase: .none' -- OTToolkit \
+            | awk -F: '{ total += $2 } END { print total + 0 }')
+          if [ "${configurations}" -eq 0 ] || [ "${configurations}" -ne "${disabled}" ]; then
+            echo "::error::Every ModelConfiguration must pass cloudKitDatabase: .none."
+            exit 1
+          fi
+
+      - name: Verify asset provenance ledger
+        run: ./Scripts/verify_asset_provenance.sh
 
       - name: Verify local main-push guard
         shell: bash
@@ -193,9 +231,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          plutil -lint OTToolkit/Resources/PrivacyInfo.xcprivacy
+          manifest_source=OTToolkit/Resources/PrivacyInfo.xcprivacy
+          plutil -lint "${manifest_source}"
           test "$(/usr/libexec/PlistBuddy -c 'Print :NSPrivacyTracking' \
-            OTToolkit/Resources/PrivacyInfo.xcprivacy)" = "false"
+            "${manifest_source}")" = "false"
+
+          # OTK-041: the App Store answer is "no data collected". Both arrays
+          # must stay empty for that answer and the privacy policy to be true.
+          test "$(plutil -extract NSPrivacyCollectedDataTypes json -o - \
+            "${manifest_source}")" = "[]"
+          test "$(plutil -extract NSPrivacyTrackingDomains json -o - \
+            "${manifest_source}")" = "[]"
 
           settings=$(xcodebuild \
             -project OTToolkit.xcodeproj \
@@ -241,9 +287,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          manifest="${DERIVED_DATA_PATH}/Build/Products/Debug-iphonesimulator/OTToolkit.app/PrivacyInfo.xcprivacy"
+          bundle="${DERIVED_DATA_PATH}/Build/Products/Debug-iphonesimulator/OTToolkit.app"
+          manifest="${bundle}/PrivacyInfo.xcprivacy"
           test -f "${manifest}"
           plutil -lint "${manifest}"
+
+          # OTK-041: the export-compliance answer ships in the build so no
+          # per-upload prompt can be answered inconsistently.
+          test "$(plutil -extract ITSAppUsesNonExemptEncryption raw -o - \
+            "${bundle}/Info.plist")" = "false"
 
       - name: Build Release
         run: |
