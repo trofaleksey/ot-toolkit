@@ -35,20 +35,25 @@ The pre-push hook rejects any update or deletion whose destination is the remote
 
 ## Pull requests
 
-Complete the pull-request template with scope, decisions, data impact, accessibility impact, exact validation commands, and manual checks. Link the primary issue and any ADR. Draft pull requests are appropriate until all acceptance criteria and tests pass.
+Complete the pull-request template with scope, decisions, data impact, accessibility impact, exact validation commands, and manual checks. Link the primary issue and any ADR.
+
+GitHub-hosted Actions are a limited final integration resource. Before opening a pull request, finish a coherent local change, review the diff, and run the required local formatting, lint, build, and test commands. Opening a draft pull request also triggers CI; use one before local validation only when early remote collaboration or review is worth that run.
+
+After a pull request is open, collect related fixups locally and push them together after the affected local checks pass. Inspect existing failure logs before pushing or rerunning. Do not use `workflow_dispatch`, rerun jobs, push no-op commits, or make whitespace-only changes to obtain another run without explicit maintainer approval. A deterministic code or configuration failure requires a fix and local validation before another push; a no-change rerun is reserved for demonstrably transient infrastructure failures.
 
 For every change to `main`:
 
-1. Push only a `codex/otk-XXX-short-description` branch and open a pull request.
+1. Validate locally, then push only a `codex/otk-XXX-short-description` branch and open a pull request.
 2. Wait for every available CI check to pass; GitHub Free cannot require those checks on this private repository.
-3. Review the final diff and confirm no patient data, credentials, or unrelated files are present.
-4. Squash-merge through GitHub, then allow GitHub to delete the merged branch.
+3. If fixes are needed, batch them locally, rerun the affected local checks, and make one follow-up push when practical.
+4. Review the final diff and confirm no patient data, credentials, or unrelated files are present.
+5. Squash-merge through GitHub, then allow GitHub to delete the merged branch.
 
 Never push directly to `main`, force-push it, or delete it. These are maintainer rules even where GitHub cannot enforce them server-side.
 
 ## Validation
 
-For documentation-only work, run the repository checks listed in the pull request. For Swift changes, run `./Scripts/format.sh`, `./Scripts/lint.sh`, and the relevant shared `OTToolkit` test-plan invocation. Include iPhone and iPad UI coverage for critical flows and record manual assistive-technology checks.
+For documentation-only work, run the repository checks listed in the pull request locally. For Swift changes, run `./Scripts/format.sh`, `./Scripts/lint.sh`, and the relevant shared `OTToolkit` test-plan invocation locally before opening the pull request. Include iPhone and iPad UI coverage for critical flows and record manual assistive-technology checks.
 
 Xcode 26.6 and iOS 26.5 in GitHub CI are authoritative. The Xcode 16.4 and iOS 18.5 compatibility lane protects the iOS/iPadOS 18.0 deployment target. Local validation does not replace either pinned check. Unsigned simulator builds use `CODE_SIGNING_ALLOWED=NO`; signing and distribution configuration remain release work.
 

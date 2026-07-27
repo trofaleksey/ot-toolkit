@@ -66,17 +66,28 @@ Before editing:
 
 After editing:
 
-1. Run formatting/lint, build, and relevant tests.
+1. Run formatting/lint, build, and relevant tests locally.
 2. Review the diff for unrelated changes and sensitive data.
 3. Summarize implementation and changed files.
 4. Report exact test commands and results.
 5. List remaining risks and manual checks.
 
+## GitHub Actions budget
+
+GitHub-hosted CI is a final integration gate, not the development feedback loop. Preserve the required pinned lanes, but minimize workflow runs:
+
+- Finish a coherent change and complete the required local validation before opening a pull request. Opening a draft pull request also starts CI, so use a draft before local validation only when early remote review is genuinely needed.
+- Once a pull request exists, accumulate related fixups locally, rerun the affected local checks, and push the fixes together. Do not push each small edit separately.
+- Diagnose failures from the existing logs before changing code or starting another run. Do not rerun a failed job without a code/configuration change unless the failure is demonstrably transient infrastructure trouble.
+- Do not start `workflow_dispatch`, rerun individual jobs, or rerun all jobs without explicit maintainer approval.
+- Do not push no-op commits or make whitespace-only edits solely to trigger CI.
+- Never weaken, skip, or remove a required check to save Actions minutes. If the Actions allowance is exhausted, report the locally verified state and wait for the allowance or a maintainer decision before merging.
+
 ## Project management
 
 GitHub Issues are the source of truth for active tickets, ownership, status, and acceptance criteria. ROADMAP.md defines sequence and gates; ADRs define durable decisions. Do not create a parallel Markdown ticket backlog. Maintainers allocate unique OTK roadmap IDs; GitHub issue numbers are separate and are used in pull-request closing keywords.
 
-Use branches named codex/otk-XXX-short-description. Keep pull requests small enough to review, link one primary issue with Closes #<number>, and use draft pull requests for work in progress.
+Use branches named codex/otk-XXX-short-description. Keep pull requests small enough to review and link one primary issue with Closes #<number>. Keep ordinary work local until it is coherent and locally validated; use a draft pull request earlier only when collaboration or an explicit review need justifies the CI run.
 
 ## Issue template
 
@@ -141,7 +152,8 @@ Use bounded prompts:
     First inspect AGENTS.md, the durable documentation, linked ADRs,
     and the relevant feature/tests. Before editing, summarize the approach,
     states, transitions, data impact, and accessibility risks. Implement only
-    the ticketed scope, add focused tests, and run the shared test plan.
+    the ticketed scope, add focused tests, and run the relevant shared test
+    plan locally. Batch any fixups before pushing to an open pull request.
     Report changes, files, tests, manual validation, risks, and assumptions.
 
 For reviews, inspect the diff without editing first. Report confirmed findings by severity with file and line references, then apply only approved/in-scope fixes and rerun relevant tests.
