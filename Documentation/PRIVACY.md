@@ -88,15 +88,17 @@ Regulation Cards provide therapist-reviewed reference content, not individualize
 
 OTK-004 introduces direct UserDefaults access only to snapshot, clear, and, after a failed reset, restore app-owned preferences. PrivacyInfo.xcprivacy declares the UserDefaults required-reason category with reason `CA92.1` and continues to declare `NSPrivacyTracking` as false. The persistence boundary does not access file timestamps, so it does not declare the file-timestamp category. Later tickets repeat the review whenever the implemented data flow or API surface changes.
 
+OTK-041 repeated the audit for the beta gate and added explicit empty `NSPrivacyCollectedDataTypes` and `NSPrivacyTrackingDomains` arrays so the manifest states the "no data collected" position rather than leaving it implied. CI asserts both arrays stay empty. `Documentation/BETA_RELEASE.md` records the audit result, including the required-reason categories deliberately not declared and the evidence for each.
+
 ## Public disclosures and release gate
 
 Before TestFlight use with real sessions or App Store submission:
 
-- Publish a plain-language privacy policy matching actual behavior.
-- Complete App Store privacy answers from the implemented data flow.
-- Verify every SwiftData ModelConfiguration explicitly uses cloudKitDatabase .none and that CloudKit/prohibited entitlements are absent.
-- Verify backup exclusion, file protection, reset, inactive-screen redaction, and sanitized logs.
-- Create and review PrivacyInfo.xcprivacy against the required-reason APIs actually used.
-- Document how users report privacy or security concerns.
+- Publish a plain-language privacy policy matching actual behavior. The text is written and reviewed in `Documentation/PRIVACY_POLICY.md`; publishing it and recording the URL remains an owner action.
+- Complete App Store privacy answers from the implemented data flow. Derived and recorded in `Documentation/BETA_RELEASE.md` section 2.
+- Verify every SwiftData ModelConfiguration explicitly uses cloudKitDatabase .none and that CloudKit/prohibited entitlements are absent. Enforced in CI.
+- Verify backup exclusion, file protection, reset, inactive-screen redaction, and sanitized logs. Log sanitization is enforced in CI by prohibiting logging APIs in the app target; the remaining checks require a real device and are tracked in `Documentation/BETA_RELEASE.md` section 5.
+- Create and review PrivacyInfo.xcprivacy against the required-reason APIs actually used. Re-audited for OTK-041; result in `Documentation/BETA_RELEASE.md` section 3.
+- Document how users report privacy or security concerns. `SECURITY.md` and the privacy policy carry the contact; publishing a monitored address remains an owner action.
 
 Any future sync, export, collaboration, analytics, diagnostics SDK, or media expansion requires an updated data-flow review, public privacy policy, and explicit approval before implementation.
