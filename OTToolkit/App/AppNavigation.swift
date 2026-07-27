@@ -18,6 +18,7 @@ enum AppDestination: Hashable, Identifiable, Sendable {
 
 enum AppChildFacingDestination: Equatable, Sendable {
     case firstThenBoard(UUID)
+    case firstThenSchedule
     case tokenBoard(UUID)
     case visualTimer
 }
@@ -85,7 +86,7 @@ struct AppNavigationState: Equatable, Sendable {
 
     mutating func presentChildFacing(_ destination: AppChildFacingDestination) {
         switch destination {
-        case .firstThenBoard:
+        case .firstThenBoard, .firstThenSchedule:
             show(.firstThenBoards)
         case .tokenBoard:
             show(.tokenBoards)

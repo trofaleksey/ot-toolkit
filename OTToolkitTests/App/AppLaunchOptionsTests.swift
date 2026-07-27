@@ -30,6 +30,7 @@ final class AppLaunchOptionsTests: XCTestCase {
                 "-ui-test-enable-layout-toggle-fixture",
                 "-ui-test-force-privacy-cover",
                 "-ui-test-seed-first-then-board",
+                "-ui-test-seed-first-then-schedule",
                 "-ui-test-start-child-facing-fixture",
                 "-ui-test-in-memory-store",
             ]
@@ -39,6 +40,7 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertTrue(options.enablesLayoutToggleFixture)
         XCTAssertTrue(options.forcesPrivacyCover)
         XCTAssertTrue(options.seedsFirstThenBoard)
+        XCTAssertTrue(options.seedsFirstThenSchedule)
         XCTAssertTrue(options.startsInChildFacingFixture)
         XCTAssertTrue(options.usesInMemoryStore)
     }
@@ -81,6 +83,7 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertFalse(options.enablesLayoutToggleFixture)
         XCTAssertFalse(options.forcesPrivacyCover)
         XCTAssertFalse(options.seedsFirstThenBoard)
+        XCTAssertFalse(options.seedsFirstThenSchedule)
         XCTAssertFalse(options.startsInChildFacingFixture)
         XCTAssertFalse(options.usesInMemoryStore)
         XCTAssertNil(options.timerDurationOverrideSeconds)
@@ -94,6 +97,7 @@ final class AppLaunchOptionsTests: XCTestCase {
                 "--ui-test-enable-layout-toggle-fixture",
                 "--ui-test-force-privacy-cover",
                 "--ui-test-seed-first-then-board",
+                "--ui-test-seed-first-then-schedule",
                 "--ui-test-start-child-facing-fixture",
                 "--ui-test-in-memory-store",
             ]
@@ -103,6 +107,7 @@ final class AppLaunchOptionsTests: XCTestCase {
         XCTAssertFalse(options.enablesLayoutToggleFixture)
         XCTAssertFalse(options.forcesPrivacyCover)
         XCTAssertFalse(options.seedsFirstThenBoard)
+        XCTAssertFalse(options.seedsFirstThenSchedule)
         XCTAssertFalse(options.startsInChildFacingFixture)
         XCTAssertFalse(options.usesInMemoryStore)
     }

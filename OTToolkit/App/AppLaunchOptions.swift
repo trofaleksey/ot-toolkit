@@ -5,6 +5,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     static let forcePrivacyCoverArgument = "-ui-test-force-privacy-cover"
     static let largestAccessibilityTextArgument = "-ui-test-largest-accessibility-text"
     static let seedFirstThenBoardArgument = "-ui-test-seed-first-then-board"
+    static let seedFirstThenScheduleArgument = "-ui-test-seed-first-then-schedule"
     static let seedTokenBoardArgument = "-ui-test-seed-token-board"
     static let startChildFacingFixtureArgument = "-ui-test-start-child-facing-fixture"
     static let timerDurationOverrideArgument = "-ui-test-timer-duration-seconds"
@@ -16,6 +17,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     let forcesPrivacyCover: Bool
     let usesLargestAccessibilityText: Bool
     let seedsFirstThenBoard: Bool
+    let seedsFirstThenSchedule: Bool
     let seedsTokenBoard: Bool
     let startsInChildFacingFixture: Bool
     let timerDurationOverrideSeconds: Int?
@@ -28,6 +30,7 @@ struct AppLaunchOptions: Equatable, Sendable {
         forcesPrivacyCover = arguments.contains(Self.forcePrivacyCoverArgument)
         usesLargestAccessibilityText = arguments.contains(Self.largestAccessibilityTextArgument)
         seedsFirstThenBoard = arguments.contains(Self.seedFirstThenBoardArgument)
+        seedsFirstThenSchedule = arguments.contains(Self.seedFirstThenScheduleArgument)
         seedsTokenBoard = arguments.contains(Self.seedTokenBoardArgument)
         startsInChildFacingFixture = arguments.contains(Self.startChildFacingFixtureArgument)
         usesInMemoryStore = arguments.contains(Self.useInMemoryStoreArgument)

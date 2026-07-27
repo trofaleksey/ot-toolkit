@@ -46,6 +46,7 @@ Remaining beta work is distribution readiness and validation. OTK-041 has comple
 2. **First–Then slice:** complete OTK-020, OTK-021, and OTK-022 consecutively without unrelated infrastructure or polish work between them.
 3. **Token Board slice:** complete OTK-030 and OTK-031 using the smallest concrete implementation that satisfies the journey. Direct local duplication is acceptable when an abstraction would delay the usable tool.
 4. **Beta Release slice:** complete a trimmed OTK-040, then OTK-041 and OTK-042. Settings include only controls and disclosures required by shipped behavior; no theme system or general settings framework is required.
+5. **First–Then schedule addition:** complete OTK-023 after OTK-041. It is the one approved feature addition inside the core beta and must not grow into a general schedule framework or a persisted schedule record.
 
 OTK-032 is deferred until after Gate B. Reopen or reschedule it only if the completed First–Then and Token Board implementations reveal costly repeated behavior with a stable common shape.
 
@@ -97,6 +98,9 @@ Gate A:
 | OTK-020 | First meaningful VersionedSchema V1 with board/item ordering, delete rules, and migration fixtures | OTK-004 |
 | OTK-021 | Create, save, edit, complete First, and present Then | OTK-002, OTK-003, OTK-020 |
 | OTK-022 | Child-facing presentation and reusable-board UI tests | OTK-021 |
+| OTK-023 | Ephemeral multi-board session visual schedule | OTK-022 |
+
+OTK-023 is an approved core-beta scope addition sequenced after OTK-041 rather than with the original First–Then slice. It adds no persistent model, no schema version, and no new privacy surface: selection, ordering, and progress are memory-only and end with the process.
 
 The first slice uses bundled symbols. A photo-import ticket may be created only after ADR-0003 is amended and approved.
 

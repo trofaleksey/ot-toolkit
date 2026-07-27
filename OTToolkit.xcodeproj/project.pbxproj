@@ -74,6 +74,12 @@
 		C70000000000000000000002 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70000000000000000000002 /* SettingsView.swift */; };
 		C70000000000000000000003 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70000000000000000000003 /* PreferencesTests.swift */; };
 		C70000000000000000000004 /* SettingsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70000000000000000000004 /* SettingsUITests.swift */; };
+		C80000000000000000000001 /* FirstThenScheduleSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000001 /* FirstThenScheduleSession.swift */; };
+		C80000000000000000000002 /* FirstThenScheduleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000002 /* FirstThenScheduleController.swift */; };
+		C80000000000000000000003 /* FirstThenScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000003 /* FirstThenScheduleView.swift */; };
+		C80000000000000000000004 /* FirstThenScheduleSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000004 /* FirstThenScheduleSessionTests.swift */; };
+		C80000000000000000000005 /* FirstThenScheduleControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000005 /* FirstThenScheduleControllerTests.swift */; };
+		C80000000000000000000006 /* FirstThenScheduleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000006 /* FirstThenScheduleUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +168,12 @@
 		B70000000000000000000002 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B70000000000000000000003 /* PreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
 		B70000000000000000000004 /* SettingsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUITests.swift; sourceTree = "<group>"; };
+		B80000000000000000000001 /* FirstThenScheduleSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleSession.swift; sourceTree = "<group>"; };
+		B80000000000000000000002 /* FirstThenScheduleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleController.swift; sourceTree = "<group>"; };
+		B80000000000000000000003 /* FirstThenScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleView.swift; sourceTree = "<group>"; };
+		B80000000000000000000004 /* FirstThenScheduleSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleSessionTests.swift; sourceTree = "<group>"; };
+		B80000000000000000000005 /* FirstThenScheduleControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleControllerTests.swift; sourceTree = "<group>"; };
+		B80000000000000000000006 /* FirstThenScheduleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleUITests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -261,10 +273,19 @@
 		A50000000000000000000001 /* FirstThen */ = {
 			isa = PBXGroup;
 			children = (
+				A80000000000000000000001 /* Domain */,
 				A50000000000000000000002 /* Persistence */,
 				A50000000000000000000005 /* Presentation */,
 			);
 			path = FirstThen;
+			sourceTree = "<group>";
+		};
+		A80000000000000000000001 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B80000000000000000000001 /* FirstThenScheduleSession.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		A50000000000000000000002 /* Persistence */ = {
@@ -281,6 +302,8 @@
 			children = (
 				B50000000000000000000005 /* FirstThenBoardController.swift */,
 				B50000000000000000000007 /* FirstThenBoardsView.swift */,
+				B80000000000000000000002 /* FirstThenScheduleController.swift */,
+				B80000000000000000000003 /* FirstThenScheduleView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -399,10 +422,19 @@
 		A50000000000000000000003 /* FirstThen */ = {
 			isa = PBXGroup;
 			children = (
+				A80000000000000000000002 /* Domain */,
 				A50000000000000000000004 /* Persistence */,
 				A50000000000000000000006 /* Presentation */,
 			);
 			path = FirstThen;
+			sourceTree = "<group>";
+		};
+		A80000000000000000000002 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B80000000000000000000004 /* FirstThenScheduleSessionTests.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		A50000000000000000000004 /* Persistence */ = {
@@ -417,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				B50000000000000000000006 /* FirstThenBoardControllerTests.swift */,
+				B80000000000000000000005 /* FirstThenScheduleControllerTests.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -502,6 +535,7 @@
 				B1000000000000000000001D /* AdaptiveNavigationUITests.swift */,
 				B10000000000000000000008 /* AppLaunchUITests.swift */,
 				B50000000000000000000008 /* FirstThenBoardUITests.swift */,
+				B80000000000000000000006 /* FirstThenScheduleUITests.swift */,
 				B6000000000000000000000C /* TokenBoardUITests.swift */,
 				B70000000000000000000004 /* SettingsUITests.swift */,
 				B10000000000000000000021 /* VisualTimerUITests.swift */,
@@ -751,6 +785,9 @@
 				C50000000000000000000001 /* FirstThenSchemaV1.swift in Sources */,
 				C50000000000000000000005 /* FirstThenBoardController.swift in Sources */,
 				C50000000000000000000007 /* FirstThenBoardsView.swift in Sources */,
+				C80000000000000000000001 /* FirstThenScheduleSession.swift in Sources */,
+				C80000000000000000000002 /* FirstThenScheduleController.swift in Sources */,
+				C80000000000000000000003 /* FirstThenScheduleView.swift in Sources */,
 				C10000000000000000000003 /* HomeView.swift in Sources */,
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
@@ -781,6 +818,8 @@
 				C40000000000000000000003 /* LocalStoreFileSystemTests.swift in Sources */,
 				C50000000000000000000004 /* FirstThenBoardStoreTests.swift in Sources */,
 				C50000000000000000000006 /* FirstThenBoardControllerTests.swift in Sources */,
+				C80000000000000000000004 /* FirstThenScheduleSessionTests.swift in Sources */,
+				C80000000000000000000005 /* FirstThenScheduleControllerTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 				C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */,
 				C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */,
@@ -794,6 +833,7 @@
 				C1000000000000000000001C /* AdaptiveNavigationUITests.swift in Sources */,
 				C10000000000000000000008 /* AppLaunchUITests.swift in Sources */,
 				C50000000000000000000008 /* FirstThenBoardUITests.swift in Sources */,
+				C80000000000000000000006 /* FirstThenScheduleUITests.swift in Sources */,
 				C6000000000000000000000C /* TokenBoardUITests.swift in Sources */,
 				C70000000000000000000004 /* SettingsUITests.swift in Sources */,
 				C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */,
