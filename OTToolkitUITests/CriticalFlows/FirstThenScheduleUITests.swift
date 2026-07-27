@@ -95,8 +95,66 @@ final class FirstThenScheduleUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Movement Break"].exists)
     }
 
+    /// Child-facing progress, adult exit, and the explicit schedule-complete
+    /// state, at the default text size where the journey needs little
+    /// scrolling. The largest-text checks live in their own test: combining
+    /// them made one long chain of swipe-then-tap steps whose failures moved
+    /// around between runs.
     @MainActor
-    func testScheduleCompletesAndSurvivesChildFacingExitAtLargestText() throws {
+    func testScheduleCompletesThroughChildFacingModeAndSurvivesAdultExit() {
+        let app = AccessibilityTestSupport.launchApplication(
+            forcesCompactNavigation: true,
+            seedsFirstThenSchedule: true
+        )
+        openFirstThenBoards(in: app)
+        startSchedule(with: ["Arrival", "Table Work"], in: app)
+
+        let present = element(app, "firstThen.schedule.action.childFacing")
+        reveal(present, in: app)
+        present.tap()
+
+        let childContent = element(app, "firstThen.schedule.child.content")
+        XCTAssertTrue(childContent.waitForExistence(timeout: 5))
+        XCTAssertTrue(childContent.label.contains("Arrival"))
+        XCTAssertEqual(element(app, "firstThen.schedule.child.position").label, "Board 1 of 2")
+
+        // Therapist-only controls stay behind the adult exit.
+        XCTAssertFalse(element(app, "firstThen.schedule.action.end").isHittable)
+        XCTAssertFalse(element(app, "firstThen.schedule.action.startOver").isHittable)
+
+        tap(element(app, "firstThen.schedule.child.completeFirst"), in: app)
+        tap(element(app, "firstThen.schedule.child.advance"), in: app)
+        XCTAssertEqual(element(app, "firstThen.schedule.child.position").label, "Board 2 of 2")
+
+        // Adult exit preserves the schedule and its progress.
+        let exit = app.buttons["Exit child view"]
+        AccessibilityTestSupport.assertMinimumHitTarget(exit)
+        exit.tap()
+        let confirmation = app.alerts["Return to therapist controls?"]
+        XCTAssertTrue(confirmation.waitForExistence(timeout: 5))
+        confirmation.buttons["Return to controls"].tap()
+
+        XCTAssertTrue(element(app, "firstThen.schedule.therapist").waitForExistence(timeout: 5))
+        XCTAssertEqual(element(app, "firstThen.schedule.position").label, "Board 2 of 2")
+        XCTAssertEqual(element(app, "firstThen.schedule.outline.0").value as? String, "Done")
+
+        // Finish the last board and confirm the explicit completion state.
+        tap(element(app, "firstThen.schedule.completeFirst"), in: app)
+        tap(element(app, "firstThen.schedule.action.advance"), in: app)
+
+        let completed = element(app, "firstThen.schedule.completed")
+        revealAbove(completed, in: app)
+        XCTAssertTrue(completed.exists)
+        XCTAssertEqual(
+            element(app, "firstThen.schedule.position").label,
+            "All boards complete"
+        )
+    }
+
+    /// Largest-text checks on the child-facing schedule, kept to a single
+    /// screen's worth of interaction.
+    @MainActor
+    func testChildFacingScheduleRemainsUsableAtLargestText() throws {
         let app = AccessibilityTestSupport.launchApplication(
             usesLargestAccessibilityText: true,
             forcesCompactNavigation: true,
@@ -114,25 +172,21 @@ final class FirstThenScheduleUITests: XCTestCase {
         XCTAssertTrue(childContent.waitForExistence(timeout: 5))
         XCTAssertTrue(childContent.label.contains("Arrival"))
         XCTAssertEqual(element(app, "firstThen.schedule.child.position").label, "Board 1 of 2")
-
-        // Therapist-only controls stay behind the adult exit.
-        XCTAssertFalse(element(app, "firstThen.schedule.action.end").isHittable)
-        XCTAssertFalse(element(app, "firstThen.schedule.action.startOver").isHittable)
+        XCTAssertEqual(
+            element(app, "firstThen.schedule.child.first").value as? String,
+            "Now"
+        )
+        XCTAssertEqual(
+            element(app, "firstThen.schedule.child.then").value as? String,
+            "Next"
+        )
 
         let childComplete = element(app, "firstThen.schedule.child.completeFirst")
         reveal(childComplete, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(childComplete)
-        childComplete.tap()
-
-        let childAdvance = element(app, "firstThen.schedule.child.advance")
-        reveal(childAdvance, in: app)
-        AccessibilityTestSupport.assertMinimumHitTarget(childAdvance)
         try app.performAccessibilityAudit(for: [.textClipped])
-        childAdvance.tap()
 
-        XCTAssertEqual(element(app, "firstThen.schedule.child.position").label, "Board 2 of 2")
-
-        // Adult exit preserves the schedule and its progress.
+        // Adult exit stays reachable at this text size and preserves progress.
         let exit = app.buttons["Exit child view"]
         AccessibilityTestSupport.assertMinimumHitTarget(exit)
         exit.tap()
@@ -141,24 +195,7 @@ final class FirstThenScheduleUITests: XCTestCase {
         confirmation.buttons["Return to controls"].tap()
 
         XCTAssertTrue(element(app, "firstThen.schedule.therapist").waitForExistence(timeout: 5))
-        XCTAssertEqual(element(app, "firstThen.schedule.position").label, "Board 2 of 2")
-        XCTAssertEqual(element(app, "firstThen.schedule.outline.0").value as? String, "Done")
-
-        // Finish the last board and confirm the explicit completion state.
-        let complete = element(app, "firstThen.schedule.completeFirst")
-        reveal(complete, in: app)
-        complete.tap()
-        let advance = element(app, "firstThen.schedule.action.advance")
-        reveal(advance, in: app)
-        advance.tap()
-
-        let completed = element(app, "firstThen.schedule.completed")
-        reveal(completed, in: app, requiresHittable: false)
-        XCTAssertTrue(completed.exists)
-        XCTAssertEqual(
-            element(app, "firstThen.schedule.position").label,
-            "All boards complete"
-        )
+        XCTAssertEqual(element(app, "firstThen.schedule.position").label, "Board 1 of 2")
     }
 
     @MainActor
@@ -264,6 +301,35 @@ final class FirstThenScheduleUITests: XCTestCase {
         XCTAssertTrue(element(app, "firstThen.destination").waitForExistence(timeout: 5))
     }
 
+    /// Scrolls the control fully clear of the tab bar, then taps it.
+    @MainActor
+    private func tap(_ element: XCUIElement, in app: XCUIApplication) {
+        reveal(element, in: app)
+        element.tap()
+    }
+
+    /// Scrolls back toward the top until the element is in the hierarchy.
+    ///
+    /// `reveal` only ever swipes up, so it cannot recover an element that sits
+    /// above the current scroll position.
+    @MainActor
+    private func revealAbove(_ element: XCUIElement, in app: XCUIApplication) {
+        for _ in 0..<8 {
+            if element.exists {
+                return
+            }
+            app.swipeDown()
+        }
+
+        XCTAssertTrue(element.waitForExistence(timeout: 5))
+    }
+
+    /// Scrolls until the element is fully clear of the tab bar.
+    ///
+    /// `isHittable` alone is not enough: a tall control at the largest text
+    /// size can peek above the tab bar and report hittable while its centre —
+    /// the point `tap()` actually targets — is underneath it, so the tap
+    /// silently goes to the tab bar instead.
     @MainActor
     private func reveal(
         _ element: XCUIElement,
@@ -272,7 +338,9 @@ final class FirstThenScheduleUITests: XCTestCase {
     ) {
         XCTAssertTrue(element.waitForExistence(timeout: 5))
         for _ in 0..<8 {
-            if !requiresHittable || element.isHittable {
+            if !requiresHittable
+                || (element.isHittable && element.frame.maxY <= contentBottom(in: app))
+            {
                 return
             }
             app.swipeUp()
@@ -280,6 +348,13 @@ final class FirstThenScheduleUITests: XCTestCase {
 
         if requiresHittable {
             XCTAssertTrue(element.isHittable)
+            XCTAssertLessThanOrEqual(element.frame.maxY, contentBottom(in: app))
         }
+    }
+
+    @MainActor
+    private func contentBottom(in app: XCUIApplication) -> CGFloat {
+        let tabBar = app.tabBars.firstMatch
+        return tabBar.exists ? tabBar.frame.minY : app.windows.firstMatch.frame.maxY
     }
 }
