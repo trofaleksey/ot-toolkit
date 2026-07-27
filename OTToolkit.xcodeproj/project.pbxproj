@@ -70,6 +70,10 @@
 		C6000000000000000000000A /* TokenBoardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000000000000000000000A /* TokenBoardsView.swift */; };
 		C6000000000000000000000B /* TokenBoardSessionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000000000000000000000B /* TokenBoardSessionControllerTests.swift */; };
 		C6000000000000000000000C /* TokenBoardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6000000000000000000000C /* TokenBoardUITests.swift */; };
+		C70000000000000000000001 /* OTPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70000000000000000000001 /* OTPreferences.swift */; };
+		C70000000000000000000002 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70000000000000000000002 /* SettingsView.swift */; };
+		C70000000000000000000003 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70000000000000000000003 /* PreferencesTests.swift */; };
+		C70000000000000000000004 /* SettingsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70000000000000000000004 /* SettingsUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +158,10 @@
 		B6000000000000000000000A /* TokenBoardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardsView.swift; sourceTree = "<group>"; };
 		B6000000000000000000000B /* TokenBoardSessionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardSessionControllerTests.swift; sourceTree = "<group>"; };
 		B6000000000000000000000C /* TokenBoardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBoardUITests.swift; sourceTree = "<group>"; };
+		B70000000000000000000001 /* OTPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPreferences.swift; sourceTree = "<group>"; };
+		B70000000000000000000002 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B70000000000000000000003 /* PreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
+		B70000000000000000000004 /* SettingsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUITests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +234,7 @@
 				B1000000000000000000001A /* ChildFacingContainer.swift */,
 				B40000000000000000000006 /* PersistenceRecoveryView.swift */,
 				B10000000000000000000019 /* PrivacyCoverView.swift */,
+				B70000000000000000000002 /* SettingsView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -353,6 +362,7 @@
 				B40000000000000000000001 /* LocalStoreFileSystem.swift */,
 				B50000000000000000000002 /* OTToolkitSchemaMigrationPlan.swift */,
 				B60000000000000000000003 /* OTToolkitSchemaV2.swift */,
+				B70000000000000000000001 /* OTPreferences.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -470,6 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				B40000000000000000000007 /* AppDataControllerTests.swift */,
+				B70000000000000000000003 /* PreferencesTests.swift */,
 				B40000000000000000000004 /* LocalStoreContainerLifecycleTests.swift */,
 				B40000000000000000000003 /* LocalStoreFileSystemTests.swift */,
 			);
@@ -492,6 +503,7 @@
 				B10000000000000000000008 /* AppLaunchUITests.swift */,
 				B50000000000000000000008 /* FirstThenBoardUITests.swift */,
 				B6000000000000000000000C /* TokenBoardUITests.swift */,
+				B70000000000000000000004 /* SettingsUITests.swift */,
 				B10000000000000000000021 /* VisualTimerUITests.swift */,
 			);
 			path = CriticalFlows;
@@ -710,6 +722,8 @@
 			files = (
 				C60000000000000000000001 /* TokenBoardStateMachine.swift in Sources */,
 				C60000000000000000000003 /* OTToolkitSchemaV2.swift in Sources */,
+				C70000000000000000000001 /* OTPreferences.swift in Sources */,
+				C70000000000000000000002 /* SettingsView.swift in Sources */,
 				C60000000000000000000004 /* TokenBoardTemplate.swift in Sources */,
 				C60000000000000000000005 /* TokenBoardTemplateStore.swift in Sources */,
 				C60000000000000000000006 /* TokenBoardController.swift in Sources */,
@@ -752,6 +766,7 @@
 			files = (
 				C60000000000000000000002 /* TokenBoardStateMachineTests.swift in Sources */,
 				C60000000000000000000007 /* TokenBoardTemplateStoreTests.swift in Sources */,
+				C70000000000000000000003 /* PreferencesTests.swift in Sources */,
 				C60000000000000000000008 /* TokenBoardControllerTests.swift in Sources */,
 				C6000000000000000000000B /* TokenBoardSessionControllerTests.swift in Sources */,
 				C10000000000000000000007 /* AppLaunchOptionsTests.swift in Sources */,
@@ -780,6 +795,7 @@
 				C10000000000000000000008 /* AppLaunchUITests.swift in Sources */,
 				C50000000000000000000008 /* FirstThenBoardUITests.swift in Sources */,
 				C6000000000000000000000C /* TokenBoardUITests.swift in Sources */,
+				C70000000000000000000004 /* SettingsUITests.swift in Sources */,
 				C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */,
 				C10000000000000000000020 /* VisualTimerUITests.swift in Sources */,
 			);

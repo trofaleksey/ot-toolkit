@@ -5,6 +5,18 @@ import XCTest
 
 @MainActor
 final class VisualTimerControllerTests: XCTestCase {
+    /// These controllers use the shared preference domain, so clear app-owned
+    /// keys first; otherwise a feedback toggle here leaks into later tests.
+    override func setUp() {
+        super.setUp()
+        AppOwnedPreferences().clear()
+    }
+
+    override func tearDown() {
+        AppOwnedPreferences().clear()
+        super.tearDown()
+    }
+
     func testDefaultAndPresetSelectionsProduceExpectedDurations() {
         let controller = VisualTimerController(clock: ManualPresentationClock())
 

@@ -859,6 +859,294 @@
         }
       }
     },
+    "settings.disclosure.backup.message": {
+      "comment": "Backup limitation detail.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved boards stay on this device only. They are excluded from device and iCloud backups, so they will not appear on a new or restored device."
+          }
+        }
+      }
+    },
+    "settings.disclosure.backup.title": {
+      "comment": "Backup limitation heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boards do not transfer between devices"
+          }
+        }
+      }
+    },
+    "settings.disclosure.naming.message": {
+      "comment": "Naming guidance detail.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use activity or routine names rather than a child's name. Initials and nicknames can still identify a child."
+          }
+        }
+      }
+    },
+    "settings.disclosure.naming.title": {
+      "comment": "Naming guidance heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep labels generic"
+          }
+        }
+      }
+    },
+    "settings.disclosure.timer.message": {
+      "comment": "Timer lifecycle limitation detail.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Force quitting the app, a device restart, or the system reclaiming memory ends a running timer. The app reopens with no timer running and does not alert you in the background."
+          }
+        }
+      }
+    },
+    "settings.disclosure.timer.title": {
+      "comment": "Timer lifecycle limitation heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timers end if the app closes"
+          }
+        }
+      }
+    },
+    "settings.disclosure.title": {
+      "comment": "Settings section for required disclosures.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Before you rely on this app"
+          }
+        }
+      }
+    },
+    "settings.feedback.message": {
+      "comment": "Explains foreground-only sensory feedback.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Optional feedback plays only while the app is open and stays off until you turn it on."
+          }
+        }
+      }
+    },
+    "settings.feedback.timer.haptic": {
+      "comment": "Toggle for timer completion haptic.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual Timer haptic"
+          }
+        }
+      }
+    },
+    "settings.feedback.timer.sound": {
+      "comment": "Toggle for timer completion sound.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual Timer sound"
+          }
+        }
+      }
+    },
+    "settings.feedback.title": {
+      "comment": "Settings section for optional sensory feedback.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completion feedback"
+          }
+        }
+      }
+    },
+    "settings.feedback.tokenBoard.haptic": {
+      "comment": "Toggle for token board completion haptic.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Token Board haptic"
+          }
+        }
+      }
+    },
+    "settings.reset.action": {
+      "comment": "Button that starts the reset flow.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset app data"
+          }
+        }
+      }
+    },
+    "settings.reset.cancel": {
+      "comment": "Cancels the reset.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep data"
+          }
+        }
+      }
+    },
+    "settings.reset.confirm": {
+      "comment": "Confirms the reset.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        }
+      }
+    },
+    "settings.reset.dismiss": {
+      "comment": "Dismisses the reset result.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "settings.reset.failure.message": {
+      "comment": "Reset failure body.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data was left unchanged. Try again, and if the problem continues reopen the app."
+          }
+        }
+      }
+    },
+    "settings.reset.failure.title": {
+      "comment": "Reset failure title.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not reset app data"
+          }
+        }
+      }
+    },
+    "settings.reset.message": {
+      "comment": "Reset confirmation body.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every saved board, template, and preference on this device will be removed. This cannot be undone."
+          }
+        }
+      }
+    },
+    "settings.reset.section.message": {
+      "comment": "Explains what reset removes.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Removes every saved board, template, and preference on this device, then starts fresh. This cannot be undone."
+          }
+        }
+      }
+    },
+    "settings.reset.section.title": {
+      "comment": "Settings section for resetting data.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset app data"
+          }
+        }
+      }
+    },
+    "settings.reset.success.message": {
+      "comment": "Reset success body.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved boards, templates, and preferences were removed and a fresh store was created."
+          }
+        }
+      }
+    },
+    "settings.reset.success.title": {
+      "comment": "Reset success title.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App data reset"
+          }
+        }
+      }
+    },
+    "settings.reset.title": {
+      "comment": "Reset confirmation title.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset all app data?"
+          }
+        }
+      }
+    },
     "tokenBoard.action.addToken": {
       "comment": "Adds one token to the board.",
       "extractionState": "manual",

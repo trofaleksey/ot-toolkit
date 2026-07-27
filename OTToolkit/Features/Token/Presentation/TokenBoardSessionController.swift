@@ -29,14 +29,18 @@ final class SystemTokenBoardCompletionFeedback: TokenBoardCompletionFeedbackDeli
 final class TokenBoardSessionController {
     private var boardsByTemplateID: [UUID: TokenBoardStateMachine] = [:]
     private let completionFeedback: any TokenBoardCompletionFeedbackDelivering
+    private let preferences: OTPreferences
 
     private(set) var isCompletionHapticEnabled = false
 
     init(
         completionFeedback: any TokenBoardCompletionFeedbackDelivering =
-            SystemTokenBoardCompletionFeedback()
+            SystemTokenBoardCompletionFeedback(),
+        preferences: OTPreferences = OTPreferences()
     ) {
         self.completionFeedback = completionFeedback
+        self.preferences = preferences
+        isCompletionHapticEnabled = preferences.isEnabled(.tokenBoardCompletionHaptic)
     }
 
     func start(template: TokenBoardTemplateSnapshot) {
@@ -85,6 +89,7 @@ final class TokenBoardSessionController {
 
     func setCompletionHapticEnabled(_ isEnabled: Bool) {
         isCompletionHapticEnabled = isEnabled
+        preferences.setEnabled(isEnabled, for: .tokenBoardCompletionHaptic)
     }
 
     func discardSession(templateID: UUID) {

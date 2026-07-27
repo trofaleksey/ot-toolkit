@@ -31,9 +31,12 @@ final class VisualTimerController {
     private(set) var isCompletionSoundEnabled = false
     private(set) var isCompletionHapticEnabled = false
 
+    private let preferences: OTPreferences
+
     init(
         clock: any VisualTimerClock = ContinuousClock(),
-        startDurationOverride: Duration? = nil
+        startDurationOverride: Duration? = nil,
+        preferences: OTPreferences = OTPreferences()
     ) {
         stateMachine = VisualTimerStateMachine(clock: clock)
         snapshot = VisualTimerSnapshot(
@@ -42,6 +45,9 @@ final class VisualTimerController {
             remainingDuration: nil
         )
         self.startDurationOverride = startDurationOverride
+        self.preferences = preferences
+        isCompletionSoundEnabled = preferences.isEnabled(.visualTimerCompletionSound)
+        isCompletionHapticEnabled = preferences.isEnabled(.visualTimerCompletionHaptic)
     }
 
     var phase: VisualTimerPhase {
@@ -120,10 +126,12 @@ final class VisualTimerController {
 
     func setCompletionSoundEnabled(_ isEnabled: Bool) {
         isCompletionSoundEnabled = isEnabled
+        preferences.setEnabled(isEnabled, for: .visualTimerCompletionSound)
     }
 
     func setCompletionHapticEnabled(_ isEnabled: Bool) {
         isCompletionHapticEnabled = isEnabled
+        preferences.setEnabled(isEnabled, for: .visualTimerCompletionHaptic)
     }
 
     @discardableResult
