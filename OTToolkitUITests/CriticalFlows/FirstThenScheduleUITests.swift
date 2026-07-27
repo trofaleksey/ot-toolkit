@@ -13,6 +13,7 @@ final class FirstThenScheduleUITests: XCTestCase {
         let configure = element(app, "firstThen.schedule.action.configure")
         XCTAssertTrue(configure.waitForExistence(timeout: 5))
         XCTAssertTrue(configure.isEnabled)
+        reveal(configure, in: app)
         configure.tap()
 
         let start = app.buttons["firstThen.schedule.action.start"]
@@ -324,12 +325,15 @@ final class FirstThenScheduleUITests: XCTestCase {
         XCTAssertTrue(element.waitForExistence(timeout: 5))
     }
 
-    /// Scrolls until the element is fully clear of the tab bar.
+    /// Scrolls until the element's centre — the point `tap()` targets — is
+    /// clear of the tab bar.
     ///
     /// `isHittable` alone is not enough: a tall control at the largest text
-    /// size can peek above the tab bar and report hittable while its centre —
-    /// the point `tap()` actually targets — is underneath it, so the tap
-    /// silently goes to the tab bar instead.
+    /// size can peek above the tab bar and report hittable while its centre is
+    /// underneath it, so the tap silently goes to the tab bar instead. Testing
+    /// the centre rather than the whole frame matters: a control taller than
+    /// the remaining scroll travel can never get its bottom edge above the
+    /// bar, and requiring that would fail a control that taps perfectly well.
     @MainActor
     private func reveal(
         _ element: XCUIElement,
@@ -338,9 +342,7 @@ final class FirstThenScheduleUITests: XCTestCase {
     ) {
         XCTAssertTrue(element.waitForExistence(timeout: 5))
         for _ in 0..<8 {
-            if !requiresHittable
-                || (element.isHittable && element.frame.maxY <= contentBottom(in: app))
-            {
+            if !requiresHittable || isTapPointClear(element, in: app) {
                 return
             }
             app.swipeUp()
@@ -348,8 +350,13 @@ final class FirstThenScheduleUITests: XCTestCase {
 
         if requiresHittable {
             XCTAssertTrue(element.isHittable)
-            XCTAssertLessThanOrEqual(element.frame.maxY, contentBottom(in: app))
+            XCTAssertLessThan(element.frame.midY, contentBottom(in: app))
         }
+    }
+
+    @MainActor
+    private func isTapPointClear(_ element: XCUIElement, in app: XCUIApplication) -> Bool {
+        element.isHittable && element.frame.midY < contentBottom(in: app)
     }
 
     @MainActor

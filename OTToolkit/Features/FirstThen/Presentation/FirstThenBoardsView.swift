@@ -79,13 +79,16 @@ struct FirstThenBoardsView: View {
                 if controller.boards.isEmpty {
                     emptyState
                 } else {
-                    scheduleEntry
-
                     LazyVStack(spacing: OTSpacing.md) {
                         ForEach(controller.boards) { board in
                             boardRow(board)
                         }
                     }
+
+                    // Below the boards: picking a saved board is the primary
+                    // job here, and at the largest text sizes anything above
+                    // the list pushes it off the first screen.
+                    scheduleEntry
                 }
             }
             .frame(maxWidth: 720, alignment: .leading)
