@@ -12,6 +12,8 @@ struct AppSceneRootView: View {
     @State private var firstThenScheduleController: FirstThenScheduleController
     @State private var tokenBoardController: TokenBoardController
     @State private var tokenBoardSessionController: TokenBoardSessionController
+    @State private var choiceBoardController: ChoiceBoardController
+    @State private var choiceBoardSessionController: ChoiceBoardSessionController
     @State private var fixtureForcesCompactNavigation = false
 
     private let launchOptions: AppLaunchOptions
@@ -95,6 +97,22 @@ struct AppSceneRootView: View {
         )
         _tokenBoardSessionController = State(
             initialValue: TokenBoardSessionController(preferences: preferences)
+        )
+        let choiceStore = ChoiceBoardStore(modelContext: modelContext)
+        if launchOptions.seedsChoiceBoard {
+            _ = try? choiceStore.create(
+                ChoiceBoardUITestFixture.draft,
+                boardID: ChoiceBoardUITestFixture.boardID,
+                optionIDs: ChoiceBoardUITestFixture.optionIDs
+            )
+        }
+        _choiceBoardController = State(
+            initialValue: ChoiceBoardController(store: choiceStore)
+        )
+        // Selection and temporary hiding are session state, so this controller
+        // is scene-owned and never persisted.
+        _choiceBoardSessionController = State(
+            initialValue: ChoiceBoardSessionController()
         )
     }
 
@@ -196,6 +214,8 @@ struct AppSceneRootView: View {
                 firstThenScheduleController: firstThenScheduleController,
                 tokenBoardController: tokenBoardController,
                 tokenBoardSessionController: tokenBoardSessionController,
+                choiceBoardController: choiceBoardController,
+                choiceBoardSessionController: choiceBoardSessionController,
                 dataController: dataController,
                 forcesCompactNavigation: true
             )
@@ -209,6 +229,8 @@ struct AppSceneRootView: View {
                 firstThenScheduleController: firstThenScheduleController,
                 tokenBoardController: tokenBoardController,
                 tokenBoardSessionController: tokenBoardSessionController,
+                choiceBoardController: choiceBoardController,
+                choiceBoardSessionController: choiceBoardSessionController,
                 dataController: dataController,
                 forcesCompactNavigation: false
             )
@@ -218,6 +240,12 @@ struct AppSceneRootView: View {
     @ViewBuilder
     private var childFacingContent: some View {
         switch navigation.childFacingDestination {
+        case let .choiceBoard(boardID):
+            ChoiceBoardChildView(
+                controller: choiceBoardController,
+                sessionController: choiceBoardSessionController,
+                boardID: boardID
+            )
         case let .firstThenBoard(boardID):
             FirstThenBoardChildView(
                 controller: firstThenBoardController,
@@ -317,6 +345,25 @@ private enum FirstThenScheduleUITestFixture {
     private static func identifier(_ prefix: UInt8, _ suffix: UInt8) -> UUID {
         UUID(uuid: (prefix, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suffix))
     }
+}
+
+private enum ChoiceBoardUITestFixture {
+    static let boardID = UUID(
+        uuid: (0x50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x01)
+    )
+    static let optionIDs = [
+        UUID(uuid: (0x51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x01)),
+        UUID(uuid: (0x51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x02)),
+        UUID(uuid: (0x51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x03)),
+    ]
+    static let draft = ChoiceBoardDraft(
+        name: "Break Choices",
+        options: [
+            ChoiceOptionDraft(label: "Swing", systemSymbolName: "figure.walk"),
+            ChoiceOptionDraft(label: "Bubbles", systemSymbolName: "puzzlepiece"),
+            ChoiceOptionDraft(label: "Drawing", systemSymbolName: "paintbrush"),
+        ]
+    )
 }
 
 private enum TokenBoardUITestFixture {
@@ -484,6 +531,8 @@ struct AppShellView: View {
     let firstThenScheduleController: FirstThenScheduleController
     let tokenBoardController: TokenBoardController
     let tokenBoardSessionController: TokenBoardSessionController
+    let choiceBoardController: ChoiceBoardController
+    let choiceBoardSessionController: ChoiceBoardSessionController
     let dataController: AppDataController
     let forcesCompactNavigation: Bool
 
@@ -511,6 +560,9 @@ struct AppShellView: View {
                     },
                     onOpenTokenBoards: {
                         navigation.show(.tokenBoards)
+                    },
+                    onOpenChoiceBoards: {
+                        navigation.show(.choiceBoards)
                     }
                 )
                 .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -606,6 +658,9 @@ struct AppShellView: View {
                 },
                 onOpenTokenBoards: {
                     navigation.show(.tokenBoards)
+                },
+                onOpenChoiceBoards: {
+                    navigation.show(.choiceBoards)
                 }
             )
         case .saved:
@@ -654,6 +709,14 @@ struct AppShellView: View {
     @ViewBuilder
     private func destinationView(for destination: AppDestination) -> some View {
         switch destination {
+        case .choiceBoards:
+            ChoiceBoardsView(
+                controller: choiceBoardController,
+                sessionController: choiceBoardSessionController,
+                onPresentChildFacing: { boardID in
+                    navigation.presentChildFacing(.choiceBoard(boardID))
+                }
+            )
         case .firstThenBoards:
             FirstThenBoardsView(
                 controller: firstThenBoardController,

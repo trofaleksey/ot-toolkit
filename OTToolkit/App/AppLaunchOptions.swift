@@ -7,6 +7,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     static let seedFirstThenBoardArgument = "-ui-test-seed-first-then-board"
     static let seedFirstThenScheduleArgument = "-ui-test-seed-first-then-schedule"
     static let seedTokenBoardArgument = "-ui-test-seed-token-board"
+    static let seedChoiceBoardArgument = "-ui-test-seed-choice-board"
     static let startChildFacingFixtureArgument = "-ui-test-start-child-facing-fixture"
     static let timerDurationOverrideArgument = "-ui-test-timer-duration-seconds"
     static let useInMemoryStoreArgument = "-ui-test-in-memory-store"
@@ -19,6 +20,7 @@ struct AppLaunchOptions: Equatable, Sendable {
     let seedsFirstThenBoard: Bool
     let seedsFirstThenSchedule: Bool
     let seedsTokenBoard: Bool
+    let seedsChoiceBoard: Bool
     let startsInChildFacingFixture: Bool
     let timerDurationOverrideSeconds: Int?
     let usesInMemoryStore: Bool
@@ -32,6 +34,7 @@ struct AppLaunchOptions: Equatable, Sendable {
         seedsFirstThenBoard = arguments.contains(Self.seedFirstThenBoardArgument)
         seedsFirstThenSchedule = arguments.contains(Self.seedFirstThenScheduleArgument)
         seedsTokenBoard = arguments.contains(Self.seedTokenBoardArgument)
+        seedsChoiceBoard = arguments.contains(Self.seedChoiceBoardArgument)
         startsInChildFacingFixture = arguments.contains(Self.startChildFacingFixtureArgument)
         usesInMemoryStore = arguments.contains(Self.useInMemoryStoreArgument)
         timerDurationOverrideSeconds = Self.positiveInteger(

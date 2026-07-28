@@ -95,7 +95,8 @@ this section, which is how the ledger stays current as features land.
 | `arrow.right.circle.fill` | Labeled Then transition and next-board action; the localized label carries the meaning |
 | `arrow.down` | Decorative First-to-Then flow indicator, and the labeled move-later control in schedule ordering; decorative instances are hidden from assistive technologies |
 | `arrow.up` | Labeled move-earlier control in schedule ordering; the localized label carries the meaning |
-| `minus.circle` | Labeled remove-from-schedule action; the localized label carries the meaning |
+| `minus.circle` | Labeled remove-from-schedule and remove-choice actions; the localized label carries the meaning |
+| `plus.square.on.square` | Labeled duplicate-board action; the localized label carries the meaning |
 | `xmark.circle` | Labeled end-schedule action; the localized label carries the meaning |
 | `list.bullet` | Labeled start-visual-schedule action; the localized label carries the meaning |
 | `rectangle.inset.filled` | Labeled enter-child-facing action; the localized label carries the meaning |
