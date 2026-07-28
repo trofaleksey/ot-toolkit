@@ -80,6 +80,11 @@
 		C80000000000000000000004 /* FirstThenScheduleSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000004 /* FirstThenScheduleSessionTests.swift */; };
 		C80000000000000000000005 /* FirstThenScheduleControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000005 /* FirstThenScheduleControllerTests.swift */; };
 		C80000000000000000000006 /* FirstThenScheduleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000006 /* FirstThenScheduleUITests.swift */; };
+		C90000000000000000000001 /* ChoiceBoardSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000001 /* ChoiceBoardSession.swift */; };
+		C90000000000000000000002 /* ChoiceBoardSchemaV3.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000002 /* ChoiceBoardSchemaV3.swift */; };
+		C90000000000000000000003 /* ChoiceBoardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000003 /* ChoiceBoardStore.swift */; };
+		C90000000000000000000004 /* ChoiceBoardSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000004 /* ChoiceBoardSessionTests.swift */; };
+		C90000000000000000000005 /* ChoiceBoardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000005 /* ChoiceBoardStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +179,11 @@
 		B80000000000000000000004 /* FirstThenScheduleSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleSessionTests.swift; sourceTree = "<group>"; };
 		B80000000000000000000005 /* FirstThenScheduleControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleControllerTests.swift; sourceTree = "<group>"; };
 		B80000000000000000000006 /* FirstThenScheduleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstThenScheduleUITests.swift; sourceTree = "<group>"; };
+		B90000000000000000000001 /* ChoiceBoardSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardSession.swift; sourceTree = "<group>"; };
+		B90000000000000000000002 /* ChoiceBoardSchemaV3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardSchemaV3.swift; sourceTree = "<group>"; };
+		B90000000000000000000003 /* ChoiceBoardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardStore.swift; sourceTree = "<group>"; };
+		B90000000000000000000004 /* ChoiceBoardSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardSessionTests.swift; sourceTree = "<group>"; };
+		B90000000000000000000005 /* ChoiceBoardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardStoreTests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,6 +264,7 @@
 		A10000000000000000000006 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				A90000000000000000000001 /* Choice */,
 				A50000000000000000000001 /* FirstThen */,
 				A10000000000000000000007 /* Home */,
 				A60000000000000000000001 /* Token */,
@@ -268,6 +279,32 @@
 				B10000000000000000000003 /* HomeView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000001 /* Choice */ = {
+			isa = PBXGroup;
+			children = (
+				A90000000000000000000002 /* Domain */,
+				A90000000000000000000003 /* Persistence */,
+			);
+			path = Choice;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000002 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B90000000000000000000001 /* ChoiceBoardSession.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000003 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B90000000000000000000002 /* ChoiceBoardSchemaV3.swift */,
+				B90000000000000000000003 /* ChoiceBoardStore.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		A50000000000000000000001 /* FirstThen */ = {
@@ -412,11 +449,37 @@
 		A1000000000000000000000F /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				A90000000000000000000004 /* Choice */,
 				A50000000000000000000003 /* FirstThen */,
 				A60000000000000000000003 /* Token */,
 				A10000000000000000000010 /* VisualTimer */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000004 /* Choice */ = {
+			isa = PBXGroup;
+			children = (
+				A90000000000000000000005 /* Domain */,
+				A90000000000000000000006 /* Persistence */,
+			);
+			path = Choice;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000005 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B90000000000000000000004 /* ChoiceBoardSessionTests.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000006 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B90000000000000000000005 /* ChoiceBoardStoreTests.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		A50000000000000000000003 /* FirstThen */ = {
@@ -788,6 +851,9 @@
 				C80000000000000000000001 /* FirstThenScheduleSession.swift in Sources */,
 				C80000000000000000000002 /* FirstThenScheduleController.swift in Sources */,
 				C80000000000000000000003 /* FirstThenScheduleView.swift in Sources */,
+				C90000000000000000000001 /* ChoiceBoardSession.swift in Sources */,
+				C90000000000000000000002 /* ChoiceBoardSchemaV3.swift in Sources */,
+				C90000000000000000000003 /* ChoiceBoardStore.swift in Sources */,
 				C10000000000000000000003 /* HomeView.swift in Sources */,
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
@@ -820,6 +886,8 @@
 				C50000000000000000000006 /* FirstThenBoardControllerTests.swift in Sources */,
 				C80000000000000000000004 /* FirstThenScheduleSessionTests.swift in Sources */,
 				C80000000000000000000005 /* FirstThenScheduleControllerTests.swift in Sources */,
+				C90000000000000000000004 /* ChoiceBoardSessionTests.swift in Sources */,
+				C90000000000000000000005 /* ChoiceBoardStoreTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 				C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */,
 				C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */,
