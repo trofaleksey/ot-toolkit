@@ -37,8 +37,7 @@ final class ChoiceBoardUITests: XCTestCase {
 
         // Reordering in the editor determined presentation order.
         XCTAssertTrue(element(app, "choice.board.use").waitForExistence(timeout: 5))
-        XCTAssertEqual(
-            optionLabels(in: app, prefix: "choice.board.option"), ["Drawing", "Swing", "Bubbles"])
+        assertOptionOrder(["Drawing", "Swing", "Bubbles"], prefix: "choice.board.option", in: app)
 
         tap(element(app, "choice.board.use.delete"), in: app)
         let confirmation = app.alerts["Delete this board?"]
@@ -54,8 +53,8 @@ final class ChoiceBoardUITests: XCTestCase {
         openChoiceBoards(in: app)
         openSeededBoard(in: app)
 
-        let swing = optionElement(app, prefix: "choice.board.option", label: "Swing")
-        let bubbles = optionElement(app, prefix: "choice.board.option", label: "Bubbles")
+        let swing = element(app, "choice.board.option.0")
+        let bubbles = element(app, "choice.board.option.1")
 
         XCTAssertEqual(swing.value as? String, "Not picked")
         tap(swing, in: app)
@@ -75,18 +74,19 @@ final class ChoiceBoardUITests: XCTestCase {
         XCTAssertEqual(element(app, "choice.selection.summary").label, "Nothing picked yet")
 
         // Hiding removes a choice from the board for this session only.
-        let hideDrawing = hideToggle(app, forLabel: "Drawing")
-        tap(hideDrawing, in: app)
-        XCTAssertEqual(optionLabels(in: app, prefix: "choice.board.option"), ["Swing", "Bubbles"])
+        tap(element(app, "choice.visibility.toggle.2"), in: app)
+        XCTAssertEqual(element(app, "choice.visibility.state.2").label, "Hidden")
+        XCTAssertEqual(element(app, "choice.visibility.state.0").label, "Shown")
 
         // Two choices remain, so no further hiding is offered.
-        XCTAssertFalse(hideToggle(app, forLabel: "Swing").isEnabled)
+        XCTAssertFalse(element(app, "choice.visibility.toggle.0").isEnabled)
+
+        // The grid itself drops the hidden tile.
+        assertOptionOrder(["Swing", "Bubbles"], prefix: "choice.board.option", in: app)
+        XCTAssertFalse(element(app, "choice.board.option.2").exists)
 
         tap(element(app, "choice.action.showAll"), in: app)
-        XCTAssertEqual(
-            optionLabels(in: app, prefix: "choice.board.option"),
-            ["Swing", "Bubbles", "Drawing"]
-        )
+        assertOptionOrder(["Swing", "Bubbles", "Drawing"], prefix: "choice.board.option", in: app)
     }
 
     @MainActor
@@ -107,7 +107,7 @@ final class ChoiceBoardUITests: XCTestCase {
         XCTAssertFalse(element(app, "choice.action.clearSelection").isHittable)
         XCTAssertFalse(element(app, "choice.visibility").isHittable)
 
-        let childSwing = optionElement(app, prefix: "choice.child.option", label: "Swing")
+        let childSwing = element(app, "choice.child.option.0")
         AccessibilityTestSupport.assertMinimumHitTarget(childSwing)
         tap(childSwing, in: app)
         XCTAssertEqual(childSwing.value as? String, "Picked")
@@ -203,35 +203,37 @@ final class ChoiceBoardUITests: XCTestCase {
         XCTAssertTrue(element(app, "choice.board.use").waitForExistence(timeout: 5))
     }
 
+    /// Asserts the visible tiles read in the given order.
+    ///
+    /// Reads each indexed tile individually and scrolls to it first. Scraping
+    /// the whole hierarchy instead returns only tiles currently realized, which
+    /// silently drops entries once an earlier tap has scrolled the grid away.
     @MainActor
-    private func optionLabels(in app: XCUIApplication, prefix: String) -> [String] {
-        app.descendants(matching: .any)
-            .matching(NSPredicate(format: "identifier BEGINSWITH %@", "\(prefix)."))
-            .allElementsBoundByIndex
-            .map(\.label)
-    }
-
-    @MainActor
-    private func optionElement(
-        _ app: XCUIApplication,
+    private func assertOptionOrder(
+        _ labels: [String],
         prefix: String,
-        label: String
-    ) -> XCUIElement {
-        app.descendants(matching: .any)
-            .matching(NSPredicate(format: "identifier BEGINSWITH %@", "\(prefix)."))
-            .matching(NSPredicate(format: "label == %@", label))
-            .firstMatch
+        in app: XCUIApplication,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        for (index, expected) in labels.enumerated() {
+            let tile = element(app, "\(prefix).\(index)")
+            revealAnywhere(tile, in: app)
+            XCTAssertEqual(tile.label, expected, "tile \(index)", file: file, line: line)
+        }
     }
 
+    /// Scrolls up then down to bring an element into the hierarchy, without
+    /// assuming which side of the viewport it is on.
     @MainActor
-    private func hideToggle(_ app: XCUIApplication, forLabel label: String) -> XCUIElement {
-        // The visibility row's toggle is identified by the option's id, which
-        // the test does not know, so find it through the row that names it.
-        let rows = app.descendants(matching: .any)
-            .matching(NSPredicate(format: "identifier BEGINSWITH %@", "choice.visibility.toggle."))
-            .allElementsBoundByIndex
-        let index = ["Swing", "Bubbles", "Drawing"].firstIndex(of: label) ?? 0
-        return index < rows.count ? rows[index] : rows.first ?? app.buttons.firstMatch
+    private func revealAnywhere(_ element: XCUIElement, in app: XCUIApplication) {
+        for _ in 0..<6 where !element.exists {
+            app.swipeDown()
+        }
+        for _ in 0..<6 where !element.exists {
+            app.swipeUp()
+        }
+        XCTAssertTrue(element.waitForExistence(timeout: 5))
     }
 
     @MainActor
@@ -254,6 +256,20 @@ final class ChoiceBoardUITests: XCTestCase {
         reveal(field, in: app)
         field.tap()
         field.typeText(text)
+        dismissKeyboard(in: app)
+    }
+
+    /// Leaves the keyboard down between fields. It covers the lower third of a
+    /// narrow phone, which is where the next field usually is.
+    @MainActor
+    private func dismissKeyboard(in app: XCUIApplication) {
+        let keyboard = app.keyboards.firstMatch
+        guard keyboard.exists else { return }
+        if app.buttons["Return"].exists {
+            app.buttons["Return"].tap()
+        } else {
+            app.typeText("\n")
+        }
     }
 
     @MainActor
@@ -273,7 +289,7 @@ final class ChoiceBoardUITests: XCTestCase {
     /// tap silently goes to the tab bar instead.
     @MainActor
     private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<8 {
+        for _ in 0..<12 {
             if element.exists, element.isHittable, element.frame.midY < contentBottom(in: app) {
                 return
             }
@@ -285,8 +301,14 @@ final class ChoiceBoardUITests: XCTestCase {
         XCTAssertLessThan(element.frame.midY, contentBottom(in: app))
     }
 
+    /// Lowest y a tap can safely land on: whichever of the software keyboard
+    /// or the tab bar is covering the bottom of the screen.
     @MainActor
     private func contentBottom(in app: XCUIApplication) -> CGFloat {
+        let keyboard = app.keyboards.firstMatch
+        if keyboard.exists, keyboard.frame.height > 0 {
+            return keyboard.frame.minY
+        }
         let tabBar = app.tabBars.firstMatch
         return tabBar.exists ? tabBar.frame.minY : app.windows.firstMatch.frame.maxY
     }

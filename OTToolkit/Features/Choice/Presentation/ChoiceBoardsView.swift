@@ -678,7 +678,7 @@ private struct ChoiceBoardUseView: View {
                 .foregroundStyle(OTColor.secondaryText)
                 .fixedSize(horizontal: false, vertical: true)
 
-            ForEach(session.board.options) { option in
+            ForEach(Array(session.board.options.enumerated()), id: \.element.id) { index, option in
                 let isHidden = session.isHidden(option.id)
 
                 HStack(spacing: OTSpacing.sm) {
@@ -692,6 +692,7 @@ private struct ChoiceBoardUseView: View {
                     Text(isHidden ? "choice.visibility.hidden" : "choice.visibility.shown")
                         .font(OTTypography.body)
                         .foregroundStyle(OTColor.secondaryText)
+                        .accessibilityIdentifier("choice.visibility.state.\(index)")
 
                     Button {
                         if isHidden {
@@ -705,10 +706,11 @@ private struct ChoiceBoardUseView: View {
                     .buttonStyle(.bordered)
                     .disabled(!isHidden && !session.canHide(option.id))
                     .otMinimumInteractiveSize()
-                    .accessibilityIdentifier("choice.visibility.toggle.\(option.id.uuidString)")
+                    .accessibilityIdentifier("choice.visibility.toggle.\(index)")
                 }
                 .padding(.vertical, OTSpacing.xs)
                 .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("choice.visibility.row.\(index)")
             }
 
             Button {
@@ -823,7 +825,7 @@ struct ChoiceBoardGridView: View {
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: OTSpacing.md) {
-            ForEach(session.visibleOptions) { option in
+            ForEach(Array(session.visibleOptions.enumerated()), id: \.element.id) { index, option in
                 let isSelected = session.isSelected(option.id)
 
                 Button {
@@ -869,7 +871,7 @@ struct ChoiceBoardGridView: View {
                     isSelected ? "choice.state.selected" : "choice.state.notSelected"
                 )
                 .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
-                .accessibilityIdentifier("\(context.identifierPrefix).\(option.id.uuidString)")
+                .accessibilityIdentifier("\(context.identifierPrefix).\(index)")
             }
         }
     }
