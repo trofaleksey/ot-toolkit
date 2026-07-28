@@ -5,7 +5,7 @@ import XCTest
 
 final class FirstThenBoardStoreTests: XCTestCase {
     @MainActor
-    func testSchemaV1RemainsUnchangedWhileTheAppTargetsV2() {
+    func testSchemaV1RemainsUnchangedWhileTheAppTargetsV3() {
         XCTAssertEqual(OTToolkitSchemaV1.versionIdentifier, Schema.Version(1, 0, 0))
         XCTAssertEqual(OTToolkitSchemaV1.models.count, 2)
 
@@ -15,7 +15,7 @@ final class FirstThenBoardStoreTests: XCTestCase {
         XCTAssertNotNil(v1Schema.entity(for: FirstThenItem.self))
 
         let appSchema = LocalModelContainerFactory.appSchema
-        XCTAssertEqual(appSchema.version, OTToolkitSchemaV2.versionIdentifier)
+        XCTAssertEqual(appSchema.version, OTToolkitSchemaV3.versionIdentifier)
         XCTAssertNotNil(appSchema.entity(for: FirstThenBoard.self))
         XCTAssertNotNil(appSchema.entity(for: FirstThenItem.self))
     }

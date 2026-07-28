@@ -6,13 +6,15 @@ import XCTest
 final class TokenBoardTemplateStoreTests: XCTestCase {
     @MainActor
     func testSchemaV2ExposesFirstThenAndTokenModelsThroughLightweightMigration() {
+        // V2 is a released schema shape and must stay exactly as it was; only
+        // the app's current target moved on to V3.
         XCTAssertEqual(OTToolkitSchemaV2.versionIdentifier, Schema.Version(2, 0, 0))
         XCTAssertEqual(OTToolkitSchemaV2.models.count, 3)
-        XCTAssertEqual(OTToolkitSchemaMigrationPlan.schemas.count, 2)
-        XCTAssertEqual(OTToolkitSchemaMigrationPlan.stages.count, 1)
+        XCTAssertEqual(OTToolkitSchemaMigrationPlan.schemas.count, 3)
+        XCTAssertEqual(OTToolkitSchemaMigrationPlan.stages.count, 2)
 
         let schema = LocalModelContainerFactory.appSchema
-        XCTAssertEqual(schema.version, OTToolkitSchemaV2.versionIdentifier)
+        XCTAssertEqual(schema.version, OTToolkitSchemaV3.versionIdentifier)
         XCTAssertNotNil(schema.entity(for: TokenBoardTemplate.self))
         XCTAssertNotNil(schema.entity(for: FirstThenBoard.self))
         XCTAssertNotNil(schema.entity(for: FirstThenItem.self))
