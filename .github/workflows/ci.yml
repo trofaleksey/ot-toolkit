@@ -348,12 +348,17 @@ jobs:
             -maximum-test-execution-time-allowance 300 \
             CODE_SIGNING_ALLOWED=NO
 
+      # OTK-023 added five schedule tests to a step that was already at ~84%
+      # of its budget (955s of 1140s on main). Runner variance is around 20%,
+      # so the step became a coin flip and was killed on the last test of the
+      # last suite with everything passing. Raised for wall-clock headroom
+      # only; no check is weakened and no coverage is dropped.
       - name: Test iPad critical flow
-        timeout-minutes: 20
+        timeout-minutes: 27
         shell: bash
         run: |
           ./Scripts/run_xcodebuild_with_timeout.sh \
-            1140 \
+            1500 \
             TestResults/iPad.log \
             xcodebuild test \
             -project OTToolkit.xcodeproj \
