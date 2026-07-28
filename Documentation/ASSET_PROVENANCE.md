@@ -90,10 +90,14 @@ this section, which is how the ledger stays current as features land.
 | `play.fill` | Labeled start and resume actions; the localized label carries the meaning |
 | `pause.fill` | Labeled pause action; the localized label carries the meaning |
 | `arrow.counterclockwise` | Labeled reset and start-another actions; the localized label carries the meaning |
-| `arrow.uturn.backward` | Labeled remove-token action; the localized label carries the meaning |
+| `arrow.uturn.backward` | Labeled remove-token and previous-board actions; the localized label carries the meaning |
 | `checkmark.circle` | Labeled complete-First action; the localized label carries the meaning |
-| `arrow.right.circle.fill` | Labeled Then transition; the localized label carries the meaning |
-| `arrow.down` | Decorative First-to-Then flow indicator; hidden from assistive technologies |
+| `arrow.right.circle.fill` | Labeled Then transition and next-board action; the localized label carries the meaning |
+| `arrow.down` | Decorative First-to-Then flow indicator, and the labeled move-later control in schedule ordering; decorative instances are hidden from assistive technologies |
+| `arrow.up` | Labeled move-earlier control in schedule ordering; the localized label carries the meaning |
+| `minus.circle` | Labeled remove-from-schedule action; the localized label carries the meaning |
+| `xmark.circle` | Labeled end-schedule action; the localized label carries the meaning |
+| `list.bullet` | Labeled start-visual-schedule action; the localized label carries the meaning |
 | `rectangle.inset.filled` | Labeled enter-child-facing action; the localized label carries the meaning |
 
 ### Settings disclosures

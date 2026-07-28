@@ -9,6 +9,7 @@ struct AppSceneRootView: View {
     @State private var visualTimerRuntimeCoordinator: VisualTimerRuntimeCoordinator
     @State private var firstThenBoardController: FirstThenBoardController
     @State private var firstThenSessionController: FirstThenBoardSessionController
+    @State private var firstThenScheduleController: FirstThenScheduleController
     @State private var tokenBoardController: TokenBoardController
     @State private var tokenBoardSessionController: TokenBoardSessionController
     @State private var fixtureForcesCompactNavigation = false
@@ -60,11 +61,27 @@ struct AppSceneRootView: View {
                 thenItemID: FirstThenBoardUITestFixture.thenItemID
             )
         }
+        if launchOptions.seedsFirstThenSchedule {
+            // A separate fixture so the existing single-board fixture keeps
+            // producing exactly one board.
+            for board in FirstThenScheduleUITestFixture.boards {
+                _ = try? firstThenStore.create(
+                    board.draft,
+                    boardID: board.boardID,
+                    firstItemID: board.firstItemID,
+                    thenItemID: board.thenItemID
+                )
+            }
+        }
         _firstThenBoardController = State(
             initialValue: FirstThenBoardController(store: firstThenStore)
         )
         _firstThenSessionController = State(
             initialValue: FirstThenBoardSessionController()
+        )
+        // Owned by the scene, never persisted: process loss ends any schedule.
+        _firstThenScheduleController = State(
+            initialValue: FirstThenScheduleController()
         )
         let tokenStore = TokenBoardTemplateStore(modelContext: modelContext)
         if launchOptions.seedsTokenBoard {
@@ -176,6 +193,7 @@ struct AppSceneRootView: View {
                 visualTimerController: visualTimerController,
                 firstThenBoardController: firstThenBoardController,
                 firstThenSessionController: firstThenSessionController,
+                firstThenScheduleController: firstThenScheduleController,
                 tokenBoardController: tokenBoardController,
                 tokenBoardSessionController: tokenBoardSessionController,
                 dataController: dataController,
@@ -188,6 +206,7 @@ struct AppSceneRootView: View {
                 visualTimerController: visualTimerController,
                 firstThenBoardController: firstThenBoardController,
                 firstThenSessionController: firstThenSessionController,
+                firstThenScheduleController: firstThenScheduleController,
                 tokenBoardController: tokenBoardController,
                 tokenBoardSessionController: tokenBoardSessionController,
                 dataController: dataController,
@@ -205,6 +224,15 @@ struct AppSceneRootView: View {
                 sessionController: firstThenSessionController,
                 boardID: boardID
             )
+        case .firstThenSchedule:
+            if let session = firstThenScheduleController.session {
+                FirstThenScheduleChildView(
+                    scheduleController: firstThenScheduleController,
+                    session: session
+                )
+            } else {
+                FirstThenScheduleUnavailableView()
+            }
         case let .tokenBoard(templateID):
             TokenBoardChildView(
                 controller: tokenBoardController,
@@ -242,6 +270,53 @@ private enum FirstThenBoardUITestFixture {
         first: FirstThenItemDraft(label: "Get dressed", systemSymbolName: "tshirt"),
         then: FirstThenItemDraft(label: "Read together", systemSymbolName: "book.closed")
     )
+}
+
+private enum FirstThenScheduleUITestFixture {
+    struct Board {
+        let boardID: UUID
+        let firstItemID: UUID
+        let thenItemID: UUID
+        let draft: FirstThenBoardDraft
+    }
+
+    static let boards: [Board] = [
+        Board(
+            boardID: identifier(0x11, 0x01),
+            firstItemID: identifier(0x21, 0x01),
+            thenItemID: identifier(0x31, 0x01),
+            draft: FirstThenBoardDraft(
+                name: "Arrival",
+                first: FirstThenItemDraft(label: "Hang up coat", systemSymbolName: "tshirt"),
+                then: FirstThenItemDraft(label: "Choose a seat", systemSymbolName: "puzzlepiece")
+            )
+        ),
+        Board(
+            boardID: identifier(0x11, 0x02),
+            firstItemID: identifier(0x21, 0x02),
+            thenItemID: identifier(0x31, 0x02),
+            draft: FirstThenBoardDraft(
+                name: "Table Work",
+                first: FirstThenItemDraft(
+                    label: "Cutting practice", systemSymbolName: "paintbrush"),
+                then: FirstThenItemDraft(label: "Read together", systemSymbolName: "book.closed")
+            )
+        ),
+        Board(
+            boardID: identifier(0x11, 0x03),
+            firstItemID: identifier(0x21, 0x03),
+            thenItemID: identifier(0x31, 0x03),
+            draft: FirstThenBoardDraft(
+                name: "Movement Break",
+                first: FirstThenItemDraft(label: "Animal walks", systemSymbolName: "figure.walk"),
+                then: FirstThenItemDraft(label: "Snack", systemSymbolName: "fork.knife")
+            )
+        ),
+    ]
+
+    private static func identifier(_ prefix: UInt8, _ suffix: UInt8) -> UUID {
+        UUID(uuid: (prefix, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suffix))
+    }
 }
 
 private enum TokenBoardUITestFixture {
@@ -406,6 +481,7 @@ struct AppShellView: View {
     let visualTimerController: VisualTimerController
     let firstThenBoardController: FirstThenBoardController
     let firstThenSessionController: FirstThenBoardSessionController
+    let firstThenScheduleController: FirstThenScheduleController
     let tokenBoardController: TokenBoardController
     let tokenBoardSessionController: TokenBoardSessionController
     let dataController: AppDataController
@@ -582,8 +658,12 @@ struct AppShellView: View {
             FirstThenBoardsView(
                 controller: firstThenBoardController,
                 sessionController: firstThenSessionController,
+                scheduleController: firstThenScheduleController,
                 onPresentChildFacing: { boardID in
                     navigation.presentChildFacing(.firstThenBoard(boardID))
+                },
+                onPresentScheduleChildFacing: {
+                    navigation.presentChildFacing(.firstThenSchedule)
                 }
             )
         case .tokenBoards:

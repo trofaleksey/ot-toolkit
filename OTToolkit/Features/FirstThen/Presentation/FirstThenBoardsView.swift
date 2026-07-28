@@ -49,12 +49,29 @@ private enum FirstThenEditorRoute: Identifiable {
 
 struct FirstThenBoardsView: View {
     @State private var editorRoute: FirstThenEditorRoute?
+    @State private var isConfiguringSchedule = false
 
     let controller: FirstThenBoardController
     let sessionController: FirstThenBoardSessionController
+    let scheduleController: FirstThenScheduleController
     let onPresentChildFacing: (UUID) -> Void
+    let onPresentScheduleChildFacing: () -> Void
 
     var body: some View {
+        // A running schedule takes over the destination root so adult exit
+        // always lands back on the therapist controls with progress intact.
+        if let session = scheduleController.session {
+            FirstThenScheduleTherapistView(
+                scheduleController: scheduleController,
+                session: session,
+                onPresentChildFacing: onPresentScheduleChildFacing
+            )
+        } else {
+            savedBoards
+        }
+    }
+
+    private var savedBoards: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: OTSpacing.lg) {
                 guidance
@@ -67,6 +84,11 @@ struct FirstThenBoardsView: View {
                             boardRow(board)
                         }
                     }
+
+                    // Below the boards: picking a saved board is the primary
+                    // job here, and at the largest text sizes anything above
+                    // the list pushes it off the first screen.
+                    scheduleEntry
                 }
             }
             .frame(maxWidth: 720, alignment: .leading)
@@ -89,6 +111,16 @@ struct FirstThenBoardsView: View {
         .sheet(item: $editorRoute) { route in
             FirstThenBoardEditorView(controller: controller, route: route)
         }
+        .sheet(isPresented: $isConfiguringSchedule) {
+            FirstThenScheduleConfigureView(
+                controller: controller,
+                scheduleController: scheduleController
+            ) {
+                if scheduleController.start(availableBoards: controller.boards) {
+                    isConfiguringSchedule = false
+                }
+            }
+        }
         .alert(
             failureTitle,
             isPresented: failureBinding
@@ -104,6 +136,50 @@ struct FirstThenBoardsView: View {
         } message: {
             Text(failureMessage)
         }
+    }
+
+    private var scheduleEntry: some View {
+        VStack(alignment: .leading, spacing: OTSpacing.sm) {
+            Text("firstThen.schedule.entry.title")
+                .font(OTTypography.sectionHeading)
+                .foregroundStyle(OTColor.primaryText)
+                .accessibilityAddTraits(.isHeader)
+
+            Text(
+                hasEnoughBoardsForSchedule
+                    ? "firstThen.schedule.entry.message"
+                    : "firstThen.schedule.entry.requirement"
+            )
+            .font(OTTypography.body)
+            .foregroundStyle(
+                hasEnoughBoardsForSchedule ? OTColor.secondaryText : OTColor.warning
+            )
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityIdentifier("firstThen.schedule.entry.message")
+
+            Button {
+                scheduleController.reconcileSelection(withAvailable: controller.boards)
+                isConfiguringSchedule = true
+            } label: {
+                Label("firstThen.schedule.action.configure", systemImage: "list.bullet")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .disabled(!hasEnoughBoardsForSchedule)
+            .otMinimumInteractiveSize()
+            .accessibilityIdentifier("firstThen.schedule.action.configure")
+        }
+        .padding(OTSpacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(OTColor.surface)
+        .clipShape(RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("firstThen.schedule.entry")
+    }
+
+    private var hasEnoughBoardsForSchedule: Bool {
+        controller.boards.count >= FirstThenScheduleSelection.minimumBoardCount
     }
 
     private var guidance: some View {
@@ -569,7 +645,7 @@ private struct FirstThenBoardUseView: View {
 
                 FirstThenBoardSequenceView(
                     board: board,
-                    session: sessionController.session(for: boardID),
+                    isFirstComplete: sessionController.session(for: boardID).isFirstComplete,
                     context: .therapist
                 ) {
                     sessionController.completeFirst(boardID: boardID)
@@ -619,7 +695,7 @@ struct FirstThenBoardChildView: View {
 
                     FirstThenBoardSequenceView(
                         board: board,
-                        session: sessionController.session(for: boardID),
+                        isFirstComplete: sessionController.session(for: boardID).isFirstComplete,
                         context: .child
                     ) {
                         sessionController.completeFirst(boardID: boardID)
@@ -645,9 +721,11 @@ struct FirstThenBoardChildView: View {
     }
 }
 
-private struct FirstThenBoardSequenceView: View {
+/// Shared by the single-board journey and the multi-board schedule so the
+/// state semantics and accessibility treatment exist in exactly one place.
+struct FirstThenBoardSequenceView: View {
     let board: FirstThenBoardSnapshot
-    let session: FirstThenBoardSession
+    let isFirstComplete: Bool
     let context: FirstThenBoardSequenceContext
     let onCompleteFirst: () -> Void
 
@@ -656,10 +734,10 @@ private struct FirstThenBoardSequenceView: View {
             boardItem(
                 roleKey: "firstThen.role.first",
                 item: board.first,
-                stateKey: session.isFirstComplete
+                stateKey: isFirstComplete
                     ? "firstThen.state.completed" : "firstThen.state.current",
-                stateSymbol: session.isFirstComplete ? "checkmark.circle.fill" : "1.circle.fill",
-                isProminent: !session.isFirstComplete,
+                stateSymbol: isFirstComplete ? "checkmark.circle.fill" : "1.circle.fill",
+                isProminent: !isFirstComplete,
                 identifier: context.firstIdentifier
             )
 
@@ -671,14 +749,14 @@ private struct FirstThenBoardSequenceView: View {
             boardItem(
                 roleKey: "firstThen.role.then",
                 item: board.then,
-                stateKey: session.isFirstComplete
+                stateKey: isFirstComplete
                     ? "firstThen.state.current" : "firstThen.state.next",
-                stateSymbol: session.isFirstComplete ? "play.circle.fill" : "2.circle",
-                isProminent: session.isFirstComplete,
+                stateSymbol: isFirstComplete ? "play.circle.fill" : "2.circle",
+                isProminent: isFirstComplete,
                 identifier: context.thenIdentifier
             )
 
-            if !session.isFirstComplete {
+            if !isFirstComplete {
                 Button(action: onCompleteFirst) {
                     Label(
                         "firstThen.action.completeFirst",
@@ -763,14 +841,18 @@ private struct FirstThenBoardSequenceView: View {
     }
 }
 
-private enum FirstThenBoardSequenceContext {
+enum FirstThenBoardSequenceContext {
     case child
     case therapist
+    case scheduleChild
+    case scheduleTherapist
 
     var firstIdentifier: String {
         switch self {
         case .child: "firstThen.child.first"
         case .therapist: "firstThen.board.first"
+        case .scheduleChild: "firstThen.schedule.child.first"
+        case .scheduleTherapist: "firstThen.schedule.first"
         }
     }
 
@@ -778,6 +860,8 @@ private enum FirstThenBoardSequenceContext {
         switch self {
         case .child: "firstThen.child.then"
         case .therapist: "firstThen.board.then"
+        case .scheduleChild: "firstThen.schedule.child.then"
+        case .scheduleTherapist: "firstThen.schedule.then"
         }
     }
 
@@ -785,6 +869,8 @@ private enum FirstThenBoardSequenceContext {
         switch self {
         case .child: "firstThen.child.completeFirst"
         case .therapist: "firstThen.action.completeFirst"
+        case .scheduleChild: "firstThen.schedule.child.completeFirst"
+        case .scheduleTherapist: "firstThen.schedule.completeFirst"
         }
     }
 
@@ -792,6 +878,8 @@ private enum FirstThenBoardSequenceContext {
         switch self {
         case .child: "firstThen.child.transition"
         case .therapist: "firstThen.transition.then"
+        case .scheduleChild: "firstThen.schedule.child.transition"
+        case .scheduleTherapist: "firstThen.schedule.transition"
         }
     }
 }

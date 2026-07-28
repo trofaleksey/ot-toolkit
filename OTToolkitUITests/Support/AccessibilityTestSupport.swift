@@ -8,6 +8,7 @@ enum AccessibilityTestSupport {
         enablesLayoutToggleFixture: Bool = false,
         forcesPrivacyCover: Bool = false,
         seedsFirstThenBoard: Bool = false,
+        seedsFirstThenSchedule: Bool = false,
         seedsTokenBoard: Bool = false,
         startsInChildFacingFixture: Bool = false,
         timerDurationOverrideSeconds: Int? = nil
@@ -33,6 +34,9 @@ enum AccessibilityTestSupport {
         }
         if seedsFirstThenBoard {
             app.launchArguments.append("-ui-test-seed-first-then-board")
+        }
+        if seedsFirstThenSchedule {
+            app.launchArguments.append("-ui-test-seed-first-then-schedule")
         }
         if seedsTokenBoard {
             app.launchArguments.append("-ui-test-seed-token-board")

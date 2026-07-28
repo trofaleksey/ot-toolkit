@@ -449,6 +449,498 @@
         }
       }
     },
+    "firstThen.schedule.action.advance": {
+      "comment": "Advance to the next board in the schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next board"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.back": {
+      "comment": "Return to the previous board in the schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous board"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.configure": {
+      "comment": "Opens visual-schedule configuration.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start visual schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.end": {
+      "comment": "Discards the running schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.moveDown": {
+      "comment": "Moves a board later in the schedule order.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move later"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.moveUp": {
+      "comment": "Moves a board earlier in the schedule order.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move earlier"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.remove": {
+      "comment": "Removes a board from the schedule selection.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.start": {
+      "comment": "Launches the configured schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.action.startOver": {
+      "comment": "Restarts the schedule from the first board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start over"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.child.advance": {
+      "comment": "Child-facing advance action.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next board"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.completed.message": {
+      "comment": "Schedule completion detail.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every board in this schedule is done."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.completed.title": {
+      "comment": "Schedule completion heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule complete"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.configure.available": {
+      "comment": "Heading for the saved boards available to select.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved boards"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.configure.guidance.message": {
+      "comment": "Explains that schedule order and membership are temporary.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select two or more saved boards, then arrange them. This does not change your saved board order, and the schedule itself is not saved."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.configure.guidance.title": {
+      "comment": "Configuration guidance heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose boards in order"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.configure.requirement": {
+      "comment": "Explains why the schedule cannot start yet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select at least two boards to start."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.configure.selected": {
+      "comment": "Heading for the ordered schedule selection.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule order"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.configure.title": {
+      "comment": "Schedule configuration screen title.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.controls.title": {
+      "comment": "Heading for therapist schedule controls.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule controls"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.end.cancel": {
+      "comment": "Keeps the running schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.end.confirm": {
+      "comment": "Confirms discarding the schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.end.message": {
+      "comment": "Explains what ending a schedule discards.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The schedule and its progress are discarded. Your saved boards are not deleted or changed."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.end.title": {
+      "comment": "End-schedule confirmation heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End this schedule?"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.entry.message": {
+      "comment": "Describes the visual schedule on the saved-board list.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run several saved boards in a row. The order you choose applies to this session only."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.entry.requirement": {
+      "comment": "Explains why a schedule cannot be started yet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save at least two boards to start a visual schedule."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.entry.title": {
+      "comment": "Visual schedule section heading on the saved-board list.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.outline.title": {
+      "comment": "Heading for the list of boards in the schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boards in this schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.position %lld %lld": {
+      "comment": "Current schedule position; first value is the current board, second is the total.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Board %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.position.completed": {
+      "comment": "Schedule position once every board is done.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All boards complete"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.startOver.cancel": {
+      "comment": "Keeps current schedule progress.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.startOver.confirm": {
+      "comment": "Confirms restarting the schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start over"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.startOver.message": {
+      "comment": "Explains what starting over resets.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every board returns to its First step and the schedule begins at the first board. Saved boards are not changed."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.startOver.title": {
+      "comment": "Start-over confirmation heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start the schedule over?"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.state.notSelected": {
+      "comment": "Board is not in the schedule selection.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not selected"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.state.selected": {
+      "comment": "Board is in the schedule selection.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.status.completed": {
+      "comment": "Board finished earlier in the schedule.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.status.current": {
+      "comment": "Board currently in use.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Now"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.status.upcoming": {
+      "comment": "Board still to come.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.title": {
+      "comment": "Running schedule screen title.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual schedule"
+          }
+        }
+      }
+    },
+    "firstThen.schedule.unavailable.message": {
+      "comment": "Recovery guidance when no schedule is running.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the adult exit to return to the therapist controls."
+          }
+        }
+      }
+    },
+    "firstThen.schedule.unavailable.title": {
+      "comment": "Heading when no schedule is running.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No schedule is running"
+          }
+        }
+      }
+    },
     "firstThen.state.completed": {
       "localizations": {
         "en": {
