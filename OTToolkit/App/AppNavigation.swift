@@ -9,6 +9,7 @@ enum AppSection: CaseIterable, Hashable, Identifiable, Sendable {
 }
 
 enum AppDestination: Hashable, Identifiable, Sendable {
+    case choiceBoards
     case firstThenBoards
     case tokenBoards
     case visualTimer
@@ -17,6 +18,7 @@ enum AppDestination: Hashable, Identifiable, Sendable {
 }
 
 enum AppChildFacingDestination: Equatable, Sendable {
+    case choiceBoard(UUID)
     case firstThenBoard(UUID)
     case firstThenSchedule
     case tokenBoard(UUID)
@@ -86,6 +88,8 @@ struct AppNavigationState: Equatable, Sendable {
 
     mutating func presentChildFacing(_ destination: AppChildFacingDestination) {
         switch destination {
+        case .choiceBoard:
+            show(.choiceBoards)
         case .firstThenBoard, .firstThenSchedule:
             show(.firstThenBoards)
         case .tokenBoard:

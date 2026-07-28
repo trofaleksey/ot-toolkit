@@ -109,6 +109,798 @@
         }
       }
     },
+    "choice.action.addOption": {
+      "comment": "Adds another choice to the board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a choice"
+          }
+        }
+      }
+    },
+    "choice.action.cancel": {
+      "comment": "Dismisses the Choice Board editor.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "choice.action.childFacing": {
+      "comment": "Opens the child-facing Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open child view"
+          }
+        }
+      }
+    },
+    "choice.action.clearSelection": {
+      "comment": "Clears the child's current pick.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear selection"
+          }
+        }
+      }
+    },
+    "choice.action.create": {
+      "comment": "Creates a Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Choice Board"
+          }
+        }
+      }
+    },
+    "choice.action.delete": {
+      "comment": "Deletes the Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete board"
+          }
+        }
+      }
+    },
+    "choice.action.duplicate": {
+      "comment": "Duplicates the Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicate board"
+          }
+        }
+      }
+    },
+    "choice.action.edit": {
+      "comment": "Edits the Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit board"
+          }
+        }
+      }
+    },
+    "choice.action.hide": {
+      "comment": "Hides a choice for this session only.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide"
+          }
+        }
+      }
+    },
+    "choice.action.moveDown": {
+      "comment": "Moves a choice later in the board order.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move later"
+          }
+        }
+      }
+    },
+    "choice.action.moveUp": {
+      "comment": "Moves a choice earlier in the board order.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move earlier"
+          }
+        }
+      }
+    },
+    "choice.action.removeOption": {
+      "comment": "Removes a choice from the board being edited.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove choice"
+          }
+        }
+      }
+    },
+    "choice.action.save": {
+      "comment": "Saves the Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "choice.action.show": {
+      "comment": "Shows a choice that was hidden for this session.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        }
+      }
+    },
+    "choice.action.showAll": {
+      "comment": "Shows every hidden choice again.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show all choices"
+          }
+        }
+      }
+    },
+    "choice.board.actions.title": {
+      "comment": "Heading for board management actions.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Board"
+          }
+        }
+      }
+    },
+    "choice.child.title": {
+      "comment": "Child-facing Choice Board heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose one"
+          }
+        }
+      }
+    },
+    "choice.delete.cancel": {
+      "comment": "Keeps the Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "choice.delete.confirm": {
+      "comment": "Confirms deleting the Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete board"
+          }
+        }
+      }
+    },
+    "choice.delete.message": {
+      "comment": "Explains that deleting a Choice Board is permanent.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This board and its choices are deleted from this device. This cannot be undone."
+          }
+        }
+      }
+    },
+    "choice.delete.title": {
+      "comment": "Delete confirmation heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this board?"
+          }
+        }
+      }
+    },
+    "choice.duplicate.name": {
+      "comment": "Name given to a duplicated board; the placeholder is the original name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ copy"
+          }
+        }
+      }
+    },
+    "choice.editor.create.title": {
+      "comment": "Choice Board editor heading when creating.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Choice Board"
+          }
+        }
+      }
+    },
+    "choice.editor.edit.title": {
+      "comment": "Choice Board editor heading when editing.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Choice Board"
+          }
+        }
+      }
+    },
+    "choice.editor.guidance": {
+      "comment": "Explains what a Choice Board holds.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give the board a name, then add two to six choices. Use activity names rather than a child's name."
+          }
+        }
+      }
+    },
+    "choice.editor.label.placeholder": {
+      "comment": "Placeholder for a choice label.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choice name"
+          }
+        }
+      }
+    },
+    "choice.editor.maximum": {
+      "comment": "Explains that no more choices can be added.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Six choices is the maximum."
+          }
+        }
+      }
+    },
+    "choice.editor.name": {
+      "comment": "Board name field heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Board name"
+          }
+        }
+      }
+    },
+    "choice.editor.name.placeholder": {
+      "comment": "Placeholder for the board name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For example, Break choices"
+          }
+        }
+      }
+    },
+    "choice.editor.option %lld": {
+      "comment": "Heading for one choice; the value is its position.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choice %lld"
+          }
+        }
+      }
+    },
+    "choice.editor.symbol": {
+      "comment": "Symbol picker label.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symbol"
+          }
+        }
+      }
+    },
+    "choice.editor.validation": {
+      "comment": "Explains why the board cannot be saved yet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a board name and a name for every choice. A board needs two to six choices."
+          }
+        }
+      }
+    },
+    "choice.empty.message": {
+      "comment": "Empty-state detail.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a board to offer a child a small set of choices."
+          }
+        }
+      }
+    },
+    "choice.empty.title": {
+      "comment": "Empty-state heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No Choice Boards yet"
+          }
+        }
+      }
+    },
+    "choice.error.create.title": {
+      "comment": "Create failure heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That board could not be created"
+          }
+        }
+      }
+    },
+    "choice.error.delete.title": {
+      "comment": "Delete failure heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That board could not be deleted"
+          }
+        }
+      }
+    },
+    "choice.error.dismiss": {
+      "comment": "Dismisses a Choice Board error.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "choice.error.duplicate.title": {
+      "comment": "Duplicate failure heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That board could not be duplicated"
+          }
+        }
+      }
+    },
+    "choice.error.load.title": {
+      "comment": "Load failure heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choice Boards could not be opened"
+          }
+        }
+      }
+    },
+    "choice.error.message": {
+      "comment": "Generic Choice Board failure detail.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing was changed. Try again."
+          }
+        }
+      }
+    },
+    "choice.error.retry": {
+      "comment": "Retries loading Choice Boards.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "choice.error.title": {
+      "comment": "Generic Choice Board failure heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong"
+          }
+        }
+      }
+    },
+    "choice.error.update.title": {
+      "comment": "Update failure heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That board could not be saved"
+          }
+        }
+      }
+    },
+    "choice.guidance.message": {
+      "comment": "Explains the Choice Board tool.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offer a child two to six choices. Hiding a choice applies to this session only and leaves the saved board unchanged."
+          }
+        }
+      }
+    },
+    "choice.guidance.title": {
+      "comment": "Choice Board guidance heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offer a small set of choices"
+          }
+        }
+      }
+    },
+    "choice.selection.made %@": {
+      "comment": "States the current pick; the placeholder is the choice name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picked: %@"
+          }
+        }
+      }
+    },
+    "choice.selection.none": {
+      "comment": "States that nothing is picked yet.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing picked yet"
+          }
+        }
+      }
+    },
+    "choice.selection.title": {
+      "comment": "Selection section heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current pick"
+          }
+        }
+      }
+    },
+    "choice.state.notSelected": {
+      "comment": "Accessibility value for an unpicked choice.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not picked"
+          }
+        }
+      }
+    },
+    "choice.state.selected": {
+      "comment": "Accessibility value for the picked choice.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Picked"
+          }
+        }
+      }
+    },
+    "choice.summary": {
+      "comment": "Choice Board description on the home screen.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offer a child a small set of choices."
+          }
+        }
+      }
+    },
+    "choice.summary.count %lld": {
+      "comment": "Number of choices on a saved board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld choices"
+          }
+        }
+      }
+    },
+    "choice.symbol.create": {
+      "comment": "Creative activity choice symbol.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creating"
+          }
+        }
+      }
+    },
+    "choice.symbol.move": {
+      "comment": "Movement activity choice symbol.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movement"
+          }
+        }
+      }
+    },
+    "choice.symbol.music": {
+      "comment": "Music activity choice symbol.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Music"
+          }
+        }
+      }
+    },
+    "choice.symbol.play": {
+      "comment": "Play activity choice symbol.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play"
+          }
+        }
+      }
+    },
+    "choice.symbol.read": {
+      "comment": "Reading activity choice symbol.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reading"
+          }
+        }
+      }
+    },
+    "choice.symbol.snack": {
+      "comment": "Snack choice symbol.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Snack"
+          }
+        }
+      }
+    },
+    "choice.title": {
+      "comment": "Choice Board tool name.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choice Board"
+          }
+        }
+      }
+    },
+    "choice.unavailable.back": {
+      "comment": "Returns from an unavailable Choice Board.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to boards"
+          }
+        }
+      }
+    },
+    "choice.unavailable.message": {
+      "comment": "Explains that the board is gone.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This board is no longer available. It may have been deleted."
+          }
+        }
+      }
+    },
+    "choice.unavailable.title": {
+      "comment": "Heading when a Choice Board is unavailable.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Board unavailable"
+          }
+        }
+      }
+    },
+    "choice.visibility.hidden": {
+      "comment": "States that a choice is hidden this session.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hidden"
+          }
+        }
+      }
+    },
+    "choice.visibility.message": {
+      "comment": "Explains temporary hiding.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiding applies to this session only. The saved board keeps every choice."
+          }
+        }
+      }
+    },
+    "choice.visibility.shown": {
+      "comment": "States that a choice is visible.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shown"
+          }
+        }
+      }
+    },
+    "choice.visibility.title": {
+      "comment": "Visibility section heading.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choices in this session"
+          }
+        }
+      }
+    },
     "firstThen.action.cancel": {
       "localizations": {
         "en": {

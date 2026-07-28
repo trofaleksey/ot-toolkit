@@ -10,6 +10,7 @@ enum AccessibilityTestSupport {
         seedsFirstThenBoard: Bool = false,
         seedsFirstThenSchedule: Bool = false,
         seedsTokenBoard: Bool = false,
+        seedsChoiceBoard: Bool = false,
         startsInChildFacingFixture: Bool = false,
         timerDurationOverrideSeconds: Int? = nil
     ) -> XCUIApplication {
@@ -40,6 +41,9 @@ enum AccessibilityTestSupport {
         }
         if seedsTokenBoard {
             app.launchArguments.append("-ui-test-seed-token-board")
+        }
+        if seedsChoiceBoard {
+            app.launchArguments.append("-ui-test-seed-choice-board")
         }
         if startsInChildFacingFixture {
             app.launchArguments.append("-ui-test-start-child-facing-fixture")

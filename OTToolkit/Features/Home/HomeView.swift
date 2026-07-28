@@ -6,6 +6,7 @@ struct HomeView: View {
     let onOpenVisualTimer: () -> Void
     let onOpenFirstThenBoards: () -> Void
     let onOpenTokenBoards: () -> Void
+    let onOpenChoiceBoards: () -> Void
 
     var body: some View {
         ScrollView {
@@ -26,6 +27,7 @@ struct HomeView: View {
                 visualTimerCard
                 firstThenCard
                 tokenBoardCard
+                choiceBoardCard
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(OTSpacing.xl)
@@ -157,5 +159,45 @@ struct HomeView: View {
         .buttonStyle(.plain)
         .otMinimumInteractiveSize()
         .accessibilityIdentifier("home.tool.firstThen")
+    }
+
+    private var choiceBoardCard: some View {
+        Button {
+            onOpenChoiceBoards()
+        } label: {
+            HStack(alignment: .top, spacing: OTSpacing.md) {
+                Image(systemName: "square.grid.2x2")
+                    .font(OTTypography.sectionHeading)
+                    .foregroundStyle(OTColor.accent)
+                    .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: OTSpacing.xs) {
+                    Text("choice.title")
+                        .font(OTTypography.sectionHeading)
+                        .foregroundStyle(OTColor.primaryText)
+
+                    Text("choice.summary")
+                        .font(OTTypography.body)
+                        .foregroundStyle(OTColor.secondaryText)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(OTSpacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                OTColor.surface,
+                in: RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: OTRadius.card, style: .continuous)
+                    .stroke(
+                        OTColor.separator,
+                        lineWidth: accessibilityPreferences.boundaryLineWidth
+                    )
+            }
+        }
+        .buttonStyle(.plain)
+        .otMinimumInteractiveSize()
+        .accessibilityIdentifier("home.tool.choiceBoard")
     }
 }

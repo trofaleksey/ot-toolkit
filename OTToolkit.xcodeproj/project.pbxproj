@@ -85,6 +85,10 @@
 		C90000000000000000000003 /* ChoiceBoardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000003 /* ChoiceBoardStore.swift */; };
 		C90000000000000000000004 /* ChoiceBoardSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000004 /* ChoiceBoardSessionTests.swift */; };
 		C90000000000000000000005 /* ChoiceBoardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000005 /* ChoiceBoardStoreTests.swift */; };
+		C90000000000000000000006 /* ChoiceBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000006 /* ChoiceBoardController.swift */; };
+		C90000000000000000000007 /* ChoiceBoardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000007 /* ChoiceBoardsView.swift */; };
+		C90000000000000000000008 /* ChoiceBoardControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000008 /* ChoiceBoardControllerTests.swift */; };
+		C90000000000000000000009 /* ChoiceBoardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90000000000000000000009 /* ChoiceBoardUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +188,10 @@
 		B90000000000000000000003 /* ChoiceBoardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardStore.swift; sourceTree = "<group>"; };
 		B90000000000000000000004 /* ChoiceBoardSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardSessionTests.swift; sourceTree = "<group>"; };
 		B90000000000000000000005 /* ChoiceBoardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardStoreTests.swift; sourceTree = "<group>"; };
+		B90000000000000000000006 /* ChoiceBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardController.swift; sourceTree = "<group>"; };
+		B90000000000000000000007 /* ChoiceBoardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardsView.swift; sourceTree = "<group>"; };
+		B90000000000000000000008 /* ChoiceBoardControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardControllerTests.swift; sourceTree = "<group>"; };
+		B90000000000000000000009 /* ChoiceBoardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceBoardUITests.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* OTToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OTToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000002 /* OTToolkitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20000000000000000000003 /* OTToolkitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTToolkitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -286,8 +294,18 @@
 			children = (
 				A90000000000000000000002 /* Domain */,
 				A90000000000000000000003 /* Persistence */,
+				A90000000000000000000007 /* Presentation */,
 			);
 			path = Choice;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000007 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B90000000000000000000006 /* ChoiceBoardController.swift */,
+				B90000000000000000000007 /* ChoiceBoardsView.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		A90000000000000000000002 /* Domain */ = {
@@ -462,8 +480,17 @@
 			children = (
 				A90000000000000000000005 /* Domain */,
 				A90000000000000000000006 /* Persistence */,
+				A90000000000000000000008 /* Presentation */,
 			);
 			path = Choice;
+			sourceTree = "<group>";
+		};
+		A90000000000000000000008 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				B90000000000000000000008 /* ChoiceBoardControllerTests.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		A90000000000000000000005 /* Domain */ = {
@@ -599,6 +626,7 @@
 				B10000000000000000000008 /* AppLaunchUITests.swift */,
 				B50000000000000000000008 /* FirstThenBoardUITests.swift */,
 				B80000000000000000000006 /* FirstThenScheduleUITests.swift */,
+				B90000000000000000000009 /* ChoiceBoardUITests.swift */,
 				B6000000000000000000000C /* TokenBoardUITests.swift */,
 				B70000000000000000000004 /* SettingsUITests.swift */,
 				B10000000000000000000021 /* VisualTimerUITests.swift */,
@@ -854,6 +882,8 @@
 				C90000000000000000000001 /* ChoiceBoardSession.swift in Sources */,
 				C90000000000000000000002 /* ChoiceBoardSchemaV3.swift in Sources */,
 				C90000000000000000000003 /* ChoiceBoardStore.swift in Sources */,
+				C90000000000000000000006 /* ChoiceBoardController.swift in Sources */,
+				C90000000000000000000007 /* ChoiceBoardsView.swift in Sources */,
 				C10000000000000000000003 /* HomeView.swift in Sources */,
 				C10000000000000000000009 /* VisualTimerClock.swift in Sources */,
 				C1000000000000000000000A /* VisualTimerStateMachine.swift in Sources */,
@@ -888,6 +918,7 @@
 				C80000000000000000000005 /* FirstThenScheduleControllerTests.swift in Sources */,
 				C90000000000000000000004 /* ChoiceBoardSessionTests.swift in Sources */,
 				C90000000000000000000005 /* ChoiceBoardStoreTests.swift in Sources */,
+				C90000000000000000000008 /* ChoiceBoardControllerTests.swift in Sources */,
 				C1000000000000000000000B /* VisualTimerStateMachineTests.swift in Sources */,
 				C1000000000000000000001F /* VisualTimerControllerTests.swift in Sources */,
 				C10000000000000000000022 /* VisualTimerRuntimeCoordinatorTests.swift in Sources */,
@@ -902,6 +933,7 @@
 				C10000000000000000000008 /* AppLaunchUITests.swift in Sources */,
 				C50000000000000000000008 /* FirstThenBoardUITests.swift in Sources */,
 				C80000000000000000000006 /* FirstThenScheduleUITests.swift in Sources */,
+				C90000000000000000000009 /* ChoiceBoardUITests.swift in Sources */,
 				C6000000000000000000000C /* TokenBoardUITests.swift in Sources */,
 				C70000000000000000000004 /* SettingsUITests.swift in Sources */,
 				C10000000000000000000015 /* AccessibilityTestSupport.swift in Sources */,
