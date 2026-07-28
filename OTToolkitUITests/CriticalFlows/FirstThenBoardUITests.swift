@@ -146,7 +146,7 @@ final class FirstThenBoardUITests: XCTestCase {
             in: app,
             identifier: "firstThen.action.childFacing"
         )
-        reveal(present, in: app)
+        AccessibilityTestSupport.reveal(present, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(present)
         present.tap()
 
@@ -180,7 +180,7 @@ final class FirstThenBoardUITests: XCTestCase {
             in: app,
             identifier: "firstThen.child.completeFirst"
         )
-        reveal(complete, in: app)
+        AccessibilityTestSupport.reveal(complete, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(complete)
         complete.tap()
 
@@ -190,7 +190,7 @@ final class FirstThenBoardUITests: XCTestCase {
             in: app,
             identifier: "firstThen.child.transition"
         )
-        reveal(transition, in: app, requiresHittable: false)
+        AccessibilityTestSupport.reveal(transition, in: app)
         try app.performAccessibilityAudit(for: [.textClipped])
 
         let exit = app.buttons["Exit child view"]
@@ -262,22 +262,4 @@ final class FirstThenBoardUITests: XCTestCase {
         field.typeText(text)
     }
 
-    @MainActor
-    private func reveal(
-        _ element: XCUIElement,
-        in app: XCUIApplication,
-        requiresHittable: Bool = true
-    ) {
-        XCTAssertTrue(element.waitForExistence(timeout: 5))
-        for _ in 0..<8 {
-            if !requiresHittable || element.isHittable {
-                return
-            }
-            app.swipeUp()
-        }
-
-        if requiresHittable {
-            XCTAssertTrue(element.isHittable)
-        }
-    }
 }

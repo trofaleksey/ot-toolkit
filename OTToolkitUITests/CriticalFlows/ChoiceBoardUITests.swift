@@ -18,18 +18,18 @@ final class ChoiceBoardUITests: XCTestCase {
         XCTAssertFalse(save.isEnabled, "A board needs a name and every choice named.")
         XCTAssertTrue(element(app, "choice.editor.validation").exists)
 
-        type("Break Choices", into: "choice.editor.name", in: app)
-        type("Swing", into: "choice.editor.option.label.0", in: app)
-        type("Bubbles", into: "choice.editor.option.label.1", in: app)
+        AccessibilityTestSupport.type("Break Choices", into: "choice.editor.name", in: app)
+        AccessibilityTestSupport.type("Swing", into: "choice.editor.option.label.0", in: app)
+        AccessibilityTestSupport.type("Bubbles", into: "choice.editor.option.label.1", in: app)
         XCTAssertTrue(save.isEnabled)
 
         // A third choice, then reorder it to the front with the tap-accessible
         // control rather than a drag.
-        tap(element(app, "choice.editor.addOption"), in: app)
-        type("Drawing", into: "choice.editor.option.label.2", in: app)
-        tap(element(app, "choice.editor.option.moveUp.2"), in: app)
-        tap(element(app, "choice.editor.option.moveUp.1"), in: app)
-        tap(save, in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.editor.addOption"), in: app)
+        AccessibilityTestSupport.type("Drawing", into: "choice.editor.option.label.2", in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.editor.option.moveUp.2"), in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.editor.option.moveUp.1"), in: app)
+        AccessibilityTestSupport.tap(save, in: app)
 
         let boardTitle = app.staticTexts["Break Choices"]
         XCTAssertTrue(boardTitle.waitForExistence(timeout: 5))
@@ -39,7 +39,7 @@ final class ChoiceBoardUITests: XCTestCase {
         XCTAssertTrue(element(app, "choice.board.use").waitForExistence(timeout: 5))
         assertOptionOrder(["Drawing", "Swing", "Bubbles"], prefix: "choice.board.option", in: app)
 
-        tap(element(app, "choice.board.use.delete"), in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.board.use.delete"), in: app)
         let confirmation = app.alerts["Delete this board?"]
         XCTAssertTrue(confirmation.waitForExistence(timeout: 5))
         confirmation.buttons["Delete board"].tap()
@@ -57,7 +57,7 @@ final class ChoiceBoardUITests: XCTestCase {
         let bubbles = element(app, "choice.board.option.1")
 
         XCTAssertEqual(swing.value as? String, "Not picked")
-        tap(swing, in: app)
+        AccessibilityTestSupport.tap(swing, in: app)
         XCTAssertEqual(swing.value as? String, "Picked")
         XCTAssertEqual(bubbles.value as? String, "Not picked")
         XCTAssertEqual(
@@ -66,15 +66,15 @@ final class ChoiceBoardUITests: XCTestCase {
         )
 
         // Selecting another choice moves the pick rather than adding one.
-        tap(bubbles, in: app)
+        AccessibilityTestSupport.tap(bubbles, in: app)
         XCTAssertEqual(swing.value as? String, "Not picked")
         XCTAssertEqual(bubbles.value as? String, "Picked")
 
-        tap(element(app, "choice.action.clearSelection"), in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.action.clearSelection"), in: app)
         XCTAssertEqual(element(app, "choice.selection.summary").label, "Nothing picked yet")
 
         // Hiding removes a choice from the board for this session only.
-        tap(element(app, "choice.visibility.toggle.2"), in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.visibility.toggle.2"), in: app)
         XCTAssertEqual(element(app, "choice.visibility.state.2").label, "Hidden")
         XCTAssertEqual(element(app, "choice.visibility.state.0").label, "Shown")
 
@@ -85,7 +85,7 @@ final class ChoiceBoardUITests: XCTestCase {
         assertOptionOrder(["Swing", "Bubbles"], prefix: "choice.board.option", in: app)
         XCTAssertFalse(element(app, "choice.board.option.2").exists)
 
-        tap(element(app, "choice.action.showAll"), in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.action.showAll"), in: app)
         assertOptionOrder(["Swing", "Bubbles", "Drawing"], prefix: "choice.board.option", in: app)
     }
 
@@ -98,7 +98,7 @@ final class ChoiceBoardUITests: XCTestCase {
         openChoiceBoards(in: app)
         openSeededBoard(in: app)
 
-        tap(element(app, "choice.action.childFacing"), in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.action.childFacing"), in: app)
         let childContent = element(app, "choice.child.content")
         XCTAssertTrue(childContent.waitForExistence(timeout: 5))
         XCTAssertTrue(childContent.label.contains("Break Choices"))
@@ -109,7 +109,7 @@ final class ChoiceBoardUITests: XCTestCase {
 
         let childSwing = element(app, "choice.child.option.0")
         AccessibilityTestSupport.assertMinimumHitTarget(childSwing)
-        tap(childSwing, in: app)
+        AccessibilityTestSupport.tap(childSwing, in: app)
         XCTAssertEqual(childSwing.value as? String, "Picked")
 
         let exit = app.buttons["Exit child view"]
@@ -123,7 +123,7 @@ final class ChoiceBoardUITests: XCTestCase {
         XCTAssertEqual(element(app, "choice.selection.summary").label, "Picked: Swing")
 
         // Duplicating adds a copy and leaves the original in place.
-        tap(element(app, "choice.action.duplicate"), in: app)
+        AccessibilityTestSupport.tap(element(app, "choice.action.duplicate"), in: app)
         navigateBack(in: app)
 
         XCTAssertTrue(element(app, "choice.destination").waitForExistence(timeout: 5))
@@ -141,7 +141,7 @@ final class ChoiceBoardUITests: XCTestCase {
         openSeededBoard(in: app)
 
         let present = element(app, "choice.action.childFacing")
-        reveal(present, in: app)
+        AccessibilityTestSupport.reveal(present, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(present)
         present.tap()
 
@@ -153,7 +153,7 @@ final class ChoiceBoardUITests: XCTestCase {
         let tile = app.descendants(matching: .any)
             .matching(NSPredicate(format: "identifier BEGINSWITH %@", "choice.child.option."))
             .firstMatch
-        reveal(tile, in: app)
+        AccessibilityTestSupport.reveal(tile, in: app)
         AccessibilityTestSupport.assertMinimumHitTarget(tile)
         XCTAssertEqual(tile.value as? String, "Not picked")
         try app.performAccessibilityAudit(for: [.textClipped])
@@ -199,7 +199,7 @@ final class ChoiceBoardUITests: XCTestCase {
                 )
             )
             .firstMatch
-        tap(row, in: app)
+        AccessibilityTestSupport.tap(row, in: app)
         XCTAssertTrue(element(app, "choice.board.use").waitForExistence(timeout: 5))
     }
 
@@ -218,23 +218,13 @@ final class ChoiceBoardUITests: XCTestCase {
     ) {
         for (index, expected) in labels.enumerated() {
             let tile = element(app, "\(prefix).\(index)")
-            revealAnywhere(tile, in: app)
+            AccessibilityTestSupport.revealForReading(tile, in: app)
             XCTAssertEqual(tile.label, expected, "tile \(index)", file: file, line: line)
         }
     }
 
     /// Scrolls up then down to bring an element into the hierarchy, without
     /// assuming which side of the viewport it is on.
-    @MainActor
-    private func revealAnywhere(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<6 where !element.exists {
-            app.swipeDown()
-        }
-        for _ in 0..<6 where !element.exists {
-            app.swipeUp()
-        }
-        XCTAssertTrue(element.waitForExistence(timeout: 5))
-    }
 
     @MainActor
     private func element(_ app: XCUIApplication, _ identifier: String) -> XCUIElement {
@@ -245,71 +235,8 @@ final class ChoiceBoardUITests: XCTestCase {
     private func openChoiceBoards(in app: XCUIApplication) {
         AccessibilityTestSupport.showToolsContentIfNeeded(in: app)
         let choice = element(app, "home.tool.choiceBoard")
-        reveal(choice, in: app)
+        AccessibilityTestSupport.reveal(choice, in: app)
         choice.tap()
         XCTAssertTrue(element(app, "choice.destination").waitForExistence(timeout: 5))
-    }
-
-    @MainActor
-    private func type(_ text: String, into identifier: String, in app: XCUIApplication) {
-        let field = element(app, identifier)
-        reveal(field, in: app)
-        field.tap()
-        field.typeText(text)
-        dismissKeyboard(in: app)
-    }
-
-    /// Leaves the keyboard down between fields. It covers the lower third of a
-    /// narrow phone, which is where the next field usually is.
-    @MainActor
-    private func dismissKeyboard(in app: XCUIApplication) {
-        let keyboard = app.keyboards.firstMatch
-        guard keyboard.exists else { return }
-        if app.buttons["Return"].exists {
-            app.buttons["Return"].tap()
-        } else {
-            app.typeText("\n")
-        }
-    }
-
-    @MainActor
-    private func tap(_ element: XCUIElement, in app: XCUIApplication) {
-        reveal(element, in: app)
-        element.tap()
-    }
-
-    /// Scrolls until the element's centre — the point `tap()` targets — clears
-    /// the tab bar.
-    ///
-    /// Two traps this avoids. Existence is checked inside the loop rather than
-    /// up front, because at the largest text size an element below the fold is
-    /// not in the accessibility snapshot at all until it is scrolled toward.
-    /// And `isHittable` alone is not enough: a tall control can peek above the
-    /// tab bar and report hittable while its centre sits underneath it, so the
-    /// tap silently goes to the tab bar instead.
-    @MainActor
-    private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
-        for _ in 0..<12 {
-            if element.exists, element.isHittable, element.frame.midY < contentBottom(in: app) {
-                return
-            }
-            app.swipeUp()
-        }
-
-        XCTAssertTrue(element.waitForExistence(timeout: 5))
-        XCTAssertTrue(element.isHittable)
-        XCTAssertLessThan(element.frame.midY, contentBottom(in: app))
-    }
-
-    /// Lowest y a tap can safely land on: whichever of the software keyboard
-    /// or the tab bar is covering the bottom of the screen.
-    @MainActor
-    private func contentBottom(in app: XCUIApplication) -> CGFloat {
-        let keyboard = app.keyboards.firstMatch
-        if keyboard.exists, keyboard.frame.height > 0 {
-            return keyboard.frame.minY
-        }
-        let tabBar = app.tabBars.firstMatch
-        return tabBar.exists ? tabBar.frame.minY : app.windows.firstMatch.frame.maxY
     }
 }
