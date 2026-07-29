@@ -4,16 +4,18 @@ OT Toolkit is a native iPhone and iPad toolkit for pediatric occupational therap
 
 ## Status
 
-All three core-beta tools — Visual Timer, First–Then Board, and Token Board — are implemented, along with the adaptive shell, design and accessibility foundation, protected local store, required settings and disclosures, and idempotent reset. Remaining beta work is distribution readiness and the Gate B validation run.
+Four tools are implemented: Visual Timer, First–Then Board (including an ephemeral multi-board visual schedule), Token Board, and Choice Board. These sit on the adaptive shell, design and accessibility foundation, protected local store, required settings and disclosures, and idempotent reset.
+
+Choice Board is a candidate-v1 feature that the maintainer scheduled ahead of Gate B rather than after it. Gate B itself has not run: it depends on OTK-005 tester recruitment, which is the critical path to the beta.
 
 ## Core private beta
 
 - Visual Timer
-- First–Then Board
+- First–Then Board, including a session visual schedule across several saved boards
 - Token Board
 - Adaptive navigation, sensory settings, and complete local-data reset
 
-Choice Board is gated behind core validation. Regulation Cards are gated behind clinical-content governance and may ship in v1.1.
+Choice Board is implemented and belongs to candidate v1 rather than the core beta. Regulation Cards remain gated behind clinical-content governance and may ship in v1.1; `Documentation/REGULATION_CONTENT_PLAN.md` is a draft awaiting a named clinical-content owner.
 
 ## Documentation
 
@@ -24,6 +26,7 @@ Choice Board is gated behind core validation. Regulation Cards are gated behind 
 - [Privacy](Documentation/PRIVACY.md)
 - [Privacy policy](Documentation/PRIVACY_POLICY.md)
 - [Beta release readiness](Documentation/BETA_RELEASE.md)
+- [Regulation content plan (draft)](Documentation/REGULATION_CONTENT_PLAN.md)
 - [Asset provenance](Documentation/ASSET_PROVENANCE.md)
 - [Validation plan](Documentation/VALIDATION_PLAN.md)
 - [Regulation content governance](Documentation/CONTENT_GOVERNANCE.md)

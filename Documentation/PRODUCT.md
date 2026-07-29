@@ -63,14 +63,14 @@ Supporting capabilities:
 
 ### Candidate App Store v1
 
-After the core beta passes its validation gate:
+After the core beta passes its validation gate, except where the maintainer has explicitly scheduled an addition earlier:
 
-4. Choice Board
+4. Choice Board — implemented
    - Two to six choices.
    - Bundled symbols or illustrations; user photos only after the media/privacy gate.
    - Reordering, temporary hiding, clear selection, save, and duplicate.
 
-5. Movement and Regulation Cards
+5. Movement and Regulation Cards — not started; blocked on the OTK-060 content approval
    - Curated, bundled activity library.
    - Name, illustration, directions, duration, environment, equipment, regulation category, supervision, contraindications, stop criteria, and safety notes.
    - Filters, favorites, and a Pick for Me action limited to the therapist's active filters.
