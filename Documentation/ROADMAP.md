@@ -14,7 +14,9 @@ The private-beta journey is:
 
 > Open the app, select a core tool, configure it quickly, enter child-facing mode, complete the activity, exit safely, and optionally reuse a saved board.
 
-Work that neither enables nor protects this journey is deferred until after Gate B. In particular, the core-beta sequence excludes alternate timer visuals, nonessential appearance themes, board duplication, elaborate celebrations, speculative shared-board components, Choice Board, and Regulation Cards.
+Work that neither enables nor protects this journey is deferred until after Gate B. In particular, the core-beta sequence excludes alternate timer visuals, nonessential appearance themes, elaborate celebrations, speculative shared-board components, Choice Board, and Regulation Cards.
+
+Choice Board has since been implemented ahead of Gate B by maintainer decision. That does not move it into the core beta: it remains a candidate-v1 feature, and Gate B still validates the three core tools.
 
 Delivery uses two evidence levels:
 
@@ -36,9 +38,11 @@ Before TestFlight use in real sessions, the complete shared test plan, full manu
 
 ## Current status
 
-All three core tools are implemented. The universal Xcode foundation, adaptive navigation, design/accessibility tokens, protected local-store boundary, deterministic timer domain, accessible timer UI, timer lifecycle/feedback closeout, First–Then schema and boards, Token Board domain and templates, and the OTK-040 settings/disclosure/reset slice are complete. Timer enhancements remain frozen unless Gate A or a critical defect demonstrates a need.
+All three core tools are implemented, plus two approved additions. The universal Xcode foundation, adaptive navigation, design/accessibility tokens, protected local-store boundary, deterministic timer domain, accessible timer UI, timer lifecycle/feedback closeout, First–Then schema and boards, Token Board domain and templates, and the OTK-040 settings/disclosure/reset slice are complete. OTK-023 added an ephemeral multi-board visual schedule to First–Then, and OTK-050 delivered Choice Board behind schema V3. Timer enhancements remain frozen unless Gate A or a critical defect demonstrates a need.
 
 Remaining beta work is distribution readiness and validation. OTK-041 has completed its repository-side deliverables — privacy policy text, App Store privacy answers, privacy-manifest re-audit, export-compliance configuration, asset-provenance re-review with a CI guard, and the beta protocol — and now carries four owner actions tracked in `Documentation/BETA_RELEASE.md` section 8: publishing the policy URL, publishing a monitored security contact, completing Apple Developer and App Store Connect setup, and running the real-device checks. Gate A has not yet run; OTK-005 recruitment gates both Gate A and Gate B and is the critical path.
+
+OTK-050 shipped ahead of Gate B at the maintainer's direction rather than after it, so the Milestone 5 dependency below records the intent rather than the order events actually took. Gate C still requires Gate B first. No further feature work is unblocked: OTK-061 depends on OTK-060, which requires a named clinical-content owner.
 
 ## Lean delivery sequence
 
@@ -48,7 +52,7 @@ Remaining beta work is distribution readiness and validation. OTK-041 has comple
 4. **Beta Release slice:** complete a trimmed OTK-040, then OTK-041 and OTK-042. Settings include only controls and disclosures required by shipped behavior; no theme system or general settings framework is required.
 5. **First–Then schedule addition:** complete OTK-023 after OTK-041. It is the one approved feature addition inside the core beta and must not grow into a general schedule framework or a persisted schedule record.
 
-OTK-032 is deferred until after Gate B. Reopen or reschedule it only if the completed First–Then and Token Board implementations reveal costly repeated behavior with a stable common shape.
+OTK-032 is deferred until after Gate B. Reopen or reschedule it only if the completed board implementations reveal costly repeated behavior with a stable common shape. There are now three board features rather than two; `Documentation/BOARD_DUPLICATION_AUDIT.md` records the measurement its acceptance criteria require before any extraction is estimated.
 
 ## Milestone 0 — Foundation
 
@@ -147,8 +151,8 @@ Gate B:
 
 | Issue | Outcome | Depends on |
 | --- | --- | --- |
-| OTK-050 | Choice Board vertical slice using proven board patterns | Gate B |
-| OTK-060 | Name clinical owner and approve a bounded card inventory, category coverage, assets, content schema, and workflow | Gate B |
+| OTK-050 | Choice Board vertical slice using proven board patterns — **implemented**, delivered ahead of Gate B by maintainer decision | Gate B |
+| OTK-060 | Name clinical owner and approve a bounded card inventory, category coverage, assets, content schema, and workflow — a draft plan awaits approval in `REGULATION_CONTENT_PLAN.md` | Gate B |
 | OTK-061 | Regulation library, filters, favorites, safe filtered selection | OTK-060 |
 | OTK-062 | Run Gate C usability, safety-note comprehension, and core regression | OTK-050 and OTK-061 |
 | OTK-070 | Revalidate privacy policy/labels, asset licenses, accessibility matrix, and release build | OTK-062, or an explicit scope reduction |
