@@ -10,18 +10,47 @@ Free-text labels and future imported images can still contain identifiable or se
 
 ### App-created local content
 
-- Saved First–Then, Token, and later Choice boards.
-- Board names, short labels, stable identifiers, ordering, and configuration.
-- Reward labels and saved templates.
-- Favorite bundled-activity identifiers.
-- Sensory and appearance preferences.
+What the app stores today, and nothing else:
+
+- Saved First–Then boards, Token Board templates, and Choice Boards.
+- Board names, item and choice labels, chosen bundled symbols, stable
+  identifiers, ordering, and per-board configuration such as a token goal.
+- Reward labels.
+- Exactly three preferences, all boolean and all off by default: Visual Timer
+  completion sound, Visual Timer completion haptic, and Token Board completion
+  haptic. `OTPreference` is the single source of truth for this list, and
+  `OTAppStorageKeys.all` is derived from it so reset cannot miss one.
+
+Deliberately not stored, despite appearing in earlier drafts of this document:
+
+- Favorites of any kind. No favoriting exists.
+- Appearance or theme preferences. No appearance setting exists; OTK-040
+  shipped only the sensory toggles and disclosures above.
+
+Ephemeral session state — a First–Then schedule's membership and progress, and a
+Choice Board's temporary hiding and current pick — is held in memory only and
+ends with the process. It has no persisted counterpart by design.
 
 User-created regulation cards are not part of v1.
 
+This inventory is release-gate material: `Documentation/PRIVACY_POLICY.md` and
+the App Store privacy answers are written from it, so it must state what the
+code does rather than what was planned.
+
 ### Bundled content
 
-- Read-only regulation activities and metadata.
-- Bundled illustrations, symbols, sounds, and localizations.
+Shipping today:
+
+- Referenced SF Symbols, the original semantic color palette, and the localized
+  string catalog.
+- One programmatically generated completion tone.
+
+Not yet shipping, and gated:
+
+- Read-only regulation activities and metadata, behind the OTK-060 content
+  approval.
+- Bitmap illustrations. The beta ships none; `Documentation/ASSET_PROVENANCE.md`
+  is the authoritative inventory and is enforced in CI.
 
 Bundled content contains no patient-specific information and has documented provenance and review status.
 

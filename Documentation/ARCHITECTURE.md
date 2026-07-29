@@ -81,6 +81,8 @@ Feature source and mirrored test paths own their domain types, views, observable
 
 The first feature with a real persisted domain model establishes VersionedSchema V1 and SchemaMigrationPlan. V1 becomes immutable when the first persistent TestFlight build is distributed; a schema is never shipped as an unversioned prototype.
 
+Three versions exist. V1 added `FirstThenBoard` and `FirstThenItem` (OTK-020), V2 added `TokenBoardTemplate` (OTK-031), and V3 added `ChoiceBoard` and `ChoiceOption` (OTK-050). Each earlier version's model shapes are unchanged, so both migrations are lightweight. No persistent TestFlight build has been distributed yet, so no version has become immutable; the first distribution freezes V3.
+
 Persisted domain models require:
 
 - Stable UUIDs plus created and updated timestamps.
