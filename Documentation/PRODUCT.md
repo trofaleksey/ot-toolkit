@@ -46,6 +46,7 @@ The smallest useful product contains:
    - Bundled illustrations or SF Symbols with short labels for First and Then.
    - Mark First as completed and transition to Then.
    - Reusable boards and child-facing mode.
+   - Combine two or more saved boards into an ordered, session-only visual schedule.
    - User photo import is gated by the media/privacy decision and is not part of the first vertical slice.
 
 3. Token Board
@@ -58,7 +59,7 @@ The smallest useful product contains:
 Supporting capabilities:
 
    - Adaptive iPhone and iPad navigation.
-   - Sensory and appearance settings.
+   - Sensory settings and support for system appearance and accessibility preferences.
    - Complete reset of app-created data.
 
 ### Candidate App Store v1

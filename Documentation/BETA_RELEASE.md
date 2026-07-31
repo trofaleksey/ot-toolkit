@@ -27,9 +27,10 @@ from the repository. Record the date and outcome inline as each is done.
 
 Use this text, which matches shipped behavior:
 
-> This beta contains three tools: Visual Timer, First–Then Board, and Token
-> Board. Please use them in real sessions where that is appropriate for your
-> setting and your employer's policy.
+> This build contains four tools: Visual Timer, First–Then Board, Token Board,
+> and Choice Board. The core-beta study focuses on the first three; Choice Board
+> is an early candidate-v1 addition. Please use the core tools in real sessions
+> where that is appropriate for your setting and your employer's policy.
 >
 > Known limits in this build, all intentional:
 > • A running timer ends if the app is force-quit or the system reclaims it.
@@ -104,12 +105,12 @@ and result.
 | Backup exclusion | Create a board, take an encrypted local backup, confirm no OT Toolkit content directory is present | _owed_ |
 | File protection while locked | With content saved, lock the device and confirm the store is unreadable to a file-inspection tool | _owed_ |
 | Reset on device | Reset with real content present; confirm success, an empty valid store, and that a second reset also succeeds | _owed_ |
-| App-switcher redaction | From each of the three tools and from child-facing mode, switch apps and confirm the preview shows the neutral cover, not board labels | _owed_ |
+| App-switcher redaction | From each of the four shipped tools and from child-facing mode, switch apps and confirm the preview shows the neutral cover, not board labels | _owed_ |
 | Log sanitization | Watch Console.app for the whole journey; confirm the app emits no message containing a board name or label | _owed_ |
 | No network traffic | Run the full journey with the Xcode network report open; confirm zero connections | _owed_ |
 | No permission prompts | Complete the full journey; confirm iOS never prompts for any permission | _owed_ |
 | Timer lifecycle | Force-quit a running timer and relaunch; confirm no timer is restored and the disclosure matches | _owed_ |
-| Accessibility matrix | Full VoiceOver, largest Dynamic Type, Reduce Motion, Increase Contrast, Differentiate Without Color, Reduce Transparency, Switch Control, and keyboard pass across all three tools | _owed_ |
+| Accessibility matrix | Full VoiceOver, largest Dynamic Type, Reduce Motion, Increase Contrast, Differentiate Without Color, Reduce Transparency, Switch Control, and keyboard pass across all four shipped tools | _owed_ |
 
 ## 6. Participant protocol
 

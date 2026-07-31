@@ -26,8 +26,9 @@ Local Xcode versions do not replace the pinned authoritative and compatibility C
     OTToolkit/
     ├── App/
     │   ├── OTToolkitApp.swift
-    │   ├── AppRouter.swift
-    │   └── AppEnvironment.swift
+    │   ├── AppNavigation.swift
+    │   ├── AppShellView.swift
+    │   └── SettingsView.swift
     ├── Core/
     │   ├── DesignSystem/
     │   ├── Persistence/
@@ -37,14 +38,10 @@ Local Xcode versions do not replace the pinned authoritative and compatibility C
     │   ├── Home/
     │   ├── VisualTimer/
     │   ├── FirstThen/
-    │   ├── TokenBoard/
-    │   ├── ChoiceBoard/
-    │   ├── RegulationCards/
-    │   ├── SavedBoards/
-    │   └── Settings/
+    │   ├── Token/
+    │   └── Choice/
     └── Resources/
         ├── Assets.xcassets
-        ├── ActivityLibrary.json
         └── Localizable.xcstrings
 
     OTToolkitTests/
@@ -79,7 +76,9 @@ Feature source and mirrored test paths own their domain types, views, observable
 
 ## Persistence contract
 
-The first feature with a real persisted domain model establishes VersionedSchema V1 and SchemaMigrationPlan. V1 becomes immutable when the first persistent TestFlight build is distributed; a schema is never shipped as an unversioned prototype.
+The first feature with a real persisted domain model established VersionedSchema V1 and SchemaMigrationPlan. A schema is never shipped as an unversioned prototype.
+
+Three versions exist. V1 added `FirstThenBoard` and `FirstThenItem` (OTK-020), V2 added `TokenBoardTemplate` (OTK-031), and V3 added `ChoiceBoard` and `ChoiceOption` (OTK-050). Each earlier version's model shapes are unchanged, so both migrations are lightweight. No persistent TestFlight build has been distributed yet; the first distribution freezes the released V1–V3 model shapes.
 
 Persisted domain models require:
 
@@ -92,13 +91,13 @@ Persisted domain models require:
 
 Migration failure preserves the original store and presents a recoverable blocking state. Reset is offered only after explicit confirmation. Reset first tears down the live ModelContainer and contexts, removes the store and sidecars, clears every app-owned AppStorage/UserDefaults key, recreates the protected directory and backup exclusion, and validates a fresh container. The operation is idempotent.
 
-Tests cover in-memory CRUD and relationships, on-disk migration fixtures, delete cascades, reset behavior, and duplicate bundled-content identifiers. Simple sensory and appearance settings use AppStorage unless a concrete cross-model need justifies SwiftData.
+Tests cover in-memory CRUD and relationships, on-disk migration fixtures, delete cascades, reset behavior, and duplicate bundled-content identifiers. Simple device preferences such as sensory feedback use AppStorage unless a concrete cross-model need justifies SwiftData.
 
-Every v1 ModelConfiguration sets cloudKitDatabase to .none explicitly. Tests and release checks also verify that CloudKit entitlements are absent.
+Every app ModelConfiguration sets cloudKitDatabase to .none explicitly. Tests and release checks also verify that CloudKit entitlements are absent.
 
 ## Media contract
 
-The core private beta uses bundled illustrations and SF Symbols. Camera and photo import are deferred under ADR-0003.
+The core private beta uses bundled assets such as SF Symbols and currently ships no bitmap illustrations. Camera and photo import are deferred under ADR-0003.
 
 If media import is approved later, it must use a system picker with least-privilege access, re-encode and downsample into app-owned Application Support storage, remove source metadata, use stable file identifiers rather than SwiftData blobs, apply file protection and the documented backup policy, and delete derived, orphaned, temporary, and cached files. DESIGN_SYSTEM.md is the single source for pixel and decoded-memory budgets.
 
