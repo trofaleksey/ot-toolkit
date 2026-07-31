@@ -10,11 +10,12 @@ Free-text labels and future imported images can still contain identifiable or se
 
 ### App-created local content
 
-What the app stores today, and nothing else:
+The app's product data stored today consists of:
 
 - Saved First–Then boards, Token Board templates, and Choice Boards.
 - Board names, item and choice labels, chosen bundled symbols, stable
-  identifiers, ordering, and per-board configuration such as a token goal.
+  identifiers, ordering, created and updated timestamps, and per-board
+  configuration such as a token goal.
 - Reward labels.
 - Exactly three preferences, all boolean and all off by default: Visual Timer
   completion sound, Visual Timer completion haptic, and Token Board completion

@@ -23,13 +23,20 @@ storage area on your device:
   symbols you pick.
 - Token Boards: the template name, the token goal, the reward label you type,
   and the reward symbol you pick.
+- Choice Boards: the board name, two to six choice labels you type, and the
+  symbols you pick. Choices you temporarily hide and the current selection are
+  not saved.
 - Your three sensory-feedback settings (Visual Timer sound, Visual Timer haptic,
   and Token Board haptic). All three are off unless you turn them on.
 
-That is the complete list. The app has no field for a child's name, date of
-birth, diagnosis, clinical notes, session history, insurance details, photos, or
-audio. It does not record sessions, and it does not keep a history of the boards
-you have run.
+The app also keeps internal identifiers, display order, and created and updated
+timestamps needed to manage saved boards and templates. A First–Then visual
+schedule's selected boards and progress are not saved.
+
+That is the complete product-data list. The app has no field for a child's name,
+date of birth, diagnosis, clinical notes, session history, insurance details,
+photos, or audio. It does not record sessions, and it does not keep a history of
+the boards you have run.
 
 ## What we receive
 

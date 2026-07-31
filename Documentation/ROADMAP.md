@@ -34,7 +34,7 @@ Feature completion does not require rerunning and recording the entire manual re
 
 ### Beta ready
 
-Before TestFlight use in real sessions, the complete shared test plan, full manual accessibility matrix, lifecycle and real-device checks, privacy and storage checks, asset provenance review, and regression across all three tools must pass. Deferring repeated exhaustive verification to this gate does not defer implementation of accessibility or privacy requirements.
+Before TestFlight use in real sessions, the complete shared test plan, full manual accessibility matrix, lifecycle and real-device checks, privacy and storage checks, asset provenance review, and regression across every tool present in the build must pass. Gate B outcomes remain based on the three core tools. Deferring repeated exhaustive verification to this gate does not defer implementation of accessibility or privacy requirements.
 
 ## Current status
 
