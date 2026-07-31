@@ -18,6 +18,7 @@ struct AppSceneRootView: View {
 
     private let launchOptions: AppLaunchOptions
     private let dataController: AppDataController
+    private let preferences: OTPreferences
 
     init(
         launchOptions: AppLaunchOptions,
@@ -37,6 +38,7 @@ struct AppSceneRootView: View {
         } else {
             preferences = OTPreferences()
         }
+        self.preferences = preferences
 
         var initialNavigation = AppNavigationState()
         if launchOptions.startsInChildFacingFixture {
@@ -216,7 +218,7 @@ struct AppSceneRootView: View {
                 tokenBoardSessionController: tokenBoardSessionController,
                 choiceBoardController: choiceBoardController,
                 choiceBoardSessionController: choiceBoardSessionController,
-                dataController: dataController,
+                resetAppData: performDataReset,
                 forcesCompactNavigation: true
             )
             .environment(\.horizontalSizeClass, .compact)
@@ -231,10 +233,41 @@ struct AppSceneRootView: View {
                 tokenBoardSessionController: tokenBoardSessionController,
                 choiceBoardController: choiceBoardController,
                 choiceBoardSessionController: choiceBoardSessionController,
-                dataController: dataController,
+                resetAppData: performDataReset,
                 forcesCompactNavigation: false
             )
         }
+    }
+
+    private func performDataReset() -> Bool {
+        guard dataController.reset(),
+            let modelContext = dataController.modelContainer?.mainContext
+        else {
+            return false
+        }
+
+        // The persistent reset clears preferences through its lifecycle. The
+        // explicit clear keeps the in-memory UI-test store on the same contract.
+        preferences.clearAll()
+        visualTimerController.reloadCompletionPreferences()
+
+        firstThenBoardController = FirstThenBoardController(
+            store: FirstThenBoardStore(modelContext: modelContext)
+        )
+        firstThenSessionController = FirstThenBoardSessionController()
+        firstThenScheduleController = FirstThenScheduleController()
+
+        tokenBoardController = TokenBoardController(
+            store: TokenBoardTemplateStore(modelContext: modelContext)
+        )
+        tokenBoardSessionController = TokenBoardSessionController(preferences: preferences)
+
+        choiceBoardController = ChoiceBoardController(
+            store: ChoiceBoardStore(modelContext: modelContext)
+        )
+        choiceBoardSessionController = ChoiceBoardSessionController()
+
+        return true
     }
 
     @ViewBuilder
@@ -533,7 +566,7 @@ struct AppShellView: View {
     let tokenBoardSessionController: TokenBoardSessionController
     let choiceBoardController: ChoiceBoardController
     let choiceBoardSessionController: ChoiceBoardSessionController
-    let dataController: AppDataController
+    let resetAppData: () -> Bool
     let forcesCompactNavigation: Bool
 
     var body: some View {
@@ -749,7 +782,7 @@ struct AppShellView: View {
 
     private var settingsView: some View {
         SettingsView(
-            dataController: dataController,
+            resetAppData: resetAppData,
             visualTimerController: visualTimerController,
             tokenBoardSessionController: tokenBoardSessionController
         )

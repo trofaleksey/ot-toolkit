@@ -68,6 +68,63 @@ final class SettingsUITests: XCTestCase {
     }
 
     @MainActor
+    func testResetImmediatelyClearsLiveBoardsAndSensoryPreferences() {
+        let app = AccessibilityTestSupport.launchApplication(
+            forcesCompactNavigation: true,
+            seedsFirstThenBoard: true,
+            seedsTokenBoard: true,
+            seedsChoiceBoard: true
+        )
+        openSettings(in: app)
+
+        let timerSound = app.switches["settings.feedback.timer.sound"].firstMatch
+        XCTAssertTrue(timerSound.waitForExistence(timeout: 5))
+        // SwiftUI exposes the entire labeled row as the switch element. Tap
+        // the trailing control rather than the row midpoint.
+        timerSound
+            .coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 0.5))
+            .withOffset(CGVector(dx: -28, dy: 0))
+            .tap()
+        waitForSwitch(timerSound, value: "1")
+
+        let resetButton = AccessibilityTestSupport.element(
+            in: app,
+            identifier: "settings.reset.action"
+        )
+        AccessibilityTestSupport.tap(resetButton, in: app)
+        let confirmation = app.alerts["Reset all app data?"]
+        XCTAssertTrue(confirmation.waitForExistence(timeout: 5))
+        confirmation.buttons["Reset"].tap()
+
+        let success = app.alerts["App data reset"]
+        XCTAssertTrue(success.waitForExistence(timeout: 5))
+        success.buttons["Done"].tap()
+
+        AccessibilityTestSupport.revealForReading(timerSound, in: app)
+        waitForSwitch(timerSound, value: "0")
+
+        let toolsTab = app.tabBars.buttons["Tools"].firstMatch
+        XCTAssertTrue(toolsTab.waitForExistence(timeout: 5))
+        toolsTab.tap()
+
+        assertToolIsEmpty(
+            cardIdentifier: "home.tool.firstThen",
+            emptyIdentifier: "firstThen.empty.title",
+            in: app
+        )
+        assertToolIsEmpty(
+            cardIdentifier: "home.tool.tokenBoard",
+            emptyIdentifier: "tokenBoard.empty.title",
+            in: app
+        )
+        assertToolIsEmpty(
+            cardIdentifier: "home.tool.choiceBoard",
+            emptyIdentifier: "choice.empty.title",
+            in: app
+        )
+    }
+
+    @MainActor
     func testPrivacyCoverHidesSettingsContent() {
         let app = AccessibilityTestSupport.launchApplication(
             forcesCompactNavigation: true,
@@ -114,6 +171,44 @@ final class SettingsUITests: XCTestCase {
                 in: app,
                 identifier: "navigation.content.settings"
             ).waitForExistence(timeout: 5)
+        )
+    }
+
+    @MainActor
+    private func assertToolIsEmpty(
+        cardIdentifier: String,
+        emptyIdentifier: String,
+        in app: XCUIApplication
+    ) {
+        let card = AccessibilityTestSupport.element(in: app, identifier: cardIdentifier)
+        AccessibilityTestSupport.tap(card, in: app)
+        XCTAssertTrue(
+            AccessibilityTestSupport.element(in: app, identifier: emptyIdentifier)
+                .waitForExistence(timeout: 5),
+            emptyIdentifier
+        )
+
+        let backButton = app.navigationBars.buttons.element(boundBy: 0)
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
+        backButton.tap()
+    }
+
+    @MainActor
+    private func waitForSwitch(
+        _ toggle: XCUIElement,
+        value: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let expectation = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", value),
+            object: toggle
+        )
+        XCTAssertEqual(
+            XCTWaiter.wait(for: [expectation], timeout: 5),
+            .completed,
+            file: file,
+            line: line
         )
     }
 }

@@ -134,6 +134,13 @@ final class VisualTimerController {
         preferences.setEnabled(isEnabled, for: .visualTimerCompletionHaptic)
     }
 
+    /// Refreshes cached sensory settings after app data is reset without
+    /// disturbing an active timer session.
+    func reloadCompletionPreferences() {
+        isCompletionSoundEnabled = preferences.isEnabled(.visualTimerCompletionSound)
+        isCompletionHapticEnabled = preferences.isEnabled(.visualTimerCompletionHaptic)
+    }
+
     @discardableResult
     func start() -> Bool {
         let duration = startDurationOverride ?? selectedDuration
