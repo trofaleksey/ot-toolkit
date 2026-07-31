@@ -12,7 +12,7 @@ struct SettingsView: View {
     @State private var isConfirmingReset = false
     @State private var resetOutcome: AppResetOutcome?
 
-    let dataController: AppDataController
+    let resetAppData: () -> Bool
     let visualTimerController: VisualTimerController
     let tokenBoardSessionController: TokenBoardSessionController
 
@@ -33,7 +33,7 @@ struct SettingsView: View {
         .alert("settings.reset.title", isPresented: $isConfirmingReset) {
             Button("settings.reset.cancel", role: .cancel) {}
             Button("settings.reset.confirm", role: .destructive) {
-                resetOutcome = dataController.reset() ? .succeeded : .failed
+                resetOutcome = resetAppData() ? .succeeded : .failed
             }
         } message: {
             Text("settings.reset.message")

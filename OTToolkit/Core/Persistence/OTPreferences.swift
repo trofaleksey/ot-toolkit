@@ -33,4 +33,11 @@ final class OTPreferences {
     func setEnabled(_ isEnabled: Bool, for preference: OTPreference) {
         defaults.set(isEnabled, forKey: preference.rawValue)
     }
+
+    /// Removes only preferences owned by this app. The persistent-store
+    /// lifecycle performs the same cleanup in production; keeping the operation
+    /// here lets in-memory test stores follow the identical reset contract.
+    func clearAll() {
+        AppOwnedPreferences(defaults: defaults).clear()
+    }
 }

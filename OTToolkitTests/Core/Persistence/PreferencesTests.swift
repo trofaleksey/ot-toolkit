@@ -110,6 +110,25 @@ final class PreferencesTests: XCTestCase {
         )
     }
 
+    @MainActor
+    func testTimerControllerReloadsClearedFeedbackPreferencesWithoutRecreatingKeys() {
+        let preferences = OTPreferences(defaults: defaults)
+        preferences.setEnabled(true, for: .visualTimerCompletionSound)
+        preferences.setEnabled(true, for: .visualTimerCompletionHaptic)
+        let controller = VisualTimerController(
+            clock: ContinuousClock(),
+            preferences: preferences
+        )
+
+        preferences.clearAll()
+        controller.reloadCompletionPreferences()
+
+        XCTAssertFalse(controller.isCompletionSoundEnabled)
+        XCTAssertFalse(controller.isCompletionHapticEnabled)
+        XCTAssertNil(defaults.object(forKey: OTPreference.visualTimerCompletionSound.rawValue))
+        XCTAssertNil(defaults.object(forKey: OTPreference.visualTimerCompletionHaptic.rawValue))
+    }
+
     /// Acceptance criterion 1 end to end: a confirmed reset clears app-owned
     /// preferences as well as the store, leaves a usable container, and can run
     /// again without failing.
