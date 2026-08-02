@@ -1,8 +1,13 @@
-# Beta release readiness
+# Feedback MVP and beta release readiness
 
 OTK-041 owns this document. It records what must be true before a TestFlight
 build is used in a real therapy session, who verified each item, and what is
 still owed. Gate B (OTK-042) reads from it.
+
+Issue #65 defines the current four-tool build as the functional feedback MVP
+and defers external OT recruitment and participant-dependent validation. This
+document still governs any future TestFlight or real-session distribution;
+deferral does not count as a passed gate or waive the checks below.
 
 Nothing here may contain child, patient, or participant-level information.
 
@@ -28,9 +33,10 @@ from the repository. Record the date and outcome inline as each is done.
 Use this text, which matches shipped behavior:
 
 > This build contains four tools: Visual Timer, First–Then Board, Token Board,
-> and Choice Board. The core-beta study focuses on the first three; Choice Board
-> is an early candidate-v1 addition. Please use the core tools in real sessions
-> where that is appropriate for your setting and your employer's policy.
+> and Choice Board. It is the functional feedback MVP. External OT validation is
+> deferred and no validation gate is represented as passed. Use it in real
+> sessions only after the release checks in this document are complete and only
+> where appropriate for your setting and employer policy.
 >
 > Known limits in this build, all intentional:
 > • A running timer ends if the app is force-quit or the system reclaims it.
@@ -112,7 +118,7 @@ and result.
 | Timer lifecycle | Force-quit a running timer and relaunch; confirm no timer is restored and the disclosure matches | _owed_ |
 | Accessibility matrix | Full VoiceOver, largest Dynamic Type, Reduce Motion, Increase Contrast, Differentiate Without Color, Reduce Transparency, Switch Control, and keyboard pass across all four shipped tools | _owed_ |
 
-## 6. Participant protocol
+## 6. Future external-participant protocol
 
 Before a tester receives a build:
 
