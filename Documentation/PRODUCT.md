@@ -31,9 +31,9 @@ The therapist needs to:
 
 ## Staged scope
 
-### Core private beta
+### Functional feedback MVP
 
-The smallest useful product contains:
+The functional MVP used for the current maintainer-feedback loop contains:
 
 1. Visual Timer
    - Preset and custom durations.
@@ -56,28 +56,34 @@ The smallest useful product contains:
    - Optional calm completion feedback, off by default.
    - Saved templates.
 
+4. Choice Board
+   - Two to six choices.
+   - Bundled symbols or illustrations; user photos only after the media/privacy gate.
+   - Reordering, temporary hiding, clear selection, save, and duplicate.
+
 Supporting capabilities:
 
    - Adaptive iPhone and iPad navigation.
    - Sensory settings and support for system appearance and accessibility preferences.
    - Complete reset of app-created data.
 
-### Candidate App Store v1
+This four-tool scope is feature-complete. External OT recruitment and the
+participant-dependent validation gates are deferred while the maintainer
+iterates from feedback already available. This does not mean those gates have
+passed, and it does not waive privacy, accessibility, real-device, or App Store
+release checks.
 
-After the core beta passes its validation gate, except where the maintainer has explicitly scheduled an addition earlier:
+### Deferred additions
 
-4. Choice Board — implemented
-   - Two to six choices.
-   - Bundled symbols or illustrations; user photos only after the media/privacy gate.
-   - Reordering, temporary hiding, clear selection, save, and duplicate.
-
-5. Movement and Regulation Cards — not started; blocked on the OTK-060 content approval
+5. Movement and Regulation Cards — deferred; blocked on the OTK-060 content approval
    - Curated, bundled activity library.
    - Name, illustration, directions, duration, environment, equipment, regulation category, supervision, contraindications, stop criteria, and safety notes.
    - Filters, favorites, and a Pick for Me action limited to the therapist's active filters.
    - Content approved through the process in CONTENT_GOVERNANCE.md.
 
-If Choice Board or Regulation Cards do not satisfy their gates, they move to v1.1 rather than delaying a stable core release. User-created regulation cards are out of scope for v1.
+Regulation Cards do not block the functional feedback MVP. They may return in a
+later feedback-driven phase only after the clinical-content gate is satisfied.
+User-created regulation cards are out of scope for v1.
 
 ## Non-goals for v1
 
@@ -92,9 +98,15 @@ If Choice Board or Regulation Cards do not satisfy their gates, they move to v1.
 - Subscriptions, accounts, Android, web, macOS, or desktop implementations.
 - Non-English localization in v1; all user-facing strings remain externalized for later localization.
 
-## Success criteria
+## Validation status and future criteria
 
-Validation is manual and deidentified as defined in VALIDATION_PLAN.md.
+The current four-tool build is an engineering-complete feedback MVP, not a
+clinically validated release. Automated coverage and repository checks establish
+feature completion; maintainer feedback may drive focused fixes and iteration.
+
+The manual, deidentified criteria in VALIDATION_PLAN.md are retained for a
+future external-validation phase. Gate A, Gate B, and Gate C are deferred and
+must not be described as passed.
 
 ### Gate A: Timer usability
 
